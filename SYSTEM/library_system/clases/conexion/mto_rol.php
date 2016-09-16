@@ -5,7 +5,6 @@ class mto_rol extends clDML
 {    
     public function __construct()
     {
-        parent::__construct();
         
     }
 
@@ -18,8 +17,9 @@ class mto_rol extends clDML
     }
     public function guardar_rol($nombre,$descripcion)
     {
-        $query = "INSERT INTO ROL (ID_ROL,NOMBRE_ROL,DESCRIPCION_ROL) VALUES(null,'".$nombre."','".$descripcion."');";
         $conn = new clDML();
+        $query = "INSERT INTO ROL (ID_ROL,NOMBRE_ROL,DESCRIPCION_ROL) VALUES(null,'".$nombre."','".$descripcion."');";
+        
 		$result = $conn->guardar($query);
     	if($result)
     	{
@@ -35,11 +35,20 @@ class mto_rol extends clDML
         $result = $conn->guardar($query);
         if($result)
         {
-            return 'Se guardó con éxito';
+            return 'Se modificó con éxito';
         }else{
             return 'Hubo un error';
         }   
     }
+
+    public function eliminar_rol($id)
+    {
+        $query = "DELETE FROM ROL WHERE ID_ROL = '".$id."';";
+        $conn = new clDML();
+        $result = $conn->guardar($query);            
+        return $result;
+    }
+
     public function getRolByCod($id)
     {
         $query = "SELECT * FROM ROL WHERE ID_ROL = '".$id."'";

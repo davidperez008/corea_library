@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -72,60 +73,7 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Préstamos<span class="fa arrow"></span></a>
-                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Realizar Préstamo</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Registro de Préstamos</a>
-                                </li>
-                            </ul>
-                           
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Mantenimientos Principales<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Alumnos</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Empleados</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Mantenimientos Secundarios<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="mantenimientos/secundarios/tipos_libro.php">Tipo de Libro</a>
-                                </li>
-                                <li>
-                                    <a href="mantenimientos/secundarios/roles_usuario.php">Rol de Usuario</a>
-                                </li>
-                                
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Administración de usuario<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                        <?php include 'menu.php';?>
                     </ul>
                     <!-- /#side-menu -->
                 </div>
