@@ -23,9 +23,13 @@ class clDML
     public function get_list($query)
     {            
         $connection = $this->conectar(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_CHARSET);
-        $result = $connection->query($query);        
-        $users = $result->fetch_all(MYSQLI_ASSOC);        
-        $connection->close();
+        $result = $connection->query($query);
+        if($result){
+            $users = $result->fetch_all(MYSQLI_ASSOC);                    
+        }else{
+            $users = [];
+        }   
+        $connection->close();             
         return $users;
     }
 
@@ -36,6 +40,19 @@ class clDML
        $count = $connection->affected_rows;
        return $count;
 	}
+    
+     public function count($query)
+    {            
+        $connection = $this->conectar(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_CHARSET);
+        $result = $connection->query($query);
+        if($result){
+            $users = $result->num_rows;
+        }else{
+            $users = 0;
+        }   
+        $connection->close();             
+        return $users;
+    }   
 
 
 }

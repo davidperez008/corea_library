@@ -1,3 +1,27 @@
+<?php 
+require_once 'constants.php';
+require_once '/clases/login.php';
+$inicio_sesion = new LogIn();
+$estado = "";
+
+if(isset($_POST['entrar'])){
+    if (isset($_POST['user']) && !empty($_POST['user']) && isset($_POST['pass']) && !empty($_POST['pass'])){
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+        if ($inicio_sesion -> validar_usuario($user,$pass) == TRUE) {
+            echo 'Iniciar';
+            header('Location: index.php');
+            exit;
+        }else{
+            $estado = 'Usuario o contraseña no coinciden';
+        }
+    }else{
+        $estado = "Datos incompletos";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +30,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Start Bootstrap - SB Admin Version 2.0 Demo</title>
+    <title>Sistema Bibliotecario - Inicio de sesión</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -24,24 +48,32 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">
+                            <?php 
+                                if(!empty($estado)){
+                                    echo $estado;
+                                }else{
+                                    echo " Por favor ingrese sus credenciales";
+                                }
+                            ?>
+                        </h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" action="login.php" method="POST">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" name="user" placeholder="Usuario" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" name="pass" placeholder="Contraseña"  type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="Recordar">Reestablecer contraseña
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+                                <button type="submit" name="entrar" class="btn btn-lg btn-success btn-block">Entrar</a>
                             </fieldset>
                         </form>
                     </div>
