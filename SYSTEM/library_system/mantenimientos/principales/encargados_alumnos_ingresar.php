@@ -39,14 +39,13 @@ if(isset($_POST['guardar'])){
         $telefono = $_POST['telefono'];
 
         $tipo_movimiento = $_POST['guardar'];
-        if($tipo_movimiento == 2){
-            $carnet = $_POST['carnet'];
+        if($tipo_movimiento == 2){            
             $tipo_movimiento = 2;
-            $estado = $clMto__Encargado_Alumno->modificar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
+            $estado = $clMto__Encargado_Alumno->modificar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
             $mensaje = "Modificado satisfactoriamente";
         }else{
             $tipo_movimiento = 1;
-            $estado = $clMto__Encargado_Alumno->guardar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
+            $estado = $clMto__Encargado_Alumno->guardar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
             if ($estado == 1) {                
                 $mensaje = "Guardado satisfactoriamente";
                 
@@ -181,10 +180,10 @@ if(isset($_POST['guardar'])){
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Nuevo Encargado <a class="btn btn-primary btn-circle" href="alumnos_ingresar.php"><i class="fa fa-plus"></i></a>  Ver todos los encargados <a class="btn btn-primary btn-circle" href="encargados_alumnos.php"><i class="fa fa-table"></i></a> 
+                            Nuevo Encargado <a class="btn btn-primary btn-circle" href="encargados_alumnos_ingresar.php"><i class="fa fa-plus"></i></a>  Ver todos los encargados <a class="btn btn-primary btn-circle" href="encargados_alumnos.php"><i class="fa fa-table"></i></a> 
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="alumnos_ingresar.php" method="POST">  
+                            <form role="form" action="encargados_alumnos_ingresar.php" method="POST">  
                                 <div class="col-md-6">
                                      <div class="form-group" id="estado">
                                             <?php 
@@ -223,9 +222,9 @@ if(isset($_POST['guardar'])){
                                     </div>
 
                                     <div class="form-group">
-                                        <label>DIRECCIÓN</label>
-                                        <textarea name="direccion" class="form-control" rows="3"><?php echo $direccion ?></textarea>
-                                    </div>
+                                        <label>TELEFONO</label>
+                                        <input  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
+                                    </div>   
                                                                                                                                       
                         </div>
 
@@ -234,6 +233,10 @@ if(isset($_POST['guardar'])){
                                                                                                                                                                         
                                      </div>  
                                     
+                                    <div class="form-group">
+                                        <label>DIRECCIÓN</label>
+                                        <textarea name="direccion" class="form-control" rows="3"><?php echo $direccion ?></textarea>
+                                    </div>
 
                                     <div class="form-group">
                                             <label>DEPARTAMENTO</label>

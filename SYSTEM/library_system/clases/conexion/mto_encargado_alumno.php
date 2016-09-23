@@ -16,18 +16,18 @@ class mto_encargado_alumno extends clDML
         return $users;
     }
     
-    public function guardar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
+    public function guardar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio)
     {
         $conn = new clDML();
-        $query = "INSERT INTO ALUMNO (CARNET,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,DIRECCION,FECHA,SEXO,GRADO_CODIGO_GRADO,ENCARGADO_ALUMNOS_CODIGO_ENCARGADO,DEPARTAMENTO_ID_DEPARTAMENTO,MUNICIPIO_ID_MUNICIPIO) ";
-        $query .= "VALUES('".strtoupper($carnet)."','".$nombre1."','".$nombre2."','".$apellido1."','".$apellido2."','".$direccion."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";
+        $query = "INSERT INTO ENCARGADO_ALUMNO (CODIGO_ENCARGADO,NOMBRES_ENCARGADO,APELLIDOS_ENCARGADO,FECHA,DEPARTAMENTO_ID_DEPARTAMENTO,DIRECCION,TELEFONO,PARENTESCO_IDPARENTESCO,MUNICIPIO_ID_MUNICIPIO) ";
+        $query .= "VALUES('".strtoupper($codigo)."','".strtoupper($nombres)."','".strtoupper($apellidos)."','".$fecha."','".$departamento."','".strtoupper($direccion)."','".$telefono."','".$parentesco."','".$municipio."'); ";
         echo $query;
 		$result = $conn->guardar($query);
     	return $result;	
 	}
-    public function modificar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
+    public function modificar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio)
     {
-        $query = "UPDATE ALUMNO SET PRIMER_NOMBRE = '".$nombre1."', SEGUNDO_NOMBRE = '".$nombre2."',PRIMER_APELLIDO = '".$apellido1."', SEGUNDO_APELLIDO = '".$apellido2."',DIRECCION = '".$direccion."',FECHA = '".$fecha."',SEXO='".$genero."',GRADO_CODIGO_GRADO='".$grado."',ENCARGADO_ALUMNOS_CODIGO_ENCARGADO='".$encargado."',DEPARTAMENTO_ID_DEPARTAMENTO='".$departamento."',MUNICIPIO_ID_MUNICIPIO='".$municipio."' WHERE CARNET = '".$carnet."';";
+        $query = "UPDATE ENCARGADO_ALUMNO SET NOMBRES_ENCARGADO = '".strtoupper($nombres)."', APELLIDOS_ENCARGADO = '".strtoupper($apellidos)."',FECHA = '".$fecha."',DEPARTAMENTO_ID_DEPARTAMENTO = '".$departamento."' ,DIRECCION = '".strtoupper($direccion)."',TELEFONO = '".$telefono."', PARENTESCO_IDPARENTESCO = '".$parentesco."',MUNICIPIO_ID_MUNICIPIO='".$municipio."' WHERE CODIGO_ENCARGADO = '".$codigo."';";
         $conn = new clDML();
         $result = $conn->guardar($query);
         if($result)
@@ -40,7 +40,7 @@ class mto_encargado_alumno extends clDML
 
     public function eliminar_encargado($id)
     {
-        $query = "DELETE FROM ALUMNO WHERE CARNET = '".$id."';";
+        $query = "DELETE FROM ENCARGADO_ALUMNO WHERE CODIGO_ENCARGADO = '".$id."';";
         $conn = new clDML();
         $result = $conn->guardar($query);            
         return $result;
