@@ -25,9 +25,9 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
     $telefono = "";
     $tipo_movimiento = 1;
 
-if(isset($_POST['guardar'])){
-    if(isset($_POST['codigo']) && !empty($_POST['codigo']) && isset($_POST['nombres']) && !empty($_POST['nombres']) && isset($_POST['apellidos']) && !empty($_POST['apellidos']) && isset($_POST['departamento']) && !empty($_POST['departamento']) && isset($_POST['municipio']) && !empty($_POST['municipio']) && isset($_POST['parentesco']) && !empty($_POST['parentesco']) && isset($_POST['fecha']) && !empty($_POST['fecha']) && isset($_POST['telefono']) && !empty($_POST['telefono'])){
-        $codigo = $_POST['codigo'];
+if(isset($_POST['guardar'])){ 
+    if(isset($_POST['nombres']) && !empty($_POST['nombres']) && isset($_POST['apellidos']) && !empty($_POST['apellidos']) && isset($_POST['departamento']) && !empty($_POST['departamento']) && isset($_POST['municipio']) && !empty($_POST['municipio']) && isset($_POST['parentesco']) && !empty($_POST['parentesco']) && isset($_POST['fecha']) && !empty($_POST['fecha']) && isset($_POST['telefono']) && !empty($_POST['telefono'])){
+        
         $nombres = $_POST['nombres'];        
         $apellidos = $_POST['apellidos'];        
         $direccion = $_POST['direccion'];
@@ -39,28 +39,36 @@ if(isset($_POST['guardar'])){
         $telefono = $_POST['telefono'];
 
         $tipo_movimiento = $_POST['guardar'];
-        if($tipo_movimiento == 2){            
+        if($tipo_movimiento == 2){     
+            if (isset($_POST['codigo']) && !empty($_POST['codigo'])) {
+                $codigo = $_POST['codigo'];
+                $estado = $clMto__Encargado_Alumno->modificar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
+                if ($estado > 0) {
+                    $mensaje = "Modificado satisfactoriamente";
+                }else{
+                    $mensaje = "Hubo un error al modificar";
+                } 
+            }       
             $tipo_movimiento = 2;
-            $estado = $clMto__Encargado_Alumno->modificar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
-            $mensaje = "Modificado satisfactoriamente";
+                  
         }else{
             $tipo_movimiento = 1;
-            $estado = $clMto__Encargado_Alumno->guardar_encargado($codigo,$nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
-            if ($estado == 1) {                
-                $mensaje = "Guardado satisfactoriamente";
-                
+            $estado = $clMto__Encargado_Alumno->guardar_encargado($nombres,$apellidos,$fecha,$departamento,$direccion,$telefono,$parentesco,$municipio);
+            if ($estado>0) {                
+                $mensaje = "Guardado satisfactoriamente";                
             }else{
                 $tipo_movimiento = 3;
-                $mensaje = "Hubo algun error";
+                $mensaje = "Hubo algun error al guardar";
             }
-        }
-        
-        if(!$estado){            
-            $mensaje = "Hubo algun error";
-            $tipo_movimiento = 3;
-        }           
-    }else{
+        }        
+                  
+    }else{       
         $mensaje = "Datos no son válidos.";
+        if(!is_numeric($_POST['telefono'])){
+            $mensaje += "<br>El campo de telefono debe ser solo numeros y no menor de 8";
+        }elseif (($timestamp = strtotime($_POST['fecha'])) === false) {
+            $mensaje += "<br>El campo de fecha no fue introducido correctamente, debe ser Año/Mes/Dia";
+        }         
         $tipo_movimiento = 3;
     }
 }elseif (isset($_GET['codigo'])) {
@@ -201,7 +209,7 @@ if(isset($_POST['guardar'])){
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                 <label >CODIGO</label>
-                                                <input type="number" required name="codigo" size="10" class="form-control" value="<?php echo $codigo; ?>">                                            
+                                                <input readonly type="number" required name="codigo" size="10" class="form-control" value="<?php echo $codigo; ?>">                                            
                                                 </div> 
                                             </div>
                                     </div>
@@ -213,7 +221,7 @@ if(isset($_POST['guardar'])){
                                             
                                     <div class="form-group">
                                         <label>APELLIDOS</label>
-                                        <input  name="apellidos" class="form-control" value="<?php echo $apellidos; ?>">
+                                        <input required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>">
                                     </div>                                    
                                     
                                     <div class="form-group">
@@ -223,7 +231,7 @@ if(isset($_POST['guardar'])){
 
                                     <div class="form-group">
                                         <label>TELEFONO</label>
-                                        <input  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
+                                        <input maxlength="8" required  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
                                     </div>   
                                                                                                                                       
                         </div>
