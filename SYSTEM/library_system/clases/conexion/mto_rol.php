@@ -18,7 +18,7 @@ class mto_rol extends clDML
     public function guardar_rol($nombre,$descripcion)
     {
         $conn = new clDML();
-        $query = "INSERT INTO ROL (ID_ROL,NOMBRE_ROL,DESCRIPCION_ROL) VALUES(null,'".$nombre."','".$descripcion."');";
+        $query = "INSERT INTO ROL (ID_ROL,NOMBRE_ROL,DESCRIPCION_ROL) VALUES(null,'".strtoupper($nombre)."','".strtoupper($descripcion)."');";
         
 		$result = $conn->guardar($query);
     	if($result)
@@ -30,7 +30,7 @@ class mto_rol extends clDML
 	}
     public function modificar_rol($id,$nombre,$descripcion)
     {
-        $query = "UPDATE ROL SET NOMBRE_ROL = '".$nombre."', DESCRIPCION_ROL = '".$descripcion."' WHERE ID_ROL = '".$id."';";
+        $query = "UPDATE ROL SET NOMBRE_ROL = '".strtoupper($nombre)."', DESCRIPCION_ROL = '".strtoupper($descripcion)."' WHERE ID_ROL = '".$id."';";
         $conn = new clDML();
         $result = $conn->guardar($query);
         if($result)

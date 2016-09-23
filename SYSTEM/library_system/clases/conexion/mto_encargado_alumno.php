@@ -1,32 +1,33 @@
 <?php 
 require_once "clDML.php";
 
-class mto_alumno extends clDML
+class mto_encargado_alumno extends clDML
 {    
     public function __construct()
     {
         
     }
 
-    public function get_alumnos()
+    public function get_Encargados()
     {
-        $query = "SELECT * FROM ALUMNO";
+        $query = "SELECT * FROM ENCARGADO_ALUMNO";
         $conn = new clDML();
         $users = $conn->get_list($query);
         return $users;
     }
+    
     public function guardar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
     {
         $conn = new clDML();
         $query = "INSERT INTO ALUMNO (CARNET,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,DIRECCION,FECHA,SEXO,GRADO_CODIGO_GRADO,ENCARGADO_ALUMNOS_CODIGO_ENCARGADO,DEPARTAMENTO_ID_DEPARTAMENTO,MUNICIPIO_ID_MUNICIPIO) ";
-        $query .= "VALUES('".$carnet."','".strtoupper($nombre1)."','".strtoupper($nombre2)."','".strtoupper($apellido1)."','".strtoupper($apellido2)."','".strtoupper($direccion)."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";
+        $query .= "VALUES('".strtoupper($carnet)."','".$nombre1."','".$nombre2."','".$apellido1."','".$apellido2."','".$direccion."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";
         echo $query;
 		$result = $conn->guardar($query);
     	return $result;	
 	}
     public function modificar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
     {
-        $query = "UPDATE ALUMNO SET PRIMER_NOMBRE = '".strtoupper($nombre1)."', SEGUNDO_NOMBRE = '".strtoupper($nombre2)."',PRIMER_APELLIDO = '".strtoupper($apellido1)."', SEGUNDO_APELLIDO = '".strtoupper($apellido2)."',DIRECCION = '".strtoupper($direccion)."',FECHA = '".$fecha."',SEXO='".$genero."',GRADO_CODIGO_GRADO='".$grado."',ENCARGADO_ALUMNOS_CODIGO_ENCARGADO='".$encargado."',DEPARTAMENTO_ID_DEPARTAMENTO='".$departamento."',MUNICIPIO_ID_MUNICIPIO='".$municipio."' WHERE CARNET = '".$carnet."';";
+        $query = "UPDATE ALUMNO SET PRIMER_NOMBRE = '".$nombre1."', SEGUNDO_NOMBRE = '".$nombre2."',PRIMER_APELLIDO = '".$apellido1."', SEGUNDO_APELLIDO = '".$apellido2."',DIRECCION = '".$direccion."',FECHA = '".$fecha."',SEXO='".$genero."',GRADO_CODIGO_GRADO='".$grado."',ENCARGADO_ALUMNOS_CODIGO_ENCARGADO='".$encargado."',DEPARTAMENTO_ID_DEPARTAMENTO='".$departamento."',MUNICIPIO_ID_MUNICIPIO='".$municipio."' WHERE CARNET = '".$carnet."';";
         $conn = new clDML();
         $result = $conn->guardar($query);
         if($result)
@@ -45,9 +46,9 @@ class mto_alumno extends clDML
         return $result;
     }
 
-    public function getAlumnolByCod($id)
+    public function getEncargadolByCod($id)
     {
-        $query = "SELECT * FROM ALUMNO WHERE CARNET = '".$id."'";
+        $query = "SELECT * FROM ENCARGADO_ALUMNO WHERE CODIGO_ENCARGADO = '".$id."'";
         $conn = new clDML();
         $users = $conn->get_list($query);
         return $users;
@@ -69,22 +70,15 @@ class mto_alumno extends clDML
         $depa = $conn->get_list($query);
         return $depa;
     }
-
-    public function get_grado()
+  
+    public function get_tipo_parentesco()
     {
-        $query = "SELECT * FROM GRADO";
+        $query = "SELECT * FROM PARENTESCO";
         $conn = new clDML();
-        $depa = $conn->get_list($query);
-        return $depa;
+        $parentesco = $conn->get_list($query);
+        return $parentesco;
     }
 
-    public function get_encargado()
-    {
-        $query = "SELECT CODIGO_ENCARGADO, CONCAT(NOMBRES_ENCARGADO, ' ',APELLIDOS_ENCARGADO) AS ENCARGADO FROM ENCARGADO_ALUMNO";
-        $conn = new clDML();
-        $encargado = $conn->get_list($query);
-        return $encargado;
-    }
 
     
 }

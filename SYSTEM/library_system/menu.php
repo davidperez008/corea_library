@@ -27,7 +27,7 @@
                                     <a href="<?php echo $ROOT_PATH . '/mantenimientos/principales/empleados.php';?>">Empleados</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $ROOT_PATH . '/mantenimientos/principales/encargado_alumno.php';?>">Encargado del Alumno</a>
+                                    <a href="<?php echo $ROOT_PATH . '/mantenimientos/principales/encargados_alumnos.php';?>">Encargado del Alumno</a>
                                 </li>
 
                                 <li>
