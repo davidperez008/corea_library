@@ -1,5 +1,5 @@
 <?php
-require_once "../../clases/conexion/mto_rol.php";
+require_once "../../clases/conexion/mto_alumno.php";
 require_once "../../clases/vista/mensajes.php";
 
 include_once '../../clases/login.php';
@@ -11,7 +11,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    $nom_usu = $_SESSION['usr'];
    $cod_usu = $_SESSION['cod_usr'];
 
-   $clMto_Rol = new mto_rol();
+   $clMto_Alumno = new mto_alumno();
    $mensaje = "";
    $mdl = new mensajes();
    $codigo = "";
@@ -19,7 +19,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         if (isset($_GET['codigo'])) {
             $codigo = htmlspecialchars($_GET['codigo']);
 
-            $resultado = $clMto_Rol->eliminar_rol($codigo);
+            $resultado = $clMto_Alumno->eliminar_alumno($codigo);
             echo $resultado;
         }
    
@@ -35,7 +35,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Roles</title>
+    <title>Alumnos</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +73,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                         <?php include '../../menu_usuario.php';?>
+                        <?php include '../../menu_usuario.php';?>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -108,7 +108,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Roles</h1>
+                    <h1 class="page-header">Alumnos</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -117,7 +117,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Añadir Rol    <a class="btn btn-primary btn-circle" href="roles_usuario.php"><i class="fa fa-plus"></i></a> 
+                            Añadir Alumno<a class="btn btn-primary btn-circle" href="alumnos_ingresar.php"><i class="fa fa-plus"></i></a> 
                         </div>
                        
                         <!-- /.panel-heading -->
@@ -138,22 +138,28 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                      <thead>
                                         <tr>
-                                            <th>Codigo</th>
-                                            <th>Nombre Rol</th>
-                                            <th>Descripción Rol</th>
+                                            <th>CARNÉ</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Género</th>
+                                            <th>Fecha de Nac.</th>
+                                            <th>Grado</th>
                                             <th>Modificar</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                      <?php                                      
-                                        $a_users = $clMto_Rol->get_rol();
-                                        foreach ($a_users as $row): ?>
+                                        $a_alumnos = $clMto_Alumno->get_alumnos();
+                                        foreach ($a_alumnos as $row): ?>
                                             <tr>
-                                                <td><?php echo $row['ID_ROL']; ?></td>
-                                                <td><?php echo $row['NOMBRE_ROL']; ?></td>
-                                                <td><?php echo $row['DESCRIPCION_ROL']; ?></td>
-                                                <td><a href="roles_usuario.php?codigo=<?php echo $row['ID_ROL']; ?>">Modificar</a></td>
-                                                <td><a href="roles.php?codigo=<?php echo $row['ID_ROL']; ?>">Eliminar</a></td>
+                                                <td><?php echo $row['CARNET']; ?></td>
+                                                <td><?php echo $row['PRIMER_NOMBRE'] . " " . $row['SEGUNDO_NOMBRE']; ?></td>
+                                                <td><?php echo $row['PRIMER_APELLIDO'] . " " . $row['SEGUNDO_APELLIDO']; ?></td>
+                                                <td><?php echo $row['SEXO']; ?></td>
+                                                <td><?php echo $row['FECHA']; ?></td>
+                                                <td><?php echo $row['GRADO_CODIGO_GRADO']; ?></td>
+                                                <td><a href="alumnos_ingresar.php?codigo=<?php echo $row['CARNET']; ?>">Modificar</a></td>
+                                                <td><a href="alumnos.php?codigo=<?php echo $row['CARNET']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                    
                                     <?php endforeach ?>    
                                 </table>

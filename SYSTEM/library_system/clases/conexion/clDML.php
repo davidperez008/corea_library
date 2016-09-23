@@ -1,5 +1,5 @@
 <?php 
-require_once "clConexion.php";
+require_once "conn.php";
 class clDML 
 {        
     public function __construct()

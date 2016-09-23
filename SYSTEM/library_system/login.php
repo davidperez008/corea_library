@@ -1,22 +1,30 @@
 <?php 
+session_start();
 require_once 'constants.php';
 require_once '/clases/login.php';
 $inicio_sesion = new LogIn();
 $estado = "";
 
-if(isset($_POST['entrar'])){
-    if (isset($_POST['user']) && !empty($_POST['user']) && isset($_POST['pass']) && !empty($_POST['pass'])){
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
-        if ($inicio_sesion -> validar_usuario($user,$pass) == TRUE) {
-            echo 'Iniciar';
-            header('Location: index.php');
-            exit;
+if (isset($_SESSION['usr'])) {
+    header('Location: index.php');
+}else{
+    if(isset($_POST['entrar'])){
+        if (isset($_POST['user']) && !empty($_POST['user']) && isset($_POST['pass']) && !empty($_POST['pass'])){
+        $user = $_POST['user'];
+        $pass = $_POST['pass'];
+            if ($inicio_sesion -> validar_usuario($user,$pass) == TRUE) {
+                echo 'Iniciar';            
+                'Obtener usuario';
+                $_SESSION['usr'] = $_POST['user'];
+                $_SESSION['cod_usr'] = $inicio_sesion->obtener_codigo_usuario($_SESSION['usr']);
+                header('Location: index.php');
+                exit;
+            }else{
+                $estado = 'Usuario o contraseña no coinciden';
+            }
         }else{
-            $estado = 'Usuario o contraseña no coinciden';
+            $estado = "Datos incompletos";
         }
-    }else{
-        $estado = "Datos incompletos";
     }
 }
 
