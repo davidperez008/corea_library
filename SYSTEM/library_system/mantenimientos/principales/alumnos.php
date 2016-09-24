@@ -153,11 +153,11 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                                         foreach ($a_alumnos as $row): ?>
                                             <tr>
                                                 <td><?php echo $row['CARNET']; ?></td>
-                                                <td><?php echo $row['PRIMER_NOMBRE'] . " " . $row['SEGUNDO_NOMBRE']; ?></td>
-                                                <td><?php echo $row['PRIMER_APELLIDO'] . " " . $row['SEGUNDO_APELLIDO']; ?></td>
+                                                <td><?php echo $row['NOMBRES']; ?></td>
+                                                <td><?php echo $row['APELLIDOS']; ?></td>
                                                 <td><?php echo $row['SEXO']; ?></td>
                                                 <td><?php echo $row['FECHA']; ?></td>
-                                                <td><?php echo $row['GRADO_CODIGO_GRADO']; ?></td>
+                                                <td><?php echo $row['GRADO']; ?></td>
                                                 <td><a href="alumnos_ingresar.php?codigo=<?php echo $row['CARNET']; ?>">Modificar</a></td>
                                                 <td><a href="alumnos.php?codigo=<?php echo $row['CARNET']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                    

@@ -157,7 +157,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                                                 <td><?php echo $row['APELLIDOS_ENCARGADO']; ?></td>
                                                 <td><?php echo $row['DIRECCION']; ?></td>
                                                 <td><?php echo $row['TELEFONO']; ?></td>
-                                                <td><?php echo $row['PARENTESCO_IDPARENTESCO']; ?></td>
+                                                <td><?php echo $row['DESCRIPCION_PARENTESCO']; ?></td>
                                                 <td><a href="encargados_alumnos_ingresar.php?codigo=<?php echo $row['CODIGO_ENCARGADO']; ?>">Modificar</a></td>
                                                 <td><a href="encargados_alumnos.php?codigo=<?php echo $row['CODIGO_ENCARGADO']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                    

@@ -10,11 +10,24 @@ class mto_alumno extends clDML
 
     public function get_alumnos()
     {
+        $query = "SELECT a.CARNET,CONCAT(a.PRIMER_NOMBRE,' ',a.SEGUNDO_NOMBRE) As NOMBRES,CONCAT(a.PRIMER_APELLIDO,' ', a.SEGUNDO_APELLIDO) AS APELLIDOS, ";
+        $query .= "a.DIRECCION,a.FECHA,IF(a.SEXO = 1,'FEMENINO','MASCULINO') AS SEXO,g.DESCRIPCION_GRADO As GRADO  FROM ALUMNO a ";
+        $query .= "INNER JOIN GRADO g ON g.CODIGO_GRADO = a.GRADO_CODIGO_GRADO ";
+        $conn = new clDML();
+        $users = $conn->get_list($query);
+        return $users;
+    }
+
+
+
+    public function get_alumnos_all()
+    {
         $query = "SELECT * FROM ALUMNO";
         $conn = new clDML();
         $users = $conn->get_list($query);
         return $users;
     }
+
     public function guardar_encargado($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
     {
         $conn = new clDML();
@@ -60,7 +73,6 @@ class mto_alumno extends clDML
         $muni = $conn->get_list($query);
         return $muni;
     }
-
 
     public function get_departamentos()
     {

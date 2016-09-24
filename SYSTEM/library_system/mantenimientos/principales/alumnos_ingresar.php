@@ -1,5 +1,6 @@
 <?php
 require_once "../../clases/conexion/mto_alumno.php";
+require_once "../../clases/conexion/mto_encargado_alumno.php";
 require_once "../../clases/vista/mensajes.php";
 
 include_once '../../clases/login.php';
@@ -124,6 +125,22 @@ if(isset($_POST['guardar'])){
 
     <!-- SB Admin CSS - Include with every page -->
     <link href="../../css/sb-admin.css" rel="stylesheet">       
+
+    <script src="../../js/jquery-1.10.2.js"></script>
+    <script language="javascript">
+    $(document).ready(function(){
+       $("#departamento").change(function () {               
+               $("#departamento option:selected").each(function () {
+                id_departamento = $(this).val();
+
+                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
+                    $("#municipio").html(data);
+                });            
+            });
+       })
+    });
+   
+</script>
 </head>
 
 <body>
@@ -263,28 +280,33 @@ if(isset($_POST['guardar'])){
 
                                     <div class="form-group">
                                             <label>DEPARTAMENTO</label>
-                                            <select required name="departamento" class="form-control">                                                
+                                            <select required name="departamento" id="departamento" class="form-control">                                                
                                                <?php 
                                                     $depa = $clMto_Alumno->get_departamentos();
                                                     foreach ($depa as $row): ?>                                                                                                
                                                     <option <?php if($departamento == $row['ID_DEPARTAMENTO']){echo "selected";}?> value="<?php echo $row['ID_DEPARTAMENTO']; ?>"><?php echo $row['NOMBRE_DEPARTAMENTO']; ?></option>                                                                                            
                                                 <?php endforeach ?>    
-                                            </select>
+                                            </select>                                            
                                     </div>
 
 
                                     <div class="form-group">
                                             <label>MUNICIPIO</label>
-                                            <select required name="municipio" class="form-control">
+                                            <select required id="municipio" name="municipio" class="form-control">
                                                <?php 
-                                                    $muni = $clMto_Alumno->get_municipios();
-                                                    foreach ($muni as $row): ?>                                                                                                
-                                                    <option  <?php if($municipio == $row['ID_MUNICIPIO']){echo "selected";}?> value="<?php echo $row['ID_MUNICIPIO']; ?>"><?php echo $row['NOMBRE_MUNICIPIO']; ?></option>                                                                                            
-                                                <?php endforeach ?> 
+                                                    if ($tipo_movimiento == 2) {
+                                                        $muni = $clMto_Alumno->get_municipios();
+                                                        foreach ($muni as $row): ?>                                                                                                
+                                                        <option  <?php if($municipio == $row['ID_MUNICIPIO']){echo "selected";}?> value="<?php echo $row['ID_MUNICIPIO']; ?>"><?php echo $row['NOMBRE_MUNICIPIO']; ?></option>                                                                                            
+                                                        <?php endforeach   ?>                                                      
+                                                    <?php }?>
+                                                                                                                                                       
                                             </select>
                                     </div>
 
-                                    <div class="form-group">
+                                  
+
+                                      <div class="form-group">
                                             <label>ENCARGADO</label>
                                             <select required name="encargado" class="form-control">
                                                <?php 
@@ -292,7 +314,7 @@ if(isset($_POST['guardar'])){
                                                     foreach ($encargado as $row): ?>                                                                                                
                                                     <option <?php if($encargado == $row['CODIGO_ENCARGADO']){echo "selected";}?> value="<?php echo $row['CODIGO_ENCARGADO']; ?>"><?php echo $row['ENCARGADO']; ?></option>                                                                                            
                                                 <?php endforeach ?>
-                                            </select>
+                                            </select>                                            
                                     </div>
 
                                     <div class="form-group">
@@ -326,7 +348,7 @@ if(isset($_POST['guardar'])){
     <!-- /#wrapper -->
 
     <!-- Core Scripts - Include with every page -->
-    <script src="../../js/jquery-1.10.2.js"></script>
+    
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
 

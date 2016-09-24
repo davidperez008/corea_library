@@ -10,6 +10,15 @@ class mto_encargado_alumno extends clDML
 
     public function get_Encargados()
     {
+        $query = "SELECT e.CODIGO_ENCARGADO,e.NOMBRES_ENCARGADO,e.APELLIDOS_ENCARGADO,e.DIRECCION,e.TELEFONO,p.DESCRIPCION_PARENTESCO FROM ENCARGADO_ALUMNO e ";
+        $query .= "INNER JOIN PARENTESCO p ON p.ID_PARENTESCO = e.PARENTESCO_IDPARENTESCO ";
+        $conn = new clDML();
+        $users = $conn->get_list($query);
+        return $users;
+    }
+
+    public function get_Encargados_All()
+    {
         $query = "SELECT * FROM ENCARGADO_ALUMNO";
         $conn = new clDML();
         $users = $conn->get_list($query);

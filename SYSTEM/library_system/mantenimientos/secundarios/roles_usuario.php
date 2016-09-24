@@ -87,7 +87,7 @@ if(isset($_POST['guardar'])){
     <!-- Page-Level Plugin CSS - Forms -->
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="../../css/sb-admin.css" rel="stylesheet">
+    <link href="../../css/sb-admin.css" rel="stylesheet">   
 
 </head>
 
@@ -184,8 +184,8 @@ if(isset($_POST['guardar'])){
                                         <div class="form-group">
                                             <label>DESCRIPCIÓN ROL</label>
                                             <input name="descripcion" required class="form-control" value="<?php echo $desc_rol; ?>" placeholder="Descripción detallada">
-                                        </div>
-                                        
+                                        </div>                                        
+                                                                                
                                         <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>                                                                        
                                         <button type="reset" class="btn btn-default">Limpiar</button>
                                     </form>
