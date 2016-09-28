@@ -46,7 +46,7 @@ if(isset($_POST['guardar'])){
                 if ($estado > 0) {
                     $mensaje = "Modificado satisfactoriamente";
                 }else{
-                    $mensaje = "Hubo un error al modificar";
+                    $mensaje = "No hubo cambios";
                 } 
             }       
             $tipo_movimiento = 2;
@@ -126,14 +126,21 @@ if(isset($_POST['guardar'])){
     <script language="javascript">
     $(document).ready(function(){
        $("#departamento").change(function () {               
-               $("#departamento option:selected").each(function () {
-                id_departamento = $(this).val();
-
-                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
-                    $("#municipio").html(data);
+            $("#departamento option:selected").each(function () {
+            id_departamento = $(this).val();
+            $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
+            $("#municipio").html(data);
                 });            
             });
-       })
+        })    
+        
+        $("#telefono").keyup(function() {
+            $valor = $(this).val();
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                  this.value = this.value.replace(/[^0-9\.]/g, '');
+               }         
+        });         
+
     });
     </script>
    
@@ -247,7 +254,7 @@ if(isset($_POST['guardar'])){
 
                                     <div class="form-group">
                                         <label>TELEFONO</label>
-                                        <input maxlength="8" required  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
+                                        <input id="telefono" maxlength="8" required  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
                                     </div>   
                                                                                                                                       
                         </div>
@@ -326,6 +333,7 @@ if(isset($_POST['guardar'])){
 
     <!-- SB Admin Scripts - Include with every page -->
     <script src="../../js/sb-admin.js"></script>        
+
     <!-- Page-Level Demo Scripts - Forms - Use for reference -->
 
 </body>

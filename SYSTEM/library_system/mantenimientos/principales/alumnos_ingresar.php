@@ -28,6 +28,7 @@ $encargado = "";
 $fecha = "";
 $genero = "";
 $carnet = "";
+$nombre_encargado = "";
 $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
@@ -42,7 +43,6 @@ if(isset($_POST['guardar'])){
         $municipio = $_POST['municipio'];
         $grado = $_POST['grado'];
         $encargado = $_POST['encargado'];
-        //$fecha = date( 'Y-m-d H:i:s', $_POST['fecha']);
         $fecha =$_POST['fecha'];
         $genero = $_POST['genero'];
 
@@ -50,26 +50,32 @@ if(isset($_POST['guardar'])){
         if($tipo_movimiento == 2){
             $carnet = $_POST['carnet'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
-            $mensaje = "Modificado satisfactoriamente";
-        }else{
-            $tipo_movimiento = 1;
-            $estado = $clMto_Alumno->guardar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
-            if ($estado == 1) {                
-                $mensaje = "Guardado satisfactoriamente";
-                
+            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);           
+            if ($estado > 0) {
+                $mensaje = "Modificado satisfactoriamente";
             }else{
                 $tipo_movimiento = 3;
-                $mensaje = "Hubo algun error";
+                $mensaje = "No hubo cambios.";
             }
+        }else{
+            $tipo_movimiento = 1;
+            if ($clMto_Alumno->validar_carnet($carnet)){
+                    $estado = $clMto_Alumno->guardar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
+                if ($estado > 0) {                
+                    $mensaje = "Guardado satisfactoriamente";                
+                }else{
+                    $tipo_movimiento = 3;
+                    $mensaje = "Hubo algun error";
+                }
+            }else{
+                $tipo_movimiento = 3;
+                $mensaje = "Hubo un error<br>El carné que ha ingresado ya se encuentra ocupado."; 
+
+            }        
         }
-        
-        if(!$estado){            
-            $mensaje = "Hubo algun error";
-            $tipo_movimiento = 3;
-        }           
+                        
     }else{
-        $mensaje = "Datos no son válidos.";
+        $mensaje = "Datos no son válidos o incompletos.";
         $tipo_movimiento = 3;
     }
 }elseif (isset($_GET['codigo'])) {
@@ -88,6 +94,7 @@ if(isset($_POST['guardar'])){
         $municipio = $row['MUNICIPIO_ID_MUNICIPIO'];
         $grado = $row['GRADO_CODIGO_GRADO'];
         $encargado = $row['ENCARGADO_ALUMNOS_CODIGO_ENCARGADO'];
+        $nombre_encargado = $row['NOMBRE_ENCARGADO'];
         //$fecha = date( 'Y-m-d H:i:s', $_POST['fecha']);
         $fecha =$row['FECHA'];
         $genero = $row['SEXO'];
@@ -126,21 +133,7 @@ if(isset($_POST['guardar'])){
     <!-- SB Admin CSS - Include with every page -->
     <link href="../../css/sb-admin.css" rel="stylesheet">       
 
-    <script src="../../js/jquery-1.10.2.js"></script>
-    <script language="javascript">
-    $(document).ready(function(){
-       $("#departamento").change(function () {               
-               $("#departamento option:selected").each(function () {
-                id_departamento = $(this).val();
-
-                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
-                    $("#municipio").html(data);
-                });            
-            });
-       })
-    });
    
-</script>
 </head>
 
 <body>
@@ -302,19 +295,55 @@ if(isset($_POST['guardar'])){
                                                     <?php }?>
                                                                                                                                                        
                                             </select>
+                                    </div>                                         
+                                    
+                            <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Buscar encargado</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" id="texto" class="form-control">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>                                          
+                                                        <ul id="lista" class="list-group">                                              
+                                                        </ul>                                                                                
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                            <!-- Modal -->
+
+                                    <div class="form-group">
+                                        <label>ENCARGADO</label>
+                                        <div class="row">
+                                            <div class="col-md-9 col-md-push-3">
+                                                <input readonly name="nombre_encargado" id="nombre_encargado" type="text" value="<?php echo $nombre_encargado;?>" class="form-control">
+                                            </div>
+                                            <div class="col-md-3 col-md-pull-9">
+                                                <input readonly name="encargado" id="encargado" value="<?php echo $encargado;?>" type="text" class="form-control">                                                  
+                                            </div>
+                                        </div>   
+
+                                                                        
                                     </div>
 
-                                  
-
-                                      <div class="form-group">
-                                            <label>ENCARGADO</label>
-                                            <select required name="encargado" class="form-control">
-                                               <?php 
-                                                    $encargado = $clMto_Alumno->get_encargado();
-                                                    foreach ($encargado as $row): ?>                                                                                                
-                                                    <option <?php if($encargado == $row['CODIGO_ENCARGADO']){echo "selected";}?> value="<?php echo $row['CODIGO_ENCARGADO']; ?>"><?php echo $row['ENCARGADO']; ?></option>                                                                                            
-                                                <?php endforeach ?>
-                                            </select>                                            
+                                    <div class="form-group">
+                                         <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                                                Buscar encargados
+                                         </a>
                                     </div>
 
                                     <div class="form-group">
@@ -348,6 +377,45 @@ if(isset($_POST['guardar'])){
     <!-- /#wrapper -->
 
     <!-- Core Scripts - Include with every page -->
+     <script src="../../js/jquery-1.10.2.js"></script>
+    <script language="javascript">
+    $(document).ready(function(){
+       $("#departamento").change(function () {               
+               $("#departamento option:selected").each(function () {
+                id_departamento = $(this).val();
+
+                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
+                    $("#municipio").html(data);
+                });            
+            });
+       })
+
+       $('#texto').keyup(function() {
+            id_departamento = $(this).val();
+            $.post("../../clases/conexion/encargados.php", { id_departamento: id_departamento }, function(data){            
+            $("#lista").html(data);            
+            });
+        });  
+
+
+    });
+
+    function validarEncargado(valorId){
+        $("#encargado").val(valorId);
+        $("#myModal .close").click()
+        obtnenerEncargado(valorId);
+    }
+
+
+    function obtnenerEncargado(valorId){
+        $.post("../../clases/conexion/encargados.php", { id: valorId }, function(data){                    
+        $("#nombre_encargado").val(data);            
+        });
+    }   
+
+
+    
+</script>
     
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>

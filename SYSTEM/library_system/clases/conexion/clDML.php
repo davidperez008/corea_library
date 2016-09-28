@@ -38,6 +38,10 @@ class clDML
        $connection = $this->conectar(DB_HOST,DB_USER,DB_PASS,DB_NAME,DB_CHARSET);    
        $connection->query($query);
        $count = $connection->affected_rows;
+       if ($count == 0) {
+           
+       }
+       echo $connection->error;
        return $count;
 	}
     
