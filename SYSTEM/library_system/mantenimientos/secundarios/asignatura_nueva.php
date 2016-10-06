@@ -1,39 +1,39 @@
 <?php
-require_once "../../clases/conexion/mto_rol.php";
+require_once "../../clases/conexion/mto_asignatura.php";
 require_once "../../clases/vista/mensajes.php";
-
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
-
-   $clMto_Rol = new mto_rol();
+$clMto_asignatura = new mto_asignatura();
 $mensaje = "";
 $mdl = new mensajes();
-$codigo = "";
-$nombre_rol = "";
-$desc_rol = "";
-$id = "";
+$codigo_asignatura = "";
+$nombre_asignatura = "";
 $tipo_movimiento = 1;
 
+
+
 if(isset($_POST['guardar'])){
-    if(isset($_POST['nombre']) && !empty($_POST['nombre']) && isset($_POST['descripcion']) && !empty($_POST['descripcion'])){
-        $nombre_rol = $_POST['nombre'];
-        $desc_rol = $_POST['descripcion'];
+	if(isset($_POST['nombre_asignatura']) && !empty($_POST['nombre_asignatura'])){
+        $nombre_asignatura = $_POST['nombre_asignatura'];
+		
         $tipo_movimiento = $_POST['guardar'];
         if($tipo_movimiento == 2){
-            $id = $_POST['id'];
+            $codigo_asignatura = $_POST['codigo_asignatura'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Rol->modificar_rol($id,$nombre_rol,$desc_rol);
-            $mensaje = "Modificado satisfactoriamente";
+            $estado = $clMto_asignatura->modificar_asignatura($codigo_asignatura, $nombre_asignatura);
+            if ($estado > 0) {
+                $mensaje = "Modificado satisfactoriamente";    
+            }else{
+                $mensaje = "Hubo errores al modificar";    
+            }
+            
         }else{
             $tipo_movimiento = 1;
-            $estado = $clMto_Rol->guardar_rol($nombre_rol,$desc_rol);
-            $mensaje = "Guardado satisfactoriamente";
+            $estado = $clMto_asignatura->guardar_asignatura($codigo_asignatura, $nombre_asignatura);
+            if ($estado > 0 ) {
+                $mensaje = "Guardado satisfactoriamente";
+            }else{
+                $mensaje = "Hubo errores al guardar";    
+            }
+            
         }
         
         if(!$estado){            
@@ -45,14 +45,14 @@ if(isset($_POST['guardar'])){
         $tipo_movimiento = 3;
     }
 }elseif (isset($_GET['codigo'])) {
-    $codigo = htmlspecialchars($_GET['codigo']);
-    $list = $clMto_Rol->getRolByCod($codigo);
+    $codigo_asignatura = htmlspecialchars($_GET['codigo']);
+    $list = $clMto_asignatura->getAsignaturaByCod($codigo_asignatura);
     
     if (count($list) > 0) {
         foreach ($list as $row):
-        $id = $row['ID_ROL'];
-        $nombre_rol = $row['NOMBRE_ROL']; 
-        $desc_rol = $row['DESCRIPCION_ROL'];
+        $codigo_asignatura = $row['CODIGO_ASIGNATURA'];
+        $nombre_asignatura = $row['NOMBRE_ASIGNATURA'];
+		
         endforeach;      
         $tipo_movimiento = 2;
     }else{
@@ -62,13 +62,7 @@ if(isset($_POST['guardar'])){
 
 }else{
     $tipo_movimiento = 1;
-}    
-
-
-}else{
-    header('location: ../../login.php');
-}
-                                                                          
+}                                                                              
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,7 +72,7 @@ if(isset($_POST['guardar'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Roles de Usuario</title>
+    <title>ASIGNATURA</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -87,7 +81,7 @@ if(isset($_POST['guardar'])){
     <!-- Page-Level Plugin CSS - Forms -->
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="../../css/sb-admin.css" rel="stylesheet">   
+    <link href="../../css/sb-admin.css" rel="stylesheet">
 
 </head>
 
@@ -114,7 +108,13 @@ if(isset($_POST['guardar'])){
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                       <?php include '../../menu_usuario.php';?>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil de usuario</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
+                        </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -147,7 +147,7 @@ if(isset($_POST['guardar'])){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Roles de Usuario</h1>
+                    <h1 class="page-header">Asignatura</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -156,12 +156,12 @@ if(isset($_POST['guardar'])){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Ver todos los roles <a class="btn btn-primary btn-circle" href="roles.php"><i class="fa fa-table"></i></a> 
+                            Ver todas las asignaturas <a class="btn btn-primary btn-circle" href="asignatura.php"><i class="fa fa-table"></i></a> 
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" action="roles_usuario.php" method="POST">                                                        
+                                    <form role="form" action="asignatura_nueva.php" method="POST">                                                        
                                         <div class="form-group" id="estado">
                                             <?php 
                                             if(!empty($mensaje)){
@@ -174,18 +174,13 @@ if(isset($_POST['guardar'])){
                                             ?>                                                                                         
                                         </div>
                                         <div class="form-group">
-                                            <label >ID ROL</label>
-                                            <input name="id" class="form-control" value="<?php echo $id; ?>" readonly>                                            
+                                            <label >CODIGO ASIGNATURA</label>
+                                            <input name="codigo_asignatura" class="form-control" value="<?php echo $codigo_asignatura; ?>" readonly>                                            
                                         </div>
                                         <div class="form-group">
-                                            <label>NOMBRE ROL</label>
-                                            <input name="nombre" required class="form-control" value="<?php echo $nombre_rol; ?>" placeholder="Nombre representativo">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>DESCRIPCIÓN ROL</label>
-                                            <input name="descripcion" required class="form-control" value="<?php echo $desc_rol; ?>" placeholder="Descripción detallada">
+                                            <label>NOMBRE ASIGNATURA</label>
+                                            <input name="nombre_asignatura" class="form-control" value="<?php echo $nombre_asignatura; ?>" placeholder="Nombre representativo">
                                         </div>                                        
-                                                                                
                                         <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>                                                                        
                                         <button type="reset" class="btn btn-default">Limpiar</button>
                                     </form>

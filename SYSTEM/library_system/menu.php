@@ -37,6 +37,10 @@
                                 <li>
                                     <a href="<?php echo $ROOT_PATH . 'mantenimientos/principales/autores.php';?>">Autores</a>
                                 </li>
+
+                                <li>
+                                    <a href="<?php echo $ROOT_PATH . 'mantenimientos/principales/usuarios.php';?>">Usuarios</a>
+                                </li>
                                 
                             </ul>
                             <!-- /.nav-second-level -->
