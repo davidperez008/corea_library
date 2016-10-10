@@ -1,17 +1,17 @@
 <?php
-require_once "../../clases/conexion/mto_rol.php";
+require_once "../../clases/conexion/mto_tipo_libro.php";
 require_once "../../clases/vista/mensajes.php";
 
 include_once '../../clases/login.php';
 
 session_start();
 $inicio_sesion =  new LogIn();
+$clMto_Tipo_Libro = new mto_tipo_libro();
 
 if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    $nom_usu = $_SESSION['usr'];
    $cod_usu = $_SESSION['cod_usr'];
-
-   $clMto_Rol = new mto_rol();
+   
    $mensaje = "";
    $mdl = new mensajes();
    $codigo = "";
@@ -19,7 +19,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         if (isset($_GET['codigo'])) {
             $codigo = htmlspecialchars($_GET['codigo']);
 
-            $resultado = $clMto_Rol->eliminar_rol($codigo);
+            $resultado = $clMto_Tipo_Libro->eliminar_tipo($codigo);
             echo $resultado;
         }
    
@@ -35,7 +35,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Roles</title>
+    <title>TIPO LIBRO</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -108,7 +108,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Roles</h1>
+                    <h1 class="page-header">TIPO DE LIBRO</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -117,7 +117,8 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Añadir Rol    <a class="btn btn-primary btn-circle" href="roles_usuario.php"><i class="fa fa-plus"></i></a> 
+                            Añadir Registro<a class="btn btn-primary btn-circle" href="tipo_libro_ingresar.php">
+                            <i class="fa fa-plus"></i></a> 
                         </div>
                        
                         <!-- /.panel-heading -->
@@ -139,23 +140,21 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                                      <thead>
                                         <tr>
                                             <th>Codigo</th>
-                                            <th>Nombre Rol</th>
-                                            <th>Descripción Rol</th>
-                                            <th>Nivel de Acceso</th>
+                                           
+                                            <th>Tipo de Libro</th>
                                             <th>Modificar</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                      <?php                                      
-                                        $a_users = $clMto_Rol->get_rol();
+                                        $a_users = $clMto_Tipo_Libro->get_tipo();
                                         foreach ($a_users as $row): ?>
                                             <tr>
-                                                <td><?php echo $row['ID_ROL']; ?></td>
-                                                <td><?php echo $row['NOMBRE_ROL']; ?></td>
-                                                <td><?php echo $row['DESCRIPCION_ROL']; ?></td>
-                                                <td><?php echo $row['nombre_nivel']; ?></td>
-                                                <td><a href="roles_usuario.php?codigo=<?php echo $row['ID_ROL']; ?>">Modificar</a></td>
-                                                <td><a href="roles.php?codigo=<?php echo $row['ID_ROL']; ?>">Eliminar</a></td>
+                                                <td><?php echo $row['ID_TIPO_LIBRO']; ?></td>
+                                                
+                                                <td><?php echo $row['NOMBRE_TIPO_LIBRO']; ?></td>
+                                                <td><a href="tipo_libro_ingresar.php?codigo=<?php echo $row['ID_TIPO_LIBRO']; ?>">Modificar</a></td>
+                                                <td><a href="tipo_libro_ingresar.php?codigo=<?php echo $row['ID_TIPO_LIBRO']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                    
                                     <?php endforeach ?>    
                                 </table>

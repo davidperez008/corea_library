@@ -10,7 +10,8 @@ class mto_rol extends clDML
 
     public function get_rol()
     {
-        $query = "SELECT * FROM ROL";
+        $query = "SELECT r.ID_ROL,r.NOMBRE_ROL,r.DESCRIPCION_ROL, n.nombre_nivel " .
+                " FROM ROL r INNER JOIN nivel_acceso n ON n.id_nivel_acceso = r.NIVEL_ACCESSO ";
         $conn = new clDML();
         $users = $conn->get_list($query);
         return $users;
@@ -58,6 +59,13 @@ class mto_rol extends clDML
     }
 
 
+     public function get_nivel_acceso()
+    {
+        $query = "SELECT * FROM NIVEL_ACCESO";
+        $conn = new clDML();
+        $nivel = $conn->get_list($query);
+        return $nivel;
+    }
 
     
 }

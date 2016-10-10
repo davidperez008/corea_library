@@ -65,7 +65,7 @@
                                     <a href="<?php echo $ROOT_PATH . 'mantenimientos/secundarios/roles.php'?>">Rol de Usuario</a>
                                 </li>
                                  <li>
-                                    <a href="<?php echo $ROOT_PATH . 'mantenimientos/secundarios/tipos_libro.php'?>">Tipo de Libro</a>
+                                    <a href="<?php echo $ROOT_PATH . 'mantenimientos/secundarios/tipo_libro.php'?>">Tipo de Libro</a>
                                 </li>                                                        
                             </ul>
                             <!-- /.nav-second-level -->

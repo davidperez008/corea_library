@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-09-2016 a las 04:56:21
+-- Tiempo de generación: 10-10-2016 a las 15:52:27
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.23
 
@@ -28,45 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `alumno` (
   `CARNET` int(11) NOT NULL DEFAULT '0',
-  `PRIMER_NOMBRE` varchar(15) DEFAULT NULL,
-  `SEGUNDO_NOMBRE` varchar(15) DEFAULT NULL,
-  `PRIMER_APELLIDO` varchar(15) DEFAULT NULL,
-  `SEGUNDO_APELLIDO` varchar(15) DEFAULT NULL,
+  `NOMBRES_ALUMNO` varchar(15) DEFAULT NULL,
+  `APELLIDOS_ALUMNO` varchar(15) DEFAULT NULL,
   `DIRECCION` varchar(50) DEFAULT NULL,
   `FECHA` date DEFAULT NULL COMMENT 'Fecha de nacimiento\r\n',
   `SEXO` tinyint(1) DEFAULT NULL,
   `GRADO_CODIGO_GRADO` int(11) NOT NULL,
-  `ENCARGADO_ALUMNOS_CODIGO_ENCARGADO` int(11) DEFAULT NULL,
   `DEPARTAMENTO_ID_DEPARTAMENTO` int(11) NOT NULL,
-  `MUNICIPIO_ID_MUNICIPIO` int(11) NOT NULL
+  `MUNICIPIO_ID_MUNICIPIO` int(11) NOT NULL,
+  `NOMBRES_ENCARGADO` varchar(50) DEFAULT NULL,
+  `APELLIDOS_ENCARGADO` varchar(200) DEFAULT NULL,
+  `TELEFONO` int(11) DEFAULT NULL,
+  `ID_PARENTESCO` int(11) DEFAULT NULL,
+  `ID_PROFESION` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `alumno`
---
-
-INSERT INTO `alumno` (`CARNET`, `PRIMER_NOMBRE`, `SEGUNDO_NOMBRE`, `PRIMER_APELLIDO`, `SEGUNDO_APELLIDO`, `DIRECCION`, `FECHA`, `SEXO`, `GRADO_CODIGO_GRADO`, `ENCARGADO_ALUMNOS_CODIGO_ENCARGADO`, `DEPARTAMENTO_ID_DEPARTAMENTO`, `MUNICIPIO_ID_MUNICIPIO`) VALUES
-(1, 'DAVID', 'ALEJANDRO', 'PEREZ', 'MORAN', 'XSC', '1993-10-16', 2, 14, 1, 6, 12),
-(2, 'Gabriela', 'CRISTINA', 'PEREZ', 'MORAN', 'ds', '2000-05-09', 1, 12, 1, 6, 1),
-(3, 'DANGER', '', 'PEREZ', '', '', '2006-11-24', 2, 1, 1, 6, 2),
-(5, 'KARLA', 'Iveth', 'morÃ¡n', '', '', '1979-11-25', 1, 13, 7, 6, 12),
-(10, 'jose', '', 'lopez', 'perez', 'colonia campo verde', '2000-02-01', 2, 12, 1, 6, 9),
-(11, 'rosa', 'maria', 'perez', 'anaya', 'colonia guadalupe', '2000-10-01', 1, 5, 2, 6, 12),
-(12, 'ana', 'luz', 'valencia', 'cruz', 'ciudad credisa ', '2001-09-09', 1, 11, 6, 6, 12),
-(13, 'jaime ', 'antonio', 'gonzalez', 'ochoa', ' villa lourdes', '2001-10-15', 2, 13, 4, 6, 9),
-(14, 'alicia', 'nicole', 'castro', 'vega', 'campo verde', '1999-08-12', 1, 11, 7, 6, 9),
-(15, 'astrid', 'veraly', 'cuellar', 'jerez', 'colonia guadalupe ', '1996-05-12', 1, 2, 1, 6, 12),
-(16, 'juan', 'carlos', 'alvarado', 'alvarado', 'colonia jardines casa#5', '2001-01-13', 2, 12, 2, 6, 13),
-(17, 'marcos ', 'noe', 'mendez', 'pereira', 'colonia el milagro', '1999-12-12', 2, 3, 7, 6, 14),
-(18, 'martha', 'yanett', 'elias', 'perez', 'colonia abrego', '1998-12-12', 1, 14, 3, 6, 13),
-(19, 'valeria', 'alexandra', 'otero', 'perez', 'colonia los alpes', '2000-08-09', 1, 2, 1, 6, 13),
-(22, 'DANIEL ', '', 'MANZANO', 'C', '', '1993-09-03', 2, 1, 7, 6, 12),
-(55, 'LUCHO', '', 'GONZALEZ', '', '', '1998-09-10', 2, 13, 6, 6, 12),
-(221, 'DSJK', '', 'SASD', '', '', '0000-00-00', 1, 13, 12, 2, 3),
-(232, 'PRUEBA', '', 'GONZALEZ', '', '', '1998-09-10', 2, 12, 3, 5, 10),
-(502, 'ALE', 'C1', 'DSA', '', '', '1998-09-10', 2, 3, 4, 2, 4),
-(1000, 'DAVID', 'DSA', 'LOPEZ', '', '', '1998-09-10', 2, 7, 7, 4, 7),
-(3443, 'PRUEBA', 'FDS', 'CS', '', '', '1998-09-10', 2, 13, 3, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -76,22 +51,22 @@ INSERT INTO `alumno` (`CARNET`, `PRIMER_NOMBRE`, `SEGUNDO_NOMBRE`, `PRIMER_APELL
 
 CREATE TABLE `asignatura` (
   `CODIGO_ASIGNATURA` int(11) NOT NULL,
-  `NOMBRE ASIGNATURA` varchar(45) DEFAULT NULL
+  `NOMBRE_ASIGNATURA` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `asignatura`
 --
 
-INSERT INTO `asignatura` (`CODIGO_ASIGNATURA`, `NOMBRE ASIGNATURA`) VALUES
-(1, 'matemáticas '),
-(2, 'Lenguaje y literatura '),
-(3, 'Ciencias naturales '),
-(4, 'Estudios sociales '),
-(5, 'Ingles '),
-(6, 'biología '),
-(7, 'química '),
-(8, 'física ');
+INSERT INTO `asignatura` (`CODIGO_ASIGNATURA`, `NOMBRE_ASIGNATURA`) VALUES
+(1, 'MATEMÃTICAS'),
+(2, 'Lenguaje y literatura'),
+(3, 'Ciencias naturales'),
+(4, 'Estudios sociales'),
+(5, 'Ingles'),
+(6, 'BIOLOGÃA'),
+(7, 'QUÃMICA'),
+(8, 'FÃSICA');
 
 -- --------------------------------------------------------
 
@@ -104,21 +79,17 @@ CREATE TABLE `autor` (
   `NOMBRE_AUTOR` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `autor`
+-- Estructura de tabla para la tabla `conf`
 --
 
-INSERT INTO `autor` (`CODIGO_AUTOR`, `NOMBRE_AUTOR`) VALUES
-(1, 'ROBERTO BOLAÃ±OS '),
-(2, 'Victor Amela '),
-(3, 'Vladimir Nabokov'),
-(4, 'Charles Dickens'),
-(5, 'Rosalino vazquez '),
-(6, 'Paul Tippens'),
-(7, 'Alejandro Dumas '),
-(8, 'Aristoteles '),
-(9, 'Paulo Coelho '),
-(10, 'Isabel Allende  ');
+CREATE TABLE `conf` (
+  `id_conf` int(11) NOT NULL,
+  `nom_iinstitucion` varchar(200) DEFAULT NULL,
+  `logo` blob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -136,20 +107,20 @@ CREATE TABLE `departamento` (
 --
 
 INSERT INTO `departamento` (`ID_DEPARTAMENTO`, `NOMBRE_DEPARTAMENTO`) VALUES
-(1, 'Ahuachapán'),
-(2, 'Santa Ana '),
-(3, 'Sonsonate '),
-(4, 'Chalatenango'),
-(5, 'La Libertad'),
-(6, 'San Salvador'),
-(7, 'Cuscatlán '),
-(8, 'La Paz'),
-(9, 'Cabañas'),
-(10, 'San Vicente'),
-(11, 'Usulután'),
-(12, 'San Miguel'),
-(13, 'Morazán'),
-(14, 'La Unión ');
+(1, 'AHUACHAPAN'),
+(2, 'CABAÑAS'),
+(3, 'CHALATENANGO'),
+(4, 'CUSCATLAN'),
+(5, 'LA LIBERTAD'),
+(6, 'LA PAZ'),
+(7, 'LA UNION'),
+(8, 'MORAZAN'),
+(9, 'SAN MIGUEL.'),
+(10, 'SAN SALVADOR'),
+(11, 'SANTA ANA'),
+(12, 'SAN VICENTE'),
+(13, 'SONSONATE'),
+(14, 'USULUTAN');
 
 -- --------------------------------------------------------
 
@@ -162,19 +133,6 @@ CREATE TABLE `editorial` (
   `NOMBRE_EDITORIAL` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `editorial`
---
-
-INSERT INTO `editorial` (`CODIGO_EDITORIAL`, `NOMBRE_EDITORIAL`) VALUES
-(1, 'SANTILLANA'),
-(2, 'EDICIONES '),
-(3, 'ESE'),
-(4, 'PATRIA'),
-(6, 'ADDISON-WESLEY'),
-(7, 'LA CEIBA'),
-(8, 'ANAYA');
-
 -- --------------------------------------------------------
 
 --
@@ -185,21 +143,9 @@ CREATE TABLE `ejemplar_libro` (
   `ID_EJEMPLAR` int(11) NOT NULL,
   `CODIGO_EJEMPLAR` int(11) DEFAULT NULL,
   `ID_LIBRO` int(11) DEFAULT NULL,
-  `TIPO_CUBIERTA` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `DESCRIPCION_FISICA` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `DESCRIPCION_FISICA` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT '0' COMMENT '0: Disponible\r\n1: Prestado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `ejemplar_libro`
---
-
-INSERT INTO `ejemplar_libro` (`ID_EJEMPLAR`, `CODIGO_EJEMPLAR`, `ID_LIBRO`, `TIPO_CUBIERTA`, `DESCRIPCION_FISICA`) VALUES
-(1, 1, 1, 'pasta dura', 'edicion 2004'),
-(2, 2, 1, 'pasta blanda', '2ª edición, año 2003, paginas 168'),
-(3, 3, 3, 'pasta dura', 'año 2000, 3ª edición, paginas 301'),
-(4, 4, 4, 'pasta dura', '6ª edición, año 2008, paginas 195'),
-(5, 5, 5, 'pasta blanda ', '1ª edición, año 2005, paginas 455'),
-(6, 6, 6, 'pasta dura', '2ª edición, año 2000, paginas 130');
 
 -- --------------------------------------------------------
 
@@ -208,55 +154,15 @@ INSERT INTO `ejemplar_libro` (`ID_EJEMPLAR`, `CODIGO_EJEMPLAR`, `ID_LIBRO`, `TIP
 --
 
 CREATE TABLE `empleado` (
-  `CODIGO_EMPLEADO` int(11) NOT NULL,
+  `CODIGO_EMPLEADO` int(11) NOT NULL DEFAULT '0',
   `NOMBRE_EMPLEADO` varchar(45) DEFAULT NULL,
   `APELLIDO_EMPLEADO` varchar(45) DEFAULT NULL,
   `USUARIO_CODIGO_USUARIO` int(11) NOT NULL,
-  `MUNICIPIO_ID_MUNICIPIO` int(11) NOT NULL
+  `MUNICIPIO_ID_MUNICIPIO` int(11) NOT NULL,
+  `DEPARTAMENTO_ID_DEPARTAMENTO` int(11) DEFAULT NULL,
+  `GENERO` char(2) DEFAULT NULL,
+  `ID_PROFESION` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `empleado`
---
-
-INSERT INTO `empleado` (`CODIGO_EMPLEADO`, `NOMBRE_EMPLEADO`, `APELLIDO_EMPLEADO`, `USUARIO_CODIGO_USUARIO`, `MUNICIPIO_ID_MUNICIPIO`) VALUES
-(1, 'carmen rosibel ', 'mejía ', 101, 12);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `encargado_alumno`
---
-
-CREATE TABLE `encargado_alumno` (
-  `CODIGO_ENCARGADO` int(11) NOT NULL,
-  `NOMBRES_ENCARGADO` varchar(45) DEFAULT NULL,
-  `APELLIDOS_ENCARGADO` varchar(45) DEFAULT NULL,
-  `FECHA` date NOT NULL,
-  `DEPARTAMENTO_ID_DEPARTAMENTO` int(11) NOT NULL,
-  `DIRECCION` varchar(45) DEFAULT NULL,
-  `TELEFONO` int(8) DEFAULT NULL,
-  `PARENTESCO_IDPARENTESCO` int(11) DEFAULT NULL,
-  `MUNICIPIO_ID_MUNICIPIO` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `encargado_alumno`
---
-
-INSERT INTO `encargado_alumno` (`CODIGO_ENCARGADO`, `NOMBRES_ENCARGADO`, `APELLIDOS_ENCARGADO`, `FECHA`, `DEPARTAMENTO_ID_DEPARTAMENTO`, `DIRECCION`, `TELEFONO`, `PARENTESCO_IDPARENTESCO`, `MUNICIPIO_ID_MUNICIPIO`) VALUES
-(1, 'JOSE JEREMIAS ', 'OTERO PEREZ', '1967-11-20', 6, 'COLONIA REPARTO LAS ARBOLEDAS', 61627080, 2, 12),
-(2, 'MARIA ANTONIA ', 'CRUZ CHAVEZ', '1970-10-10', 6, 'COLONIA LOS ÃNGELES ', 71234576, 1, 5),
-(3, 'DAVID ANTONIO', 'PEREZ RAMOS', '1980-12-01', 6, 'COLONIA LAS ARBOLEDAS ', 75125468, 5, 12),
-(4, 'JUAN ALBERTO', 'VALENCIA OCHOA', '1968-01-01', 6, 'COLONIA LOS ALPES ', 78094576, 4, 13),
-(5, 'BERTA JAZMIN', 'URIAS ZAVALA', '0000-00-00', 6, 'COLONIA CAMPO VERDE', 78052341, 6, 9),
-(6, 'ANA MARÃA ', 'LOPEZ DUARTE', '1975-10-01', 6, 'COLONIA PALO NEGRO', 76547612, 7, 4),
-(7, 'JAVIER NOE ', 'CASTRO ESPINOZA ', '1982-10-01', 6, 'COLONIA SANTA TERESA ', 61345679, 2, 14),
-(11, 'CARLOS ARMANDO', 'MORÃ¡N MOLINA', '1950-08-20', 1, 'POR AHÃ­', 22212212, 3, 1),
-(12, 'DANGER', 'PEREZ', '1998-09-10', 4, 'SD', 22232333, 4, 8),
-(13, 'DAMIAN', 'ALBERTO', '1996-10-22', 6, '', 22220032, 3, 12),
-(14, 'RONALDO', 'NAZARIO DA LIMA', '1996-12-05', 4, '', 23333333, 5, 7),
-(15, 'CSDC', 'VSDV', '1998-09-10', 3, '', 21223232, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -274,21 +180,20 @@ CREATE TABLE `grado` (
 --
 
 INSERT INTO `grado` (`CODIGO_GRADO`, `DESCRIPCION_GRADO`) VALUES
-(1, 'kinder '),
-(2, 'preparatoria '),
-(3, '1Â°'),
-(4, '2Â°'),
-(5, '3Â°'),
-(6, '4Â°'),
-(7, '5Â°'),
-(8, '6Â°'),
-(9, '7Â°'),
-(10, '8Â°'),
-(11, '9Â°'),
-(12, '1Â° AÃ±O DE BACHILLER '),
-(13, '2Â° AÃ±O DE BACHILLER'),
-(14, '3Â° AÃ±O DE BACHILLER '),
-(15, 'BACHILLER NOCTURNO');
+(1, 'kinder'),
+(2, 'preparatoria'),
+(3, '1ª'),
+(4, '2ª'),
+(5, '3ª'),
+(6, '4ª'),
+(7, '5ª'),
+(8, '6ª'),
+(9, '7ª'),
+(10, '8ª'),
+(11, '9ª'),
+(12, '1ª año de bachiller'),
+(13, '2ª año de bachiller'),
+(14, '3ª año de bachiller');
 
 -- --------------------------------------------------------
 
@@ -297,10 +202,10 @@ INSERT INTO `grado` (`CODIGO_GRADO`, `DESCRIPCION_GRADO`) VALUES
 --
 
 CREATE TABLE `libro` (
-  `CODIGO_LIBRO` int(11) NOT NULL,
-  `TITULO_LIBRO` varchar(45) DEFAULT NULL,
+  `CODIGO_LIBRO` int(11) NOT NULL DEFAULT '0',
+  `TITULO LIBRO` varchar(45) DEFAULT NULL,
   `UBICACION` varchar(45) DEFAULT NULL,
-  `CANTIDAD_EN_EXISTENCIA` int(11) DEFAULT NULL,
+  `CANTIDAD EN EXISTENCIA` int(11) DEFAULT NULL,
   `AUTOR_CODIGO_AUTOR` int(11) DEFAULT NULL,
   `EDITORIAL_CODIGO_EDITORIAL` int(11) NOT NULL,
   `ASIGNATURA_CODIGO_ASIGNATURA` int(11) NOT NULL,
@@ -308,17 +213,18 @@ CREATE TABLE `libro` (
   `TIPO_LIBRO` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `libro`
+-- Estructura de tabla para la tabla `menu`
 --
 
-INSERT INTO `libro` (`CODIGO_LIBRO`, `TITULO_LIBRO`, `UBICACION`, `CANTIDAD_EN_EXISTENCIA`, `AUTOR_CODIGO_AUTOR`, `EDITORIAL_CODIGO_EDITORIAL`, `ASIGNATURA_CODIGO_ASIGNATURA`, `EJEMPLAR_LIBRO_ID_EJEMPLAR`, `TIPO_LIBRO`) VALUES
-(1, 'matemáticas  ', 'modulo 2', 4, 2, 1, 1, 1, NULL),
-(2, 'física ', 'modulo 4', 6, 4, 1, 8, 2, NULL),
-(3, 'english', 'modulo 1', 10, 5, 6, 5, 5, NULL),
-(4, 'biologia', 'modulo 3', 7, 9, 7, 6, 6, NULL),
-(5, 'literatura ', 'modulo 6', 9, 4, 4, 2, 3, NULL),
-(6, 'sociales y cívica ', 'modulo 2', 9, 8, 8, 4, 3, NULL);
+CREATE TABLE `menu` (
+  `id_menu` int(11) NOT NULL,
+  `nombre_item` varchar(50) DEFAULT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  `nivel_acceso` int(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -337,28 +243,288 @@ CREATE TABLE `municipio` (
 --
 
 INSERT INTO `municipio` (`ID_MUNICIPIO`, `NOMBRE_MUNICIPIO`, `DEPARTAMENTO_ID_DEPARTAMENTO`) VALUES
-(1, 'turin', 1),
-(2, 'Apaneca', 1),
-(3, 'Metapan', 2),
-(4, 'El congo', 2),
-(5, 'Armenia', 3),
-(6, 'Izalco', 3),
-(7, ' la palma', 4),
-(8, 'Comalapa', 4),
-(9, 'Colon', 5),
-(10, 'santa tecla', 5),
-(11, 'Apopa', 6),
-(12, 'Soyapango', 6),
-(13, 'San marcos ', 6),
-(14, 'San martin', 6),
-(15, 'Candelaria', 7),
-(16, 'Olocuilta', 8),
-(17, 'Ilobasco', 9),
-(18, 'Verapaz', 10),
-(19, 'Berlin', 11),
-(20, 'Chinameca', 12),
-(21, 'Corinto', 13),
-(22, 'Lislique', 14);
+(1, 'AHUACHAPAN', 1),
+(2, 'ATIQUIZAYA', 1),
+(3, 'SAN FRANCISCO MENEND', 1),
+(4, 'TACUBA', 1),
+(5, 'CONCEPCION DE ATACO', 1),
+(6, 'JUJUTLA', 1),
+(7, 'GUAYMANGO', 1),
+(8, 'APANECA', 1),
+(9, 'SAN PEDRO PUXTLA', 1),
+(10, 'SAN LORENZO', 1),
+(11, 'TURIN', 1),
+(12, 'EL REFUGIO', 1),
+(13, 'SENSUNTEPEQUE', 2),
+(14, 'ILOBASCO', 2),
+(15, 'VICTORIA', 2),
+(16, 'SAN ISIDRO', 2),
+(17, 'JUTIAPA', 2),
+(18, 'TEJUTEPEQUE', 2),
+(19, 'DOLORES', 2),
+(20, 'CINQUERA', 2),
+(21, 'GUACOTECTI', 2),
+(22, 'CHALATENANGO', 3),
+(23, 'NUEVA CONCEPCION', 3),
+(24, 'LA PALMA', 3),
+(25, 'TEJUTLA', 3),
+(26, 'LA REINA', 3),
+(27, 'ARCATAO', 3),
+(28, 'SAN IGNACIO', 3),
+(29, 'DULCE NOMBRE DE MARI', 3),
+(30, 'CITALA', 3),
+(31, 'AGUA CALIENTE', 3),
+(32, 'CONCEPCION QUEZALTEP', 3),
+(33, 'NUEVA TRINIDAD', 3),
+(34, 'LAS VUELTAS', 3),
+(35, 'COMALAPA', 3),
+(36, 'SAN RAFAEL', 3),
+(37, 'SAN JOSE LAS FLORES', 3),
+(38, 'OJOS DE AGUA', 3),
+(39, 'NOMBRE DE JESUS', 3),
+(40, 'POTONICO', 3),
+(41, 'SAN FRANCISCO MORAZA', 3),
+(42, 'SANTA RITA', 3),
+(43, 'LA LAGUNA', 3),
+(44, 'SAN ISIDRO LABRADOR', 3),
+(45, 'SAN ANTONIO DE LA CR', 3),
+(46, 'EL PARAISO', 3),
+(47, 'SAN MIGUEL DE MERCED', 3),
+(48, 'SAN LUIS DEL CARMEN', 3),
+(49, 'SAN JOSE CANCASQUE', 3),
+(50, 'SAN ANTONIO LOS RANC', 3),
+(51, 'EL CARRIZAL', 3),
+(52, 'SAN FERNANDO', 3),
+(53, 'AZACUALPA', 3),
+(54, 'SAN FRANCISCO LEMPA', 3),
+(55, 'COJUTEPEQUE', 4),
+(56, 'SUCHITOTO', 4),
+(57, 'SAN PEDRO PERULAPAN', 4),
+(58, 'SAN JOSE GUAYABAL', 4),
+(59, 'TENANCINGO', 4),
+(60, 'SAN RAFAEL CEDROS', 4),
+(61, 'CANDELARIA', 4),
+(62, 'EL CARMEN', 4),
+(63, 'MONTE SAN JUAN', 4),
+(64, 'SAN CRISTOBLA', 4),
+(65, 'SANTA CRUZ MICHAPA', 4),
+(66, 'SAN BARTOLOME PERULA', 4),
+(67, 'SAN RAMON', 4),
+(68, 'EL ROSARIO', 4),
+(69, 'ORATORIO DE CONCEPCI', 4),
+(70, 'SANTA CRUZ ANALQUITO', 4),
+(71, 'SANTA TECLA', 5),
+(72, 'QUEZALTEPEQUE', 5),
+(73, 'CIUDAD ARCE', 5),
+(74, 'SAN JUAN OPICO', 5),
+(75, 'COLON', 5),
+(76, 'PUERTO DE LA LIBERTA', 5),
+(77, 'ANTIGUO CUSCATLAN', 5),
+(78, 'COMASAGUA', 5),
+(79, 'SAN PABLO TACACHICO', 5),
+(80, 'JAYAQUE', 5),
+(81, 'HUIZUCAR', 5),
+(82, 'TEPECOYO', 5),
+(83, 'TEOTEPEQUE', 5),
+(84, 'CHILTIUPAN', 5),
+(85, 'NUEVO CUSCATLAN', 5),
+(86, 'TAMANIQUE', 5),
+(87, 'SACACOYO', 5),
+(88, 'SAN JOSE VILLA NUEVA', 5),
+(89, 'ZARAGOZA', 5),
+(90, 'TALNIQUE', 5),
+(91, 'SAN MATIAS', 5),
+(92, 'JICALAPA', 5),
+(93, 'ZACATECOLUCA', 6),
+(94, 'SANTIAGO NONUALCO', 6),
+(95, 'SAN JUAN NONUALCO', 6),
+(96, 'SAN PEDRO MASAHUAT', 6),
+(97, 'OLOCUILTA', 6),
+(98, 'SAN PEDRO NONUALCO', 6),
+(99, 'SAN FRANCISCO CHINAM', 6),
+(100, 'SAN JUAN TALPA', 6),
+(101, 'EL ROSARIO', 6),
+(102, 'SAN RAFAEL OBRAJUELO', 6),
+(103, 'SANTA MARIA OSTUMA', 6),
+(104, 'SAN LUIS TALPA', 6),
+(105, 'SAN ANTONIO MASAHUAT', 6),
+(106, 'SAN MIGUEL TEPEZONTE', 6),
+(107, 'SAN JUAN TEPEZONTES', 6),
+(108, 'TAPALHUACA', 6),
+(109, 'CUYULTITAN', 6),
+(110, 'PARAISO DE OSORIO', 6),
+(111, 'SAN EMIGDIO', 6),
+(112, 'JERUSALEN', 6),
+(113, 'MERCEDES LA CEIBA', 6),
+(114, 'SAN LUIS LA HERRADUR', 6),
+(115, 'LA UNION', 7),
+(116, 'SANTA ROSA DE LIMA', 7),
+(117, 'PASAQUINA', 7),
+(118, 'SAN ALEJO', 7),
+(119, 'ANAMOROS', 7),
+(120, 'EL CARMEN', 7),
+(121, 'CONCHAGUA', 7),
+(122, 'EL SAUCE', 7),
+(123, 'LISLIQUE', 7),
+(124, 'YUCUAYQUIN', 7),
+(125, 'NUEVA ESPARTA', 7),
+(126, 'POLOROS', 7),
+(127, 'BOLIVAR', 7),
+(128, 'CONCEPCION DE ORIENT', 7),
+(129, 'INTIPUCA', 7),
+(130, 'SAN JOSE LA FUENTE', 7),
+(131, 'YAYANTIQUE', 7),
+(132, 'MEANGUERA DEL GOLFO', 7),
+(133, 'SAN FRANCISCO GOTERA', 8),
+(134, 'JOCORO', 8),
+(135, 'CORINTO', 8),
+(136, 'SOCIEDAD', 8),
+(137, 'CACAOPERA', 8),
+(138, 'GUATAJIAG?A', 8),
+(139, 'EL DIVISADERO', 8),
+(140, 'JOCOAITIQUE', 8),
+(141, 'OSICALA', 8),
+(142, 'CHILANGA', 8),
+(143, 'MEANGUERA', 8),
+(144, 'TOROLA', 8),
+(145, 'SAN SIMON', 8),
+(146, 'DELICIAS DE CONCEPCI', 8),
+(147, 'JOATECA', 8),
+(148, 'ARAMBALA', 8),
+(149, 'LOLOTIQUILLO', 8),
+(150, 'YAMABAL', 8),
+(151, 'YOLOAIQUIN', 8),
+(152, 'SAN CARLOS', 8),
+(153, 'EL ROSARIO', 8),
+(154, 'PERQUIN', 8),
+(155, 'SENSEMBRA', 8),
+(156, 'GUALOCOCTI', 8),
+(157, 'SAN FERNANDO', 8),
+(158, 'SAN ISIDRO', 8),
+(159, 'SAN MIGUEL', 9),
+(160, 'CHINAMECA', 9),
+(161, 'EL TRANSITO', 9),
+(162, 'CIUDAD BARRIOS', 9),
+(163, 'CHIRILAGUA', 9),
+(164, 'SESORI', 9),
+(165, 'SAN RAFAEL ORIENTE', 9),
+(166, 'MONCAGUA', 9),
+(167, 'LOLOTIQUE', 9),
+(168, 'SAN JORGE', 9),
+(169, 'CHAPELTIQUE', 9),
+(170, 'SAN GERARDO', 9),
+(171, 'CAROLINA', 9),
+(172, 'QUELEPA', 9),
+(173, 'SAN LUIS DE LA REINA', 9),
+(174, 'NUEVO EDEN DE SAN JU', 9),
+(175, 'NUEVA GUADALUPE', 9),
+(176, 'ULUAZAPA', 9),
+(177, 'COMACARAN', 9),
+(178, 'SAN ANTONIO DEL MOSC', 9),
+(179, 'SAN SALVADOR', 10),
+(180, 'CIUDAD DELGADO', 10),
+(181, 'MEJICANOS', 10),
+(182, 'SOYAPANGO', 10),
+(183, 'CUSCATANCINGO', 10),
+(184, 'SAN MARCOS', 10),
+(185, 'ILOPANGO', 10),
+(186, 'NEJAPA', 10),
+(187, 'APOPA', 10),
+(188, 'SAN MARTIN', 10),
+(189, 'PANCHIMALCO', 10),
+(190, 'AGUILARES', 10),
+(191, 'TONACATEPEQUE', 10),
+(192, 'SANTO TOMAS', 10),
+(193, 'SANTIAGO TEXACUANGOS', 10),
+(194, 'EL PAISNAL', 10),
+(195, 'GUAZAPA', 10),
+(196, 'AYUTUXTEPEQUE', 10),
+(197, 'ROSARIO DE MORA', 10),
+(198, 'SANTA ANA', 11),
+(199, 'CHALCHUAPA', 11),
+(200, 'METAPAN', 11),
+(201, 'COATEPEQUE', 11),
+(202, 'EL CONGO', 11),
+(203, 'TEXISTEPEQUE', 11),
+(204, 'CANDELARIA LA FRONTE', 11),
+(205, 'SAN SEBASTIAN SALITR', 11),
+(206, 'SANTA ROSA GUACHIPIL', 11),
+(207, 'SANTIAGO DE LA FRONT', 11),
+(208, 'EL PORVENIR', 11),
+(209, 'MASAHUAT', 11),
+(210, 'SAN ANTONIO PAJONAL', 11),
+(211, 'SAN VICENTE', 12),
+(212, 'TECOLUCA', 12),
+(213, 'SAN SEBASTIAN', 12),
+(214, 'APASTEPEQUE', 12),
+(215, 'SAN ESTEBAN CATARINA', 12),
+(216, 'SAN ILDEFONSO', 12),
+(217, 'SANTA CLARA', 12),
+(218, 'SAN LORENZO', 12),
+(219, 'VERAPAZ', 12),
+(220, 'GUADALUPE', 12),
+(221, 'SANTO DOMINGO', 12),
+(222, 'SAN CAYETANO ISTEPEQ', 12),
+(223, 'NUEVO TEPETITAN', 12),
+(224, 'SONSONATE', 13),
+(225, 'IZALCO', 13),
+(226, 'ACAJUTLA', 13),
+(227, 'ARMENIA', 13),
+(228, 'NAHUIZALCO', 13),
+(229, 'JUAYUA', 13),
+(230, 'SAN JULIAN', 13),
+(231, 'SONZACATE', 13),
+(232, 'SAN ANTONIO DEL MONT', 13),
+(233, 'NAHULINGO', 13),
+(234, 'CUISNAHUAT', 13),
+(235, 'SANTA CATARINA MASAH', 13),
+(236, 'CALUCO', 13),
+(237, 'SANTA ISABEL ISHUATA', 13),
+(238, 'SALCOATITAN', 13),
+(239, 'SANTO DOMINGO DE GUZ', 13),
+(240, 'USULUTAN', 14),
+(241, 'JIQUILISCO', 14),
+(242, 'BERLIN', 14),
+(243, 'SANTIAGO DE MARIA', 14),
+(244, 'JUCUAPA', 14),
+(245, 'SANTA ELENA', 14),
+(246, 'JUCUARAN', 14),
+(247, 'SAN AGUSTIN', 14),
+(248, 'OZATLAN', 14),
+(249, 'ESTANZUELAS', 14),
+(250, 'MERCEDES UMA?A', 14),
+(251, 'ALEGRIA', 14),
+(252, 'CONCEPCION BATRES', 14),
+(253, 'SAN FRANCISCO JAVIER', 14),
+(254, 'PUERTO EL TRIUNFO', 14),
+(255, 'TECAPAN', 14),
+(256, 'SAN DIONISIO', 14),
+(257, 'EREGUAYQUIN', 14),
+(258, 'SANTA MARIA', 14),
+(259, 'NUEVA GRANADA', 14),
+(260, 'EL TRIUNFO', 14),
+(261, 'SAN BUENAVENTURA', 14),
+(262, 'CALIFORNIA', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `nivel_acceso`
+--
+
+CREATE TABLE `nivel_acceso` (
+  `id_nivel_acceso` int(11) NOT NULL,
+  `nombre_nivel` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `nivel_acceso`
+--
+
+INSERT INTO `nivel_acceso` (`id_nivel_acceso`, `nombre_nivel`) VALUES
+(1, 'EDITOR DE CONTENIDO'),
+(2, 'ADMINISTRADOR'),
+(3, 'SUPER USUARIO');
 
 -- --------------------------------------------------------
 
@@ -400,17 +566,16 @@ CREATE TABLE `prestamo` (
   `EMPLEADO_CODIGO_EMPLEADO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `prestamo`
+-- Estructura de tabla para la tabla `profesion`
 --
 
-INSERT INTO `prestamo` (`ID_PRESTAMO`, `ALUMNO_CARNET`, `FECHA_PRESTAMO`, `FECHA_DEVOLUCION`, `FECHA_DEVUELTO`, `LIBRO_CODIGO_LIBRO`, `EMPLEADO_CODIGO_EMPLEADO`) VALUES
-(1, 10, '2016-08-20', '2016-08-23', NULL, 2, 1),
-(2, 16, '2016-08-19', '2016-08-22', NULL, 2, 1),
-(3, 13, '2016-08-18', '2016-08-21', NULL, 4, 1),
-(4, 15, '2016-08-17', '2016-08-20', '2016-08-21', 5, 1),
-(5, 16, '2016-08-01', '2016-08-04', '2016-08-03', 5, 1),
-(6, 19, '2016-07-19', '2016-07-22', NULL, 6, 1);
+CREATE TABLE `profesion` (
+  `ID_PROFESION` int(11) NOT NULL,
+  `NOMBRE_PROFESION` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -421,16 +586,18 @@ INSERT INTO `prestamo` (`ID_PRESTAMO`, `ALUMNO_CARNET`, `FECHA_PRESTAMO`, `FECHA
 CREATE TABLE `rol` (
   `ID_ROL` int(11) NOT NULL,
   `NOMBRE_ROL` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `DESCRIPCION_ROL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `DESCRIPCION_ROL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `NIVEL_ACCESSO` int(3) DEFAULT NULL COMMENT 'Los niveles de acceso serán 3:\r\n1: Publicador de contenido\r\n2: Administrador\r\n3: SuperUsuario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`ID_ROL`, `NOMBRE_ROL`, `DESCRIPCION_ROL`) VALUES
-(1, 'Administrador', 'La ostia'),
-(3, 'SecretarÃ­a', 'Acceso a personal administrativo');
+INSERT INTO `rol` (`ID_ROL`, `NOMBRE_ROL`, `DESCRIPCION_ROL`, `NIVEL_ACCESSO`) VALUES
+(1, 'ADMINISTRADOR', 'ACCESO A PERSONAL ADMINISTRATIVO', 2),
+(3, 'SECRETARÃ­A', 'ACCESO A PERSONAL ', 1),
+(4, 'ALUMNO', 'ACCESO A ALUMNOS', NULL);
 
 -- --------------------------------------------------------
 
@@ -443,6 +610,39 @@ CREATE TABLE `tipo_libro` (
   `NOMBRE_TIPO_LIBRO` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tipo_libro`
+--
+
+INSERT INTO `tipo_libro` (`ID_TIPO_LIBRO`, `NOMBRE_TIPO_LIBRO`) VALUES
+(1, 'OBRA'),
+(2, 'LIBRO DE TEXTO Ã‰'),
+(3, 'AÃ Ã‰');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_libro_conf`
+--
+
+CREATE TABLE `tipo_libro_conf` (
+  `id_tipo_libro` int(11) DEFAULT NULL,
+  `id_conf` int(11) DEFAULT NULL,
+  `dias` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ubicacion`
+--
+
+CREATE TABLE `ubicacion` (
+  `id_ubicacion` int(11) NOT NULL,
+  `estante` int(11) DEFAULT NULL,
+  `fila` char(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -450,7 +650,7 @@ CREATE TABLE `tipo_libro` (
 --
 
 CREATE TABLE `usuario` (
-  `CODIGO_USUARIO` int(11) NOT NULL,
+  `CODIGO_USUARIO` int(11) NOT NULL DEFAULT '0',
   `NOMBRE_USUARIO` varchar(45) DEFAULT NULL,
   `CONTRA` varchar(45) NOT NULL,
   `ROL_ID_ROL` int(11) NOT NULL
@@ -472,10 +672,11 @@ INSERT INTO `usuario` (`CODIGO_USUARIO`, `NOMBRE_USUARIO`, `CONTRA`, `ROL_ID_ROL
 --
 ALTER TABLE `alumno`
   ADD PRIMARY KEY (`CARNET`),
-  ADD KEY `fk_ALUMNO_PADRES_ALUMNOS1_idx` (`ENCARGADO_ALUMNOS_CODIGO_ENCARGADO`),
   ADD KEY `fk_GRADO_CODIGO_GRADO_idx` (`GRADO_CODIGO_GRADO`),
   ADD KEY `fk_ALUMNO_MUNICIPIO1_idx` (`MUNICIPIO_ID_MUNICIPIO`),
-  ADD KEY `DEPARTAMENTO_ID_DEPARTAMENTO` (`DEPARTAMENTO_ID_DEPARTAMENTO`);
+  ADD KEY `DEPARTAMENTO_ID_DEPARTAMENTO` (`DEPARTAMENTO_ID_DEPARTAMENTO`),
+  ADD KEY `ID_PARENTESCO` (`ID_PARENTESCO`),
+  ADD KEY `ID_PROFESION` (`ID_PROFESION`);
 
 --
 -- Indices de la tabla `asignatura`
@@ -488,6 +689,12 @@ ALTER TABLE `asignatura`
 --
 ALTER TABLE `autor`
   ADD PRIMARY KEY (`CODIGO_AUTOR`);
+
+--
+-- Indices de la tabla `conf`
+--
+ALTER TABLE `conf`
+  ADD PRIMARY KEY (`id_conf`);
 
 --
 -- Indices de la tabla `departamento`
@@ -505,7 +712,8 @@ ALTER TABLE `editorial`
 -- Indices de la tabla `ejemplar_libro`
 --
 ALTER TABLE `ejemplar_libro`
-  ADD PRIMARY KEY (`ID_EJEMPLAR`);
+  ADD PRIMARY KEY (`ID_EJEMPLAR`),
+  ADD UNIQUE KEY `CODIGO_EJEMPLAR` (`CODIGO_EJEMPLAR`);
 
 --
 -- Indices de la tabla `empleado`
@@ -514,16 +722,8 @@ ALTER TABLE `empleado`
   ADD PRIMARY KEY (`CODIGO_EMPLEADO`,`USUARIO_CODIGO_USUARIO`,`MUNICIPIO_ID_MUNICIPIO`),
   ADD KEY `CODIGO_USUARIO_idx` (`USUARIO_CODIGO_USUARIO`),
   ADD KEY `fk_EMPLEADO_MUNICIPIO1_idx` (`MUNICIPIO_ID_MUNICIPIO`),
-  ADD KEY `CODIGO_EMPLEADO` (`CODIGO_EMPLEADO`);
-
---
--- Indices de la tabla `encargado_alumno`
---
-ALTER TABLE `encargado_alumno`
-  ADD PRIMARY KEY (`CODIGO_ENCARGADO`),
-  ADD KEY `IdParentesco_idx` (`PARENTESCO_IDPARENTESCO`),
-  ADD KEY `fk_ENCARGADO_ALUMNO_MUNICIPIO1_idx` (`MUNICIPIO_ID_MUNICIPIO`),
-  ADD KEY `DEPARTAMENTO_ID_DEPARTAMENTO` (`DEPARTAMENTO_ID_DEPARTAMENTO`);
+  ADD KEY `DEPARTAMENTO_ID_DEPARTAMENTO` (`DEPARTAMENTO_ID_DEPARTAMENTO`),
+  ADD KEY `ID_PROFESION` (`ID_PROFESION`);
 
 --
 -- Indices de la tabla `grado`
@@ -539,7 +739,14 @@ ALTER TABLE `libro`
   ADD KEY `fk_LIBROS_AUTOR_idx` (`AUTOR_CODIGO_AUTOR`),
   ADD KEY `fk_LIBROS_EDITORIAL1_idx` (`EDITORIAL_CODIGO_EDITORIAL`),
   ADD KEY `fk_LIBROS_ASIGNATURA1_idx` (`ASIGNATURA_CODIGO_ASIGNATURA`),
-  ADD KEY `fk_EJEMPLAR_LIBRO_ID_EJEMPLAR_idx` (`EJEMPLAR_LIBRO_ID_EJEMPLAR`);
+  ADD KEY `fk_EJEMPLAR_LIBRO_ID_EJEMPLAR_idx` (`EJEMPLAR_LIBRO_ID_EJEMPLAR`),
+  ADD KEY `tipo_libro_fk` (`TIPO_LIBRO`);
+
+--
+-- Indices de la tabla `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id_menu`);
 
 --
 -- Indices de la tabla `municipio`
@@ -547,6 +754,12 @@ ALTER TABLE `libro`
 ALTER TABLE `municipio`
   ADD PRIMARY KEY (`ID_MUNICIPIO`),
   ADD KEY `fk_MUNICIPIO_DEPARTAMENTO1_idx` (`DEPARTAMENTO_ID_DEPARTAMENTO`);
+
+--
+-- Indices de la tabla `nivel_acceso`
+--
+ALTER TABLE `nivel_acceso`
+  ADD PRIMARY KEY (`id_nivel_acceso`);
 
 --
 -- Indices de la tabla `parentesco`
@@ -564,6 +777,12 @@ ALTER TABLE `prestamo`
   ADD KEY `fk_PRESTAMO_EMPLEADOS1_idx` (`EMPLEADO_CODIGO_EMPLEADO`);
 
 --
+-- Indices de la tabla `profesion`
+--
+ALTER TABLE `profesion`
+  ADD PRIMARY KEY (`ID_PROFESION`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -574,6 +793,12 @@ ALTER TABLE `rol`
 --
 ALTER TABLE `tipo_libro`
   ADD PRIMARY KEY (`ID_TIPO_LIBRO`);
+
+--
+-- Indices de la tabla `ubicacion`
+--
+ALTER TABLE `ubicacion`
+  ADD PRIMARY KEY (`id_ubicacion`);
 
 --
 -- Indices de la tabla `usuario`
@@ -595,57 +820,57 @@ ALTER TABLE `asignatura`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `CODIGO_AUTOR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `CODIGO_AUTOR` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `conf`
+--
+ALTER TABLE `conf`
+  MODIFY `id_conf` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `editorial`
 --
 ALTER TABLE `editorial`
-  MODIFY `CODIGO_EDITORIAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT de la tabla `empleado`
---
-ALTER TABLE `empleado`
-  MODIFY `CODIGO_EMPLEADO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `encargado_alumno`
---
-ALTER TABLE `encargado_alumno`
-  MODIFY `CODIGO_ENCARGADO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `CODIGO_EDITORIAL` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `grado`
 --
 ALTER TABLE `grado`
-  MODIFY `CODIGO_GRADO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `CODIGO_GRADO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
--- AUTO_INCREMENT de la tabla `libro`
+-- AUTO_INCREMENT de la tabla `menu`
 --
-ALTER TABLE `libro`
-  MODIFY `CODIGO_LIBRO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `menu`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `nivel_acceso`
+--
+ALTER TABLE `nivel_acceso`
+  MODIFY `id_nivel_acceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `parentesco`
 --
 ALTER TABLE `parentesco`
   MODIFY `ID_PARENTESCO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT de la tabla `prestamo`
+-- AUTO_INCREMENT de la tabla `profesion`
 --
-ALTER TABLE `prestamo`
-  MODIFY `ID_PRESTAMO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `profesion`
+  MODIFY `ID_PROFESION` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `ID_ROL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_ROL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `tipo_libro`
 --
 ALTER TABLE `tipo_libro`
-  MODIFY `ID_TIPO_LIBRO` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_TIPO_LIBRO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT de la tabla `ubicacion`
 --
-ALTER TABLE `usuario`
-  MODIFY `CODIGO_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+ALTER TABLE `ubicacion`
+  MODIFY `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --
@@ -654,34 +879,29 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  ADD CONSTRAINT `alumno_fk` FOREIGN KEY (`ENCARGADO_ALUMNOS_CODIGO_ENCARGADO`) REFERENCES `encargado_alumno` (`CODIGO_ENCARGADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `alumno_fk1` FOREIGN KEY (`GRADO_CODIGO_GRADO`) REFERENCES `grado` (`CODIGO_GRADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `alumno_fk` FOREIGN KEY (`ID_PARENTESCO`) REFERENCES `parentesco` (`ID_PARENTESCO`),
+  ADD CONSTRAINT `alumno_fk1` FOREIGN KEY (`ID_PROFESION`) REFERENCES `profesion` (`ID_PROFESION`),
   ADD CONSTRAINT `fk_ALUMNO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_DEPARTAMENTO_ID` FOREIGN KEY (`DEPARTAMENTO_ID_DEPARTAMENTO`) REFERENCES `departamento` (`ID_DEPARTAMENTO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_DEPARTAMENTO_ID` FOREIGN KEY (`DEPARTAMENTO_ID_DEPARTAMENTO`) REFERENCES `departamento` (`ID_DEPARTAMENTO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `grado_fk` FOREIGN KEY (`GRADO_CODIGO_GRADO`) REFERENCES `grado` (`CODIGO_GRADO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  ADD CONSTRAINT `empleado_fk` FOREIGN KEY (`USUARIO_CODIGO_USUARIO`) REFERENCES `usuario` (`CODIGO_USUARIO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_EMPLEADO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `encargado_alumno`
---
-ALTER TABLE `encargado_alumno`
-  ADD CONSTRAINT `encargado_alumno_fk` FOREIGN KEY (`PARENTESCO_IDPARENTESCO`) REFERENCES `parentesco` (`ID_PARENTESCO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `encargado_alumno_fk_departamento` FOREIGN KEY (`DEPARTAMENTO_ID_DEPARTAMENTO`) REFERENCES `departamento` (`ID_DEPARTAMENTO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ENCARGADO_ALUMNO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `empleado_fk` FOREIGN KEY (`DEPARTAMENTO_ID_DEPARTAMENTO`) REFERENCES `departamento` (`ID_DEPARTAMENTO`),
+  ADD CONSTRAINT `empleado_fk1` FOREIGN KEY (`ID_PROFESION`) REFERENCES `profesion` (`ID_PROFESION`),
+  ADD CONSTRAINT `fk_EMPLEADO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_USUARIO_CODIGO_USUARIO` FOREIGN KEY (`USUARIO_CODIGO_USUARIO`) REFERENCES `usuario` (`CODIGO_USUARIO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `libro`
 --
 ALTER TABLE `libro`
+  ADD CONSTRAINT `editorial_fk` FOREIGN KEY (`EDITORIAL_CODIGO_EDITORIAL`) REFERENCES `editorial` (`CODIGO_EDITORIAL`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_EJEMPLAR_LIBRO_ID_EJEMPLAR_LIBRO` FOREIGN KEY (`EJEMPLAR_LIBRO_ID_EJEMPLAR`) REFERENCES `ejemplar_libro` (`ID_EJEMPLAR`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `libro_fk` FOREIGN KEY (`ASIGNATURA_CODIGO_ASIGNATURA`) REFERENCES `asignatura` (`CODIGO_ASIGNATURA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `libro_fk1` FOREIGN KEY (`AUTOR_CODIGO_AUTOR`) REFERENCES `autor` (`CODIGO_AUTOR`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `libro_fk2` FOREIGN KEY (`EDITORIAL_CODIGO_EDITORIAL`) REFERENCES `editorial` (`CODIGO_EDITORIAL`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tipo_libro_fk` FOREIGN KEY (`TIPO_LIBRO`) REFERENCES `tipo_libro` (`ID_TIPO_LIBRO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `municipio`
@@ -694,8 +914,8 @@ ALTER TABLE `municipio`
 --
 ALTER TABLE `prestamo`
   ADD CONSTRAINT `fk_ALUMNO_CARNET` FOREIGN KEY (`ALUMNO_CARNET`) REFERENCES `alumno` (`CARNET`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `prestamo_fk` FOREIGN KEY (`EMPLEADO_CODIGO_EMPLEADO`) REFERENCES `empleado` (`CODIGO_EMPLEADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `prestamo_fk1` FOREIGN KEY (`LIBRO_CODIGO_LIBRO`) REFERENCES `libro` (`CODIGO_LIBRO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_EMPLEADO_CODIGO_EMPLEADO` FOREIGN KEY (`EMPLEADO_CODIGO_EMPLEADO`) REFERENCES `empleado` (`CODIGO_EMPLEADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_LIBRO_CODIGO_LIBRO` FOREIGN KEY (`LIBRO_CODIGO_LIBRO`) REFERENCES `libro` (`CODIGO_LIBRO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuario`

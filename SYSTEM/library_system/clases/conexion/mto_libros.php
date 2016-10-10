@@ -18,14 +18,14 @@ class mto_libros extends clDML
     public function guardar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro)
     {
         $conn = new clDML();
-        $query = "INSERT INTO LIBRO (CODIGO_LIBRO, TITULO_LIBRO, UBICACION, CANTIDAD_EN_EXISTENCIA, AUTOR_CODIGO_AUTOR, EDITORIAL_CODIGO_EDITORIAL, ASIGNATURA_CODIGO_ASIGNATURA, EJEMPLAR_LIBRO_ID_EJEMPLAR, TIPO_LIBRO) VALUES (null,'".$titulo."','".$ubicacion."','".$cantidad."','".$autor."','".$editorial."','".$asignatura."','".$tipo_libro."');";
+        $query = "INSERT INTO LIBRO (CODIGO_LIBRO, TITULO_LIBRO, UBICACION, CANTIDAD_EN_EXISTENCIA, AUTOR_CODIGO_AUTOR, EDITORIAL_CODIGO_EDITORIAL, ASIGNATURA_CODIGO_ASIGNATURA, TIPO_LIBRO) VALUES (null,'".strtoupper($titulo)."','".strtoupper($ubicacion)."','".$cantidad."','".$autor."','".$editorial."','".$asignatura."','".$tipo_libro."');";
         
 		$result = $conn->guardar($query);
     	return $result;
 	}
     public function modificar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro)
     {
-        $query = "UPDATE LIBRO SET TITULO_LIBRO = '".$titulo."', UBICACION = '".$ubicacion."', CANTIDAD_EN_EXISTENCIA = '".$cantidad."', AUTOR_CODIGO_AUTOR = '".$autor."', EDITORIAL_CODIGO_EDITORIAL = '".$editorial."', ASIGNATURA_CODIGO_ASIGNATURA = '".$asignatura."', TIPO_LIBRO = '".$tipo_libro."' WHERE CODIGO_LIBRO = '".$codigo."';";
+        $query = "UPDATE LIBRO SET TITULO_LIBRO = '".strtoupper($titulo)."', UBICACION = '".strtoupper($ubicacion)."', CANTIDAD_EN_EXISTENCIA = '".$cantidad."', AUTOR_CODIGO_AUTOR = '".$autor."', EDITORIAL_CODIGO_EDITORIAL = '".$editorial."', ASIGNATURA_CODIGO_ASIGNATURA = '".$asignatura."', TIPO_LIBRO = '".$tipo_libro."' WHERE CODIGO_LIBRO = '".$codigo."';";
         $conn = new clDML();
         $result = $conn->guardar($query);
         if($result)
@@ -83,6 +83,14 @@ class mto_libros extends clDML
 	 public function get_tipo_libro()
     {
         $query = "SELECT * FROM TIPO_LIBRO";
+        $conn = new clDML();
+        $depa = $conn->get_list($query);
+        return $depa;
+    }
+
+    public function get_autor()
+    {
+        $query = "SELECT * FROM AUTOR";
         $conn = new clDML();
         $depa = $conn->get_list($query);
         return $depa;

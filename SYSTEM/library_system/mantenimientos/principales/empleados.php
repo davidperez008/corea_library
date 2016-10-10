@@ -1,5 +1,5 @@
 <?php
-require_once "../../clases/conexion/mto_rol.php";
+require_once "../../clases/conexion/mto_empleado.php";
 require_once "../../clases/vista/mensajes.php";
 
 include_once '../../clases/login.php';
@@ -11,7 +11,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    $nom_usu = $_SESSION['usr'];
    $cod_usu = $_SESSION['cod_usr'];
 
-   $clMto_Rol = new mto_rol();
+   $clMto_Empleado = new mto_empleado();
    $mensaje = "";
    $mdl = new mensajes();
    $codigo = "";
@@ -19,7 +19,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         if (isset($_GET['codigo'])) {
             $codigo = htmlspecialchars($_GET['codigo']);
 
-            $resultado = $clMto_Rol->eliminar_rol($codigo);
+            $resultado = $clMto_Empleado->eliminar_empleado($codigo);
             echo $resultado;
         }
    
@@ -35,7 +35,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Roles</title>
+    <title>Empleados registrados en el sistema</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +73,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                         <?php include '../../menu_usuario.php';?>
+                        <?php include '../../menu_empleado.php';?>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -108,7 +108,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Roles</h1>
+                    <h1 class="page-header">Empleados</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -117,7 +117,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Añadir Rol    <a class="btn btn-primary btn-circle" href="roles_usuario.php"><i class="fa fa-plus"></i></a> 
+                            Añadir un empleado<a class="btn btn-primary btn-circle" href="empleado_ingresar.php"><i class="fa fa-plus"></i></a> 
                         </div>
                        
                         <!-- /.panel-heading -->
@@ -139,24 +139,32 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
                                      <thead>
                                         <tr>
                                             <th>Codigo</th>
-                                            <th>Nombre Rol</th>
-                                            <th>Descripción Rol</th>
-                                            <th>Nivel de Acceso</th>
-                                            <th>Modificar</th>
-                                            <th>Eliminar</th>
+                                            <th>Nombre</th>
+                                            <th>Apellidos</th>
+                                            <th>Genero</th>
+                                            <th>Usuario</th>
+                                            <th>Departamento</th>
+                                            <th>Municipio</th>
+                                            <th>Dirección</th>
+                                            <th>Rol</th>
                                         </tr>
                                     </thead>
-                                     <?php                                      
-                                        $a_users = $clMto_Rol->get_rol();
-                                        foreach ($a_users as $row): ?>
+                                     <?php                                  
+                                        $a_empleado = $clMto_Empleado->get_empleado();
+                                        foreach ($a_empleado as $row): ?>
                                             <tr>
-                                                <td><?php echo $row['ID_ROL']; ?></td>
-                                                <td><?php echo $row['NOMBRE_ROL']; ?></td>
-                                                <td><?php echo $row['DESCRIPCION_ROL']; ?></td>
-                                                <td><?php echo $row['nombre_nivel']; ?></td>
-                                                <td><a href="roles_usuario.php?codigo=<?php echo $row['ID_ROL']; ?>">Modificar</a></td>
-                                                <td><a href="roles.php?codigo=<?php echo $row['ID_ROL']; ?>">Eliminar</a></td>
-                                            </tr><!-- /TROW -->                                    
+                                                <td><?php echo $row['CODIGO_EMPLEADO']; ?></td>
+                                                <td><?php echo $row['NOMBRE_EMPLEADO']; ?></td>
+                                                <td><?php echo $row['APELLIDO_EMPLEADO']; ?></td>
+                                                <td><?php echo $row['GENERO']; ?></td>
+                                                <td><?php echo $row['USUARIO_CODIGO_USUARIO']; ?></td>
+                                                <td><?php echo $row['DEPARTAMENTO_ID_DEPARTAMENTO']; ?></td>
+                                                <td><?php echo $row['MUNICIPIO_ID_MUNICIPIO']; ?></td>
+                                                <td><?php echo $row['DIRECCION']; ?></td>
+                                                <td><?php echo $row['ROL_ID_ROL']; ?></td>
+                                                <td><a href="empleado_ingresar.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Modificar</a></td>
+                                                <td><a href="empleados.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Eliminar</a></td>
+                                            </tr><!-- /TROW -->                                  
                                     <?php endforeach ?>    
                                 </table>
                             </div>

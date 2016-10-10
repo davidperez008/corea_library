@@ -12,24 +12,23 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
    $nom_usu = $_SESSION['usr'];
    $cod_usu = $_SESSION['cod_usr'];
 
-   $clMto_Alumno = new mto_alumno();
-$mensaje = "";
-$mdl = new mensajes();
-$codigo = "";
-$nombre1 = "";
-$nombre2 = "";
-$apellido1 = "";
-$apellido2 = "";
-$direccion = "";
-$departamento = "";
-$municipio = "";
-$grado = "";
-$encargado = "";
-$fecha = "";
-$genero = "";
-$carnet = "";
-$nombre_encargado = "";
-$tipo_movimiento = 1;
+    $clMto_Alumno = new mto_alumno();
+    $mensaje = "";
+    $mdl = new mensajes();
+    $codigo = "";
+    $nombres_alumno = "";    
+    $apellidos_alumno = "";
+    $direccion = "";
+    $departamento = "";
+    $municipio = "";
+    $grado = "";
+    $encargado = "";
+    $fecha = "";
+    $genero = "";
+    $carnet = "";
+    $telefono = "";
+    $nombre_encargado = "";
+    $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
     if(isset($_POST['carnet']) && !empty($_POST['carnet']) && isset($_POST['nombre1']) && !empty($_POST['nombre1']) && isset($_POST['apellido1']) && !empty($_POST['apellido1']) && isset($_POST['departamento']) && !empty($_POST['departamento']) && isset($_POST['municipio']) && !empty($_POST['municipio']) && isset($_POST['grado']) && !empty($_POST['grado']) && isset($_POST['encargado']) && !empty($_POST['encargado']) && isset($_POST['fecha']) && !empty($_POST['fecha']) && isset($_POST['genero']) && !empty($_POST['genero'])){
@@ -201,11 +200,14 @@ if(isset($_POST['guardar'])){
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Nuevo Alumno <a class="btn btn-primary btn-circle" href="alumnos_ingresar.php"><i class="fa fa-plus"></i></a>  Ver todos los alumnos <a class="btn btn-primary btn-circle" href="alumnos.php"><i class="fa fa-table"></i></a> 
+                            Nuevo Alumno <a class="btn btn-primary btn-circle" href="alumnos_ingresar.php"><i class="fa fa-plus"></i></a>  
+                            Ver todos los alumnos <a class="btn btn-primary btn-circle" href="alumnos.php"><i class="fa fa-table"></i></a> 
                         </div>
                         <div class="panel-body">
                             <form role="form" action="alumnos_ingresar.php" method="POST">  
                                 <div class="col-md-6">
+                                    <h1>Datos del Alumno</h1>
+
                                      <div class="form-group" id="estado">
                                             <?php 
                                             if(!empty($mensaje)){
@@ -228,24 +230,15 @@ if(isset($_POST['guardar'])){
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label>PRIMER NOMBRE</label>
+                                        <label>NOMBRES</label>
                                         <input required name="nombre1" class="form-control" value="<?php echo $nombre1; ?>">
                                     </div>
                                             
-                                    <div class="form-group">
-                                        <label>SEGUNDO NOMBRE</label>
-                                        <input  name="nombre2" class="form-control" value="<?php echo $nombre2; ?>">
-                                    </div>
 
                                     <div class="form-group">
-                                        <label>PRIMER APELLIDO</label>
+                                        <label>APELLIDOS</label>
                                         <input required name="apellido1" class="form-control" value="<?php echo $apellido1; ?>">
-                                    </div>
-                                            
-                                    <div class="form-group">
-                                        <label>SEGUNDO APELLIDO</label>
-                                        <input  name="apellido2" class="form-control" value="<?php echo $apellido2; ?>">
-                                    </div>
+                                    </div>                                   
                                     
                                     <div class="form-group">
                                         <label>FECHA DE NACIMIENTO</label>
@@ -329,21 +322,26 @@ if(isset($_POST['guardar'])){
                                     <div class="form-group">
                                         <label>ENCARGADO</label>
                                         <div class="row">
-                                            <div class="col-md-9 col-md-push-3">
-                                                <input readonly name="nombre_encargado" id="nombre_encargado" type="text" value="<?php echo $nombre_encargado;?>" class="form-control">
+                                           
+        <div class="col-md-2">
+            <input class="form-control" name="encargado" readonly size="1" id="encargado" value="<?php echo $encargado;?>" type="text">
+        </div>
+                                            <div class="col-md-6">
+                                                <input style="float:left;" readonly name="nombre_encargado" id="nombre_encargado" type="text" value="<?php echo $nombre_encargado;?>" class="form-control">                    
                                             </div>
-                                            <div class="col-md-3 col-md-pull-9">
-                                                <input readonly name="encargado" id="encargado" value="<?php echo $encargado;?>" type="text" class="form-control">                                                  
-                                            </div>
+                                                
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                                                      <i class="fa fa-search"></i>                                                      
+                                                 </a>
+
+                                                 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEncargado">
+                                                      <i class="fa fa-plus"></i>
+                                                 </a>
+                                                 
+                                                                                   
                                         </div>   
 
                                                                         
-                                    </div>
-
-                                    <div class="form-group">
-                                         <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                                                Buscar encargados
-                                         </a>
                                     </div>
 
                                     <div class="form-group">
@@ -368,196 +366,6 @@ if(isset($_POST['guardar'])){
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-
-            <div class="row">
-                <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Basic Tabs
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#home" data-toggle="tab">Alumno</a>
-                                </li>
-                                <li><a href="#profile" data-toggle="tab">Encargado</a>
-                                </li>
-                                
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="home">
-                                    <br>
-                                    <h4>Datos del alumno</h4>
-                                    <form role="form" action="alumnos_ingresar.php" method="POST">                                 
-                                    <div class="col-md-6">
-
-                                     <div class="form-group" id="estado">
-                                            <?php 
-                                            if(!empty($mensaje)){
-                                                if($tipo_movimiento == 1 || $tipo_movimiento == 2){
-                                                    echo $mdl->iCompletado($mensaje);
-                                                }elseif ($tipo_movimiento == 3 || $tipo_movimiento == 0) {
-                                                    echo $mdl->iError($mensaje);
-                                                }                                               
-                                            }                                          
-                                            ?>                                                                                                                                 
-                                     </div>  
-                                                                         
-                                    <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                <label >CARNÉ</label>
-                                                <input type="number" required name="carnet" size="10" class="form-control" value="<?php echo $carnet; ?>">                                            
-                                                </div> 
-                                            </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>PRIMER NOMBRE</label>
-                                        <input required name="nombre1" class="form-control" value="<?php echo $nombre1; ?>">
-                                    </div>
-                                            
-                                    <div class="form-group">
-                                        <label>SEGUNDO NOMBRE</label>
-                                        <input  name="nombre2" class="form-control" value="<?php echo $nombre2; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>PRIMER APELLIDO</label>
-                                        <input required name="apellido1" class="form-control" value="<?php echo $apellido1; ?>">
-                                    </div>
-                                            
-                                    <div class="form-group">
-                                        <label>SEGUNDO APELLIDO</label>
-                                        <input  name="apellido2" class="form-control" value="<?php echo $apellido2; ?>">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>FECHA DE NACIMIENTO</label>
-                                        <input required name="fecha" placeholder="AAAA/MM/DD" type="date" class="form-control" value="<?php echo $fecha; ?>">                                    
-                                    </div>
-
-                                  <div class="form-group">
-                                            <label>GÉNERO</label>
-                                            <select required name="genero" class="form-control">                                                
-                                                    <option <?php if($genero == 1){echo "selected";}?> value="1">Femenino</option>
-                                                    <option <?php if($genero == 2){echo "selected";}?> value="2">Masculino</option>
-                                            </select>
-                                    </div>   
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-
-                                            <div class="form-group" id="estado">
-                                                                                                                                                                        
-                                     </div>  
-
-                                    <div class="form-group">
-                                        <label>DIRECCIÓN</label>
-                                        <textarea name="direccion" class="form-control" rows="3"><?php echo $direccion ?></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                            <label>DEPARTAMENTO</label>
-                                            <select required name="departamento" id="departamento" class="form-control">                                                
-                                               <?php 
-                                                    $depa = $clMto_Alumno->get_departamentos();
-                                                    foreach ($depa as $row): ?>                                                                                                
-                                                    <option <?php if($departamento == $row['ID_DEPARTAMENTO']){echo "selected";}?> value="<?php echo $row['ID_DEPARTAMENTO']; ?>"><?php echo $row['NOMBRE_DEPARTAMENTO']; ?></option>                                                                                            
-                                                <?php endforeach ?>    
-                                            </select>                                            
-                                    </div>
-
-
-                                    <div class="form-group">
-                                            <label>MUNICIPIO</label>
-                                            <select required id="municipio" name="municipio" class="form-control">
-                                               <?php 
-                                                    if ($tipo_movimiento == 2) {
-                                                        $muni = $clMto_Alumno->get_municipios();
-                                                        foreach ($muni as $row): ?>                                                                                                
-                                                        <option  <?php if($municipio == $row['ID_MUNICIPIO']){echo "selected";}?> value="<?php echo $row['ID_MUNICIPIO']; ?>"><?php echo $row['NOMBRE_MUNICIPIO']; ?></option>                                                                                            
-                                                        <?php endforeach   ?>                                                      
-                                                    <?php }?>
-                                                                                                                                                       
-                                            </select>
-                                    </div>  
-                                                <label>GRADO</label>
-                                                <select required name="grado" class="form-control">
-                                                    <?php 
-                                                        $grado_list = $clMto_Alumno->get_grado();
-                                                        foreach ($grado_list as $row): ?>                                                                                                
-                                                        <option <?php if($grado == $row['CODIGO_GRADO']){echo "selected";}?> value="<?php echo $row['CODIGO_GRADO']; ?>"><?php echo $row['DESCRIPCION_GRADO']; ?></option>                                                                                            
-                                                    <?php endforeach ?> 
-                                                </select>
-                                        </div>
-
-                                    </div>
-
-                                    
-                                </div>
-                                
-
-                                <div class="tab-pane fade" id="profile">
-                                    <br>
-                                    <h4>Datos del encargado</h4>
-                                     <div class="col-md-6">
-                                     <div class="form-group" id="estado">
-                                            <?php 
-                                            if(!empty($mensaje)){
-                                                if($tipo_movimiento == 1 || $tipo_movimiento == 2){
-                                                    echo $mdl->iCompletado($mensaje);
-                                                }elseif ($tipo_movimiento == 3 || $tipo_movimiento == 0) {
-                                                    echo $mdl->iError($mensaje);
-                                                }                                               
-                                            }                                          
-                                            ?>                                                                                                                                 
-                                     </div>  
-                                                                         
-                                    <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                <label >CODIGO</label>
-                                                <input readonly type="number" required name="codigo" size="10" class="form-control" value="<?php echo $codigo; ?>">                                            
-                                                </div> 
-                                            </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>NOMBRES</label>
-                                        <input required name="nombres" class="form-control" value="<?php echo $nombres; ?>">
-                                    </div>
-                                            
-                                    <div class="form-group">
-                                        <label>APELLIDOS</label>
-                                        <input required name="apellidos" class="form-control" value="<?php echo $apellidos; ?>">
-                                    </div>                                    
-                                    
-                                    <div class="form-group">
-                                        <label>FECHA DE NACIMIENTO</label>
-                                        <input required name="fecha" placeholder="AAAA/MM/DD" type="date" class="form-control" value="<?php echo $fecha; ?>">                                    
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>TELEFONO</label>
-                                        <input id="telefono" maxlength="8" required  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
-                                    </div>                                                                                                                                                                                         
-                                </div>
-
-                                <div class="col-md-6"></div>
-
-                                </div>  
-
-                                </form>                                                  
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-
             </div>
             <!-- /.row -->
         </div>

@@ -11,29 +11,27 @@ $cantidad = "";
 $autor = "";
 $editorial = "";
 $asignatura = "";
-$ejemplar_libro = "";
 $tipo_libro = "";
 $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
-	if(isset($_POST['titulo']) && !empty($_POST['titulo']) && isset($_POST['ubicacion']) && !empty($_POST['ubicacion']) && isset($_POST['cantidad']) && !empty($_POST['cantidad']) && isset($_POST['autor']) && !empty($_POST['autor']) && isset($_POST['editorial']) && !empty($_POST['editorial']) && isset($_POST['asignatura']) && !empty($_POST['asignatura']) && isset($_POST['ejemplar_libro']) && !empty($_POST['ejemplar_libro']) && isset($_POST['tipo_libro']) && !empty($_POST['tipo_libro'])){
+	if(isset($_POST['titulo']) && !empty($_POST['titulo']) && isset($_POST['ubicacion']) && !empty($_POST['ubicacion']) && isset($_POST['cantidad']) && !empty($_POST['cantidad']) && isset($_POST['autor']) && !empty($_POST['autor']) && isset($_POST['editorial']) && !empty($_POST['editorial']) && isset($_POST['asignatura']) && !empty($_POST['asignatura']) && isset($_POST['tipo_libro']) && !empty($_POST['tipo_libro'])){
         $titulo = $_POST['titulo'];
         $ubicacion = $_POST['ubicacion'];
 		$cantidad = $_POST['cantidad'];
 		$autor = $_POST['autor'];
 		$editorial = $_POST['editorial'];
-		$asignatura = $_POST['asignatura'];
-		$ejemplar_libro = $_POST['ejemplar_libro'];
+		$asignatura = $_POST['asignatura'];		
 		$tipo_libro = $_POST['tipo_libro'];		
         $tipo_movimiento = $_POST['guardar'];
         if($tipo_movimiento == 2){
             $codigo = $_POST['codigo'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Libro->modificar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$ejemplar_libro,$tipo_libro);
+            $estado = $clMto_Libro->modificar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro);
             $mensaje = "Modificado satisfactoriamente";
         }else{
             $tipo_movimiento = 1;
-			$estado = $clMto_Libro->guardar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$ejemplar_libro,$tipo_libro);
+			$estado = $clMto_Libro->guardar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro);
 			if($estado > 0)			
 				{
 					$mensaje = "Guardado satisfactoriamente";
@@ -230,7 +228,13 @@ if(isset($_POST['guardar'])){
 									 <div class="col-md-6">	
 										<div class="form-group">
                                             <label>AUTOR</label>
-                                            <input name="autor" class="form-control" value="<?php echo $autor; ?>" placeholder="Código del autor">
+                                             <select required name="autor" class="form-control">
+                                                <?php 
+                                                    $autor_list = $clMto_Libro->get_autor();
+                                                    foreach ($autor_list as $row): ?>                                                                                                
+                                                    <option <?php if($autor == $row['CODIGO_AUTOR']){echo "selected";}?> value="<?php echo $row['CODIGO_AUTOR']; ?>"><?php echo $row['NOMBRE_AUTOR']; ?></option>                                                                                            
+                                                <?php endforeach ?> 
+                                            </select>
                                         </div>
 
 

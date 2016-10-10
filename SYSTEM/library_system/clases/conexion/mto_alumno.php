@@ -51,7 +51,7 @@ class mto_alumno extends clDML
     {
         $conn = new clDML();
         $query = "INSERT INTO ALUMNO (CARNET,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,DIRECCION,FECHA,SEXO,GRADO_CODIGO_GRADO,ENCARGADO_ALUMNOS_CODIGO_ENCARGADO,DEPARTAMENTO_ID_DEPARTAMENTO,MUNICIPIO_ID_MUNICIPIO) ";
-        $query .= "VALUES('".$carnet."','".strtoupper($nombre1)."','".strtoupper($nombre2)."','".strtoupper($apellido1)."','".strtoupper($apellido2)."','".strtoupper($direccion)."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";        
+        $query .= "VALUES('".$carnet."','".mb_strtoupper($nombre1)."','".mb_strtoupper($nombre2)."','".strtoupper($apellido1)."','".strtoupper($apellido2)."','".strtoupper($direccion)."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";        
 		$result = $conn->guardar($query);
     	return $result;	
 	}
