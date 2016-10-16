@@ -2,15 +2,6 @@
 require_once "../../clases/conexion/mto_alumno.php";
 require_once "../../clases/vista/mensajes.php";
 
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
-
    $clMto_Alumno = new mto_alumno();
    $mensaje = "";
    $mdl = new mensajes();
@@ -22,10 +13,6 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
             $resultado = $clMto_Alumno->eliminar_alumno($codigo);
             echo $resultado;
         }
-   
-}else{
-    header('location: ../../login.php');
-}
 ?>
 <!DOCTYPE html>
 <html>

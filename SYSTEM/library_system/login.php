@@ -17,6 +17,11 @@ if (isset($_SESSION['usr'])) {
                 'Obtener usuario';
                 $_SESSION['usr'] = $_POST['user'];
                 $_SESSION['cod_usr'] = $inicio_sesion->obtener_codigo_usuario($_SESSION['usr']);
+                $lista = $inicio_sesion->obtener_datos_usuario($_POST['user']);
+                foreach ($lista as $row) {
+                    $_SESSION['rol_usr'] = $row['ROL_ID_ROL'];    
+                }
+                
                 header('Location: index.php');
                 exit;
             }else{

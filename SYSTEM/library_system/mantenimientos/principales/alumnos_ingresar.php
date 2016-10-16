@@ -5,12 +5,29 @@ require_once "../../clases/vista/mensajes.php";
 
 include_once '../../clases/login.php';
 
-session_start();
-$inicio_sesion =  new LogIn();
+function validarDatos()
+{
+    $var_error = "";
+    if (isset($_POST['carnet']) && !empty($_POST['carnet'])) {
+        $var_error = "Ingrese un carné";
+    }elseif (isset($_POST['nombres_alumno']) && !empty($_POST['nombres_alumno'])) {
+        $var_error = "Ingrese los nombres del alumno";
+    }elseif (isset($_POST['apellido1']) && !empty($_POST['apellido1'])) {
+        $var_error = "Ingrese los apellidos del alumno";
+    }elseif (isset($_POST['departamento']) && !empty($_POST['departamento'])) {
+        $var_error = "Ingrese un departamento";
+    }elseif (isset($_POST['municipio']) && !empty($_POST['municipio'])) {
+        $var_error = "Ingrese un municipio";
+    }elseif (isset($_POST['grado']) && !empty($_POST['grado'])) {
+        $var_error = "Ingrese un grado";    
+    }elseif (isset($_POST['fecha']) && !empty($_POST['fecha'])) {
+        # code...
+    }elseif (isset($_POST['genero']) && !empty($_POST['genero'])) {
+        # code...
+    }
 
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
+    return $var_error;
+}
 
     $clMto_Alumno = new mto_alumno();
     $mensaje = "";
@@ -21,35 +38,45 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
     $direccion = "";
     $departamento = "";
     $municipio = "";
-    $grado = "";
-    $encargado = "";
+    $grado = "";    
     $fecha = "";
     $genero = "";
     $carnet = "";
     $telefono = "";
     $nombre_encargado = "";
+    $apellido_encargado = "";
+    $parentesco = "";
+    $genero_encargado = "";
+    $fecha_encargado = "";
+    $profesion = "";
     $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
-    if(isset($_POST['carnet']) && !empty($_POST['carnet']) && isset($_POST['nombre1']) && !empty($_POST['nombre1']) && isset($_POST['apellido1']) && !empty($_POST['apellido1']) && isset($_POST['departamento']) && !empty($_POST['departamento']) && isset($_POST['municipio']) && !empty($_POST['municipio']) && isset($_POST['grado']) && !empty($_POST['grado']) && isset($_POST['encargado']) && !empty($_POST['encargado']) && isset($_POST['fecha']) && !empty($_POST['fecha']) && isset($_POST['genero']) && !empty($_POST['genero'])){
+    if($empty(validarDatos())){
         $carnet = $_POST['carnet'];
-        $nombre1 = $_POST['nombre1'];
-        $nombre2 = $_POST['nombre2'];
-        $apellido1 = $_POST['apellido1'];
-        $apellido2 = $_POST['apellido2'];
+        $nombres_alumno = $_POST['nombres_alumno'];        
+        $apellidos_alumno = $_POST['apellidos_alumno'];    
         $direccion = $_POST['direccion'];
         $departamento = $_POST['departamento'];
         $municipio = $_POST['municipio'];
-        $grado = $_POST['grado'];
-        $encargado = $_POST['encargado'];
+        $grado = $_POST['grado'];        
         $fecha =$_POST['fecha'];
+        $fecha_encargado = $_POST['fecha_encargado'];
         $genero = $_POST['genero'];
+        $nombre_encargado = $_POST['nombre_encargado'];
+        $apellido_encargado = $_POST['apellido_encargado'];
+        $telefono = $_POST['telefono'];
+        $parentesco = $_POST['parentesco'];
+        $genero_encargado = $_POST['genero_encargado'];
+        $profesion = $_POST['profresion'];
+        $genero_encargado = $_POST['genero_encargado'];
+
 
         $tipo_movimiento = $_POST['guardar'];
         if($tipo_movimiento == 2){
             $carnet = $_POST['carnet'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);           
+            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombres_alumno,$apellidos_alumno,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);           
             if ($estado > 0) {
                 $mensaje = "Modificado satisfactoriamente";
             }else{
@@ -107,11 +134,6 @@ if(isset($_POST['guardar'])){
 }else{
     $tipo_movimiento = 1;
 }    
-
-
-}else{
-    header('location: ../../login.php');
-}
                                                                           
 ?>
 <!DOCTYPE html>
@@ -231,13 +253,13 @@ if(isset($_POST['guardar'])){
                                     
                                     <div class="form-group">
                                         <label>NOMBRES</label>
-                                        <input required name="nombre1" class="form-control" value="<?php echo $nombre1; ?>">
+                                        <input required name="nombres_alumno" class="form-control" value="<?php echo $nombres_alumno; ?>">
                                     </div>
                                             
 
                                     <div class="form-group">
                                         <label>APELLIDOS</label>
-                                        <input required name="apellido1" class="form-control" value="<?php echo $apellido1; ?>">
+                                        <input required name="apellidos_alumno" class="form-control" value="<?php echo $apellidos_alumno; ?>">
                                     </div>                                   
                                     
                                     <div class="form-group">
@@ -251,15 +273,10 @@ if(isset($_POST['guardar'])){
                                                     <option <?php if($genero == 1){echo "selected";}?> value="1">Femenino</option>
                                                     <option <?php if($genero == 2){echo "selected";}?> value="2">Masculino</option>
                                             </select>
-                                    </div>                                                                                                       
-                        </div>
+                                    </div>
 
-                        <div class="col-md-6">
-                                    <div class="form-group" id="estado">
-                                                                                                                                                                        
-                                     </div>  
 
-                                    <div class="form-group">
+                                     <div class="form-group">
                                         <label>DIRECCIÓN</label>
                                         <textarea name="direccion" class="form-control" rows="3"><?php echo $direccion ?></textarea>
                                     </div>
@@ -288,63 +305,9 @@ if(isset($_POST['guardar'])){
                                                     <?php }?>
                                                                                                                                                        
                                             </select>
-                                    </div>                                         
-                                    
-                            <!-- Modal -->
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title" id="myModalLabel">Buscar encargado</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group input-group">
-                                                        <input type="text" id="texto" class="form-control">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
-                                                            </button>
-                                                        </span>
-                                                    </div>                                          
-                                                        <ul id="lista" class="list-group">                                              
-                                                        </ul>                                                                                
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                            <!-- Modal -->
+                                    </div> 
 
-                                    <div class="form-group">
-                                        <label>ENCARGADO</label>
-                                        <div class="row">
-                                           
-        <div class="col-md-2">
-            <input class="form-control" name="encargado" readonly size="1" id="encargado" value="<?php echo $encargado;?>" type="text">
-        </div>
-                                            <div class="col-md-6">
-                                                <input style="float:left;" readonly name="nombre_encargado" id="nombre_encargado" type="text" value="<?php echo $nombre_encargado;?>" class="form-control">                    
-                                            </div>
-                                                
-                                                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                                                      <i class="fa fa-search"></i>                                                      
-                                                 </a>
-
-                                                 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEncargado">
-                                                      <i class="fa fa-plus"></i>
-                                                 </a>
-                                                 
-                                                                                   
-                                        </div>   
-
-                                                                        
-                                    </div>
-
-                                    <div class="form-group">
+                                      <div class="form-group">
                                             <label>GRADO</label>
                                             <select required name="grado" class="form-control">
                                                 <?php 
@@ -353,12 +316,76 @@ if(isset($_POST['guardar'])){
                                                     <option <?php if($grado == $row['CODIGO_GRADO']){echo "selected";}?> value="<?php echo $row['CODIGO_GRADO']; ?>"><?php echo $row['DESCRIPCION_GRADO']; ?></option>                                                                                            
                                                 <?php endforeach ?> 
                                             </select>
+                                    </div>                                                                                                      
+                        </div>
+
+                        <div class="col-md-6">
+                            <h1>Datos del Encargado</h1>
+                                    <div class="form-group" id="estado">
+                                                                                                                                                                        
+                                     </div>  
+
+                                     <div class="form-group">
+                                        <label>NOMBRES</label>
+                                        <input required name="nombre_encargado" class="form-control" value="<?php echo $nombre_encargado; ?>">
+                                    </div>
+                                            
+
+                                    <div class="form-group">
+                                        <label>APELLIDOS</label>
+                                        <input required name="apellido_encargado" class="form-control" value="<?php echo $apellido_encargado; ?>">
+                                    </div>  
+
+                                    <div class="form-group">
+                                        <label>FECHA DE NACIMIENTO</label>
+                                        <input required name="fecha_encargado" placeholder="AAAA/MM/DD" type="date" class="form-control" value="<?php echo $fecha; ?>">                                    
                                     </div>
 
-                                    <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-primary">Guardar</button>                                                                        
-                                        <button type="reset" class="btn btn-default">Limpiar</button>
+                                <div class="form-group">
+                                            <label>GÉNERO</label>
+                                            <select required name="genero_encargado" class="form-control">                                                
+                                                    <option <?php if($genero == 1){echo "selected";}?> value="1">Femenino</option>
+                                                    <option <?php if($genero == 2){echo "selected";}?> value="2">Masculino</option>
+                                            </select>
+                                </div>
+
+                                <div class="form-group">
+                                        <label>TELEFONO</label>
+                                        <input id="telefono" maxlength="8" required  name="telefono" type="tel" min="8" placeholder="22222222" class="form-control" value="<?php echo $telefono; ?>">
+                                </div>   
+
+                                <div class="form-group">
+                                            <label>PROFESIÓN</label>
+                                            <select required name="profesion" class="form-control">
+                                                <?php 
+                                                    $profesion_list = $clMto_Alumno->get_profesion();
+                                                    foreach ($profesion_list as $row): ?>                                                                                                
+                                                    <option <?php if($profesion == $row['ID_PROFESION']){echo "selected";}?> value="<?php echo $row['ID_PROFESION']; ?>"><?php echo $row['NOMBRE_PROFESION']; ?></option>                                                                                            
+                                                <?php endforeach ?> 
+                                            </select>
+                                </div> 
+
+
+                                 <div class="form-group">
+                                            <label>PARENTESCO</label>
+                                            <select required name="parentesco" class="form-control">
+                                                <?php 
+                                                    $parentesco_list = $clMto_Alumno->get_parentesco();
+                                                    foreach ($parentesco_list as $row): ?>                                                                                                
+                                                    <option <?php if($parentesco == $row['ID_PARENTESCO']){echo "selected";}?> value="<?php echo $row['ID_PARENTESCO']; ?>"><?php echo $row['DESCRIPCION_PARENTESCO']; ?></option>                                                                                            
+                                                <?php endforeach ?> 
+                                            </select>
+                                </div>  
+
 
                         </div>
+
+
+                        <div class="col-md-12">
+                            <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-primary">Guardar</button>                                                                        
+                            <button type="reset" class="btn btn-default">Limpiar</button>
+                        </div>
+
                            </form>
                         </div>
                         <!-- /.panel-body -->

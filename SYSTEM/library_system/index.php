@@ -1,16 +1,5 @@
 <?php 
-include_once 'clases/login.php';
 
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
-   
-}else{
-    header('location: login.php');
-}
 ?>
 <!DOCTYPE html>
 <html>

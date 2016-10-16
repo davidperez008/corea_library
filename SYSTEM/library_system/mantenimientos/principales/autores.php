@@ -2,15 +2,7 @@
 require_once "../../clases/conexion/mto_autor.php";
 require_once "../../clases/vista/mensajes.php";
 
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
    $clMto_autor = new mto_autor();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
 
    $mensaje = "";
    $mdl = new mensajes();
@@ -23,9 +15,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
             echo $resultado;
         }
    
-}else{
-    header('location: ../../login.php');
-}
+
 ?>
 <!DOCTYPE html>
 <html>

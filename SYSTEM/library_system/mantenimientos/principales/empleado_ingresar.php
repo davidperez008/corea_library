@@ -2,29 +2,19 @@
 require_once "../../clases/conexion/mto_empleado.php";
 require_once "../../clases/vista/mensajes.php";
 
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
-   //Acá antes variables de sesión...
-   
    $clMto_Empleado = new mto_empleado();
-$mensaje = "";
-$mdl = new mensajes();
-$codigo = "";
-$nombre = "";
-$apellido = "";
-$genero = "";
-$cod_usuario = "";
-$cod_departamento = "";
-$cod_municipio = "";
-$direccion = "";
-$rol = "";
-$tipo_movimiento = 1;
+    $mensaje = "";
+    $mdl = new mensajes();
+    $codigo = "";
+    $nombre = "";
+    $apellido = "";
+    $genero = "";
+    $cod_usuario = "";
+    $cod_departamento = "";
+    $cod_municipio = "";
+    $direccion = "";
+    $rol = "";
+    $tipo_movimiento = 1;
 
 //Se necesita el método POST en el empleado 
 if(isset($_POST['guardar'])){
@@ -92,10 +82,6 @@ if(isset($_POST['guardar'])){
     $tipo_movimiento = 1;
 }    
 
-
-}else{
-    header('location: ../../login.php');
-}
                                                                           
 ?>
 <!DOCTYPE html>

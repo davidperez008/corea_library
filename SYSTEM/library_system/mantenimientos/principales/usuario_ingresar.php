@@ -1,15 +1,6 @@
 	<?php
 require_once "../../clases/conexion/mto_usuario.php";
 require_once "../../clases/vista/mensajes.php";
-
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
    //Acá antes variables de sesión...
    
    $clMto_Usuario = new mto_usuario();
@@ -74,12 +65,7 @@ if(isset($_POST['guardar'])){
 }else{
     $tipo_movimiento = 1;
 }    
-
-
-}else{
-    header('location: ../../login.php');
-}
-                                                                          
+                                                                      
 ?>
 <!DOCTYPE html>
 <html>

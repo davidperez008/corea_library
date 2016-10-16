@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2016 a las 15:52:27
+-- Tiempo de generación: 16-10-2016 a las 05:18:49
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.23
 
@@ -39,6 +39,7 @@ CREATE TABLE `alumno` (
   `NOMBRES_ENCARGADO` varchar(50) DEFAULT NULL,
   `APELLIDOS_ENCARGADO` varchar(200) DEFAULT NULL,
   `TELEFONO` int(11) DEFAULT NULL,
+  `GENERO_ENCARGADO` tinyint(1) DEFAULT NULL,
   `ID_PARENTESCO` int(11) DEFAULT NULL,
   `ID_PROFESION` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -205,7 +206,6 @@ CREATE TABLE `libro` (
   `CODIGO_LIBRO` int(11) NOT NULL DEFAULT '0',
   `TITULO LIBRO` varchar(45) DEFAULT NULL,
   `UBICACION` varchar(45) DEFAULT NULL,
-  `CANTIDAD EN EXISTENCIA` int(11) DEFAULT NULL,
   `AUTOR_CODIGO_AUTOR` int(11) DEFAULT NULL,
   `EDITORIAL_CODIGO_EDITORIAL` int(11) NOT NULL,
   `ASIGNATURA_CODIGO_ASIGNATURA` int(11) NOT NULL,
@@ -222,9 +222,60 @@ CREATE TABLE `libro` (
 CREATE TABLE `menu` (
   `id_menu` int(11) NOT NULL,
   `nombre_item` varchar(50) DEFAULT NULL,
+  `id_parent_item` int(11) DEFAULT NULL,
   `url` varchar(200) DEFAULT NULL,
-  `nivel_acceso` int(3) DEFAULT NULL
+  `nivel_acceso` int(3) DEFAULT NULL,
+  `icono` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `menu`
+--
+
+INSERT INTO `menu` (`id_menu`, `nombre_item`, `id_parent_item`, `url`, `nivel_acceso`, `icono`) VALUES
+(14, 'Realizar Préstamo', 2, 'prestamos/prestar.php', 1, ' '),
+(15, 'Registro de Préstamos', 2, 'prestamos/prestamos.php', 1, ' '),
+(16, 'Alumnos', 3, 'mantenimientos/principales/alumnos.php', 1, NULL),
+(17, 'Empleados', 3, 'mantenimientos/principales/empleados.php', 2, NULL),
+(18, 'Libros', 3, 'mantenimientos/principales/libros.php', 1, NULL),
+(19, 'Autrores', 3, 'mantenimientos/principales/autores.php', 1, NULL),
+(20, 'Usuarios', 3, 'mantenimientos/principales/usuarios.php', 2, NULL),
+(21, 'Asignatura', 4, 'mantenimientos/secundarios/asignatura.php', 2, NULL),
+(22, 'Editorial', 4, 'mantenimientos/secundarios/editorial_libros.php', 1, NULL),
+(23, 'Grado', 4, 'mantenimientos/secundarios/grado.php', 2, NULL),
+(24, 'Parentesco', 4, 'mantenimientos/secundarios/parentesco.php', 1, NULL),
+(25, 'Rol de Usuario', 4, 'mantenimientos/secundarios/roles.php', 3, NULL),
+(26, 'Tipo de Libro', 4, 'mantenimientos/secundarios/tipo_libro.php', 1, NULL),
+(27, 'Salir del Sistema', 6, 'logout.php', 1, NULL),
+(28, 'Administrar Usuario', 6, 'usuario.php', 1, NULL),
+(29, 'Menú', 3, 'mantenimientos/principales/menu.php', 3, NULL),
+(30, 'Profesiones', 4, 'mantenimientos/secundarios/profesion.php', 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `menu_principal`
+--
+
+CREATE TABLE `menu_principal` (
+  `id_menu_principal` int(11) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `nivel_acceso` int(11) DEFAULT NULL,
+  `icono` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `menu_principal`
+--
+
+INSERT INTO `menu_principal` (`id_menu_principal`, `nombre`, `url`, `nivel_acceso`, `icono`) VALUES
+(1, 'Inicio', 'index.php', 1, 'fa fa-home fa-fw'),
+(2, 'Prestamos', '#', 1, 'fa fa-bars fa-fw'),
+(3, 'Mantenimientos Principales', '#', 1, 'fa fa-star fa-fw'),
+(4, 'Manatenimientos Secundarios', '#', 1, 'fa fa-flag fa-fw'),
+(5, 'Configuraciones', 'configuraciones.php', 3, 'fa fa-gears fa-fw'),
+(6, 'AdministraciÃ³n de usuario', '#', 1, 'fa fa-user fa-fw');
 
 -- --------------------------------------------------------
 
@@ -574,8 +625,15 @@ CREATE TABLE `prestamo` (
 
 CREATE TABLE `profesion` (
   `ID_PROFESION` int(11) NOT NULL,
-  `NOMBRE_PROFESION` int(50) DEFAULT NULL
+  `NOMBRE_PROFESION` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `profesion`
+--
+
+INSERT INTO `profesion` (`ID_PROFESION`, `NOMBRE_PROFESION`) VALUES
+(2, 'DOCTOR');
 
 -- --------------------------------------------------------
 
@@ -597,7 +655,7 @@ CREATE TABLE `rol` (
 INSERT INTO `rol` (`ID_ROL`, `NOMBRE_ROL`, `DESCRIPCION_ROL`, `NIVEL_ACCESSO`) VALUES
 (1, 'ADMINISTRADOR', 'ACCESO A PERSONAL ADMINISTRATIVO', 2),
 (3, 'SECRETARÃ­A', 'ACCESO A PERSONAL ', 1),
-(4, 'ALUMNO', 'ACCESO A ALUMNOS', NULL);
+(4, 'ALUMNO', 'ACCESO A ALUMNOS', 1);
 
 -- --------------------------------------------------------
 
@@ -607,41 +665,18 @@ INSERT INTO `rol` (`ID_ROL`, `NOMBRE_ROL`, `DESCRIPCION_ROL`, `NIVEL_ACCESSO`) V
 
 CREATE TABLE `tipo_libro` (
   `ID_TIPO_LIBRO` int(11) NOT NULL,
-  `NOMBRE_TIPO_LIBRO` varchar(30) DEFAULT NULL
+  `NOMBRE_TIPO_LIBRO` varchar(30) DEFAULT NULL,
+  `DIAS_PRESTAMO` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipo_libro`
 --
 
-INSERT INTO `tipo_libro` (`ID_TIPO_LIBRO`, `NOMBRE_TIPO_LIBRO`) VALUES
-(1, 'OBRA'),
-(2, 'LIBRO DE TEXTO Ã‰'),
-(3, 'AÃ Ã‰');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_libro_conf`
---
-
-CREATE TABLE `tipo_libro_conf` (
-  `id_tipo_libro` int(11) DEFAULT NULL,
-  `id_conf` int(11) DEFAULT NULL,
-  `dias` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ubicacion`
---
-
-CREATE TABLE `ubicacion` (
-  `id_ubicacion` int(11) NOT NULL,
-  `estante` int(11) DEFAULT NULL,
-  `fila` char(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `tipo_libro` (`ID_TIPO_LIBRO`, `NOMBRE_TIPO_LIBRO`, `DIAS_PRESTAMO`) VALUES
+(1, 'OBRA', NULL),
+(2, 'LIBRO DE TEXTO', NULL),
+(3, 'AÃ Ã‰', NULL);
 
 -- --------------------------------------------------------
 
@@ -650,7 +685,7 @@ CREATE TABLE `ubicacion` (
 --
 
 CREATE TABLE `usuario` (
-  `CODIGO_USUARIO` int(11) NOT NULL DEFAULT '0',
+  `CODIGO_USUARIO` int(11) NOT NULL,
   `NOMBRE_USUARIO` varchar(45) DEFAULT NULL,
   `CONTRA` varchar(45) NOT NULL,
   `ROL_ID_ROL` int(11) NOT NULL
@@ -661,7 +696,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`CODIGO_USUARIO`, `NOMBRE_USUARIO`, `CONTRA`, `ROL_ID_ROL`) VALUES
-(101, 'carmen.mejia', '1112', 1);
+(101, 'carmen.mejia', '1112', 1),
+(102, 'david.perez', '9776', 3);
 
 --
 -- Índices para tablas volcadas
@@ -749,6 +785,12 @@ ALTER TABLE `menu`
   ADD PRIMARY KEY (`id_menu`);
 
 --
+-- Indices de la tabla `menu_principal`
+--
+ALTER TABLE `menu_principal`
+  ADD PRIMARY KEY (`id_menu_principal`);
+
+--
 -- Indices de la tabla `municipio`
 --
 ALTER TABLE `municipio`
@@ -795,12 +837,6 @@ ALTER TABLE `tipo_libro`
   ADD PRIMARY KEY (`ID_TIPO_LIBRO`);
 
 --
--- Indices de la tabla `ubicacion`
---
-ALTER TABLE `ubicacion`
-  ADD PRIMARY KEY (`id_ubicacion`);
-
---
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -840,7 +876,12 @@ ALTER TABLE `grado`
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT de la tabla `menu_principal`
+--
+ALTER TABLE `menu_principal`
+  MODIFY `id_menu_principal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `nivel_acceso`
 --
@@ -855,7 +896,7 @@ ALTER TABLE `parentesco`
 -- AUTO_INCREMENT de la tabla `profesion`
 --
 ALTER TABLE `profesion`
-  MODIFY `ID_PROFESION` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_PROFESION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
@@ -867,10 +908,10 @@ ALTER TABLE `rol`
 ALTER TABLE `tipo_libro`
   MODIFY `ID_TIPO_LIBRO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `ubicacion`
+-- AUTO_INCREMENT de la tabla `usuario`
 --
-ALTER TABLE `ubicacion`
-  MODIFY `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `usuario`
+  MODIFY `CODIGO_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
 -- Restricciones para tablas volcadas
 --
@@ -891,15 +932,14 @@ ALTER TABLE `alumno`
 ALTER TABLE `empleado`
   ADD CONSTRAINT `empleado_fk` FOREIGN KEY (`DEPARTAMENTO_ID_DEPARTAMENTO`) REFERENCES `departamento` (`ID_DEPARTAMENTO`),
   ADD CONSTRAINT `empleado_fk1` FOREIGN KEY (`ID_PROFESION`) REFERENCES `profesion` (`ID_PROFESION`),
-  ADD CONSTRAINT `fk_EMPLEADO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_USUARIO_CODIGO_USUARIO` FOREIGN KEY (`USUARIO_CODIGO_USUARIO`) REFERENCES `usuario` (`CODIGO_USUARIO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `empleado_fk2` FOREIGN KEY (`USUARIO_CODIGO_USUARIO`) REFERENCES `usuario` (`CODIGO_USUARIO`),
+  ADD CONSTRAINT `fk_EMPLEADO_MUNICIPIO1` FOREIGN KEY (`MUNICIPIO_ID_MUNICIPIO`) REFERENCES `municipio` (`ID_MUNICIPIO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `libro`
 --
 ALTER TABLE `libro`
   ADD CONSTRAINT `editorial_fk` FOREIGN KEY (`EDITORIAL_CODIGO_EDITORIAL`) REFERENCES `editorial` (`CODIGO_EDITORIAL`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_EJEMPLAR_LIBRO_ID_EJEMPLAR_LIBRO` FOREIGN KEY (`EJEMPLAR_LIBRO_ID_EJEMPLAR`) REFERENCES `ejemplar_libro` (`ID_EJEMPLAR`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `libro_fk` FOREIGN KEY (`ASIGNATURA_CODIGO_ASIGNATURA`) REFERENCES `asignatura` (`CODIGO_ASIGNATURA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `tipo_libro_fk` FOREIGN KEY (`TIPO_LIBRO`) REFERENCES `tipo_libro` (`ID_TIPO_LIBRO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

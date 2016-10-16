@@ -1,15 +1,6 @@
 <?php
-require_once "../../clases/conexion/mto_encargado_alumno.php";
-require_once "../../clases/vista/mensajes.php";
-
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
-
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
+include_once "../../clases/conexion/mto_encargado_alumno.php";
+include_once "../../clases/vista/mensajes.php";
 
     $clMto__Encargado_Alumno = new mto_encargado_alumno();
     $mensaje = "";
@@ -99,9 +90,7 @@ if(isset($_POST['guardar'])){
 }    
 
 
-}else{
-    header('location: ../../login.php');
-}
+
                                                                           
 ?>
 <!DOCTYPE html>

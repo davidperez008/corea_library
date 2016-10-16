@@ -1,8 +1,9 @@
 <?php
-require_once "../../clases/conexion/mto_empleado.php";
+require_once "../../clases/conexion/mto_profesion.php";
 require_once "../../clases/vista/mensajes.php";
 
-   $clMto_Empleado = new mto_empleado();
+
+   $clMto_Profesion = new mto_profesion();
    $mensaje = "";
    $mdl = new mensajes();
    $codigo = "";
@@ -10,10 +11,10 @@ require_once "../../clases/vista/mensajes.php";
         if (isset($_GET['codigo'])) {
             $codigo = htmlspecialchars($_GET['codigo']);
 
-            $resultado = $clMto_Empleado->eliminar_empleado($codigo);
+            $resultado = $clMto_Profesion->eliminar_profesion($codigo);
             echo $resultado;
         }
-
+   
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@ require_once "../../clases/vista/mensajes.php";
    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Empleados registrados en el sistema</title>
+    <title>Profesiones registradas en el sistema</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -61,7 +62,7 @@ require_once "../../clases/vista/mensajes.php";
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <?php include '../../menu_empleado.php';?>
+                        <?php include '../../menu_profesion.php';?>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -96,7 +97,7 @@ require_once "../../clases/vista/mensajes.php";
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Empleados</h1>
+                    <h1 class="page-header">Profesiones</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -105,7 +106,7 @@ require_once "../../clases/vista/mensajes.php";
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Añadir un empleado<a class="btn btn-primary btn-circle" href="empleado_ingresar.php"><i class="fa fa-plus"></i></a> 
+                            Añadir una profesión<a class="btn btn-primary btn-circle" href="profesion_ingresar.php"><i class="fa fa-plus"></i></a> 
                         </div>
                        
                         <!-- /.panel-heading -->
@@ -113,7 +114,7 @@ require_once "../../clases/vista/mensajes.php";
                             <?php 
                             if(!empty($codigo)){
                                 if($resultado == 1){
-                                    $mensaje = "Eliminado correctamente";
+                                    $mensaje = "Registro eliminado correctamente";
                                     echo $mdl->iCompletado($mensaje);                        
                                 }elseif ($resultado == 0) {
                                     $mensaje  = "No se pudo eliminar";
@@ -127,31 +128,20 @@ require_once "../../clases/vista/mensajes.php";
                                      <thead>
                                         <tr>
                                             <th>Codigo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellidos</th>
-                                            <th>Genero</th>
-                                            <th>Usuario</th>
-                                            <th>Departamento</th>
-                                            <th>Municipio</th>
-                                            <th>Dirección</th>
-                                            <th>Rol</th>
+                                            <th>Nombre de Profesión</th>
+                                            <th>Modificar</th>
+                                            <th>Eliminar</th>
                                         </tr>
                                     </thead>
-                                     <?php                                  
-                                        $a_empleado = $clMto_Empleado->get_empleado();
-                                        foreach ($a_empleado as $row): ?>
+                                     <?php                                      
+                                        $a_profesion = $clMto_Profesion->get_profesion();
+                                        foreach ($a_profesion as $row): ?>
                                             <tr>
-                                                <td><?php echo $row['CODIGO_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['NOMBRE_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['APELLIDO_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['GENERO']; ?></td>
-                                                <td><?php echo $row['USUARIO_CODIGO_USUARIO']; ?></td>
-                                                <td><?php echo $row['DEPARTAMENTO_ID_DEPARTAMENTO']; ?></td>
-                                                <td><?php echo $row['MUNICIPIO_ID_MUNICIPIO']; ?></td>
-                                                <td><?php echo $row['DIRECCION']; ?></td>
-                                                <td><?php echo $row['ROL_ID_ROL']; ?></td>
-                                                <td><a href="empleado_ingresar.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Modificar</a></td>
-                                                <td><a href="empleados.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Eliminar</a></td>
+                                                <td><?php echo $row['ID_PROFESION']; ?></td>
+                                                <td><?php echo $row['NOMBRE_PROFESION']; ?></td>
+                                               
+                                                <td><a href="profesion_ingresar.php?codigo=<?php echo $row['ID_PROFESION']; ?>">Modificar</a></td>
+                                                <td><a href="profesion.php?codigo=<?php echo $row['ID_PROFESION']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                  
                                     <?php endforeach ?>    
                                 </table>

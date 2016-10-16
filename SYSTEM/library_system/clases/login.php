@@ -35,5 +35,13 @@ class LogIn
 		}
 		return $valor;
 	}
+
+
+	public function obtener_datos_usuario($nombre){
+		$conn = new clDML();
+		$str = "SELECT CODIGO_USUARIO,NOMBRE_USUARIO,ROL_ID_ROL FROM USUARIO WHERE NOMBRE_USUARIO = '".$nombre."'";
+		$lista = $conn->get_list($str);		
+		return $lista;
+	}
 }
 ?>

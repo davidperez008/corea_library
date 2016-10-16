@@ -1,16 +1,8 @@
 <?php
 require_once "../../clases/conexion/mto_tipo_libro.php";
 require_once "../../clases/vista/mensajes.php";
-
-include_once '../../clases/login.php';
-
-session_start();
-$inicio_sesion =  new LogIn();
 $clMto_Tipo_Libro = new mto_tipo_libro();
 
-if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
-   $nom_usu = $_SESSION['usr'];
-   $cod_usu = $_SESSION['cod_usr'];
    
    $mensaje = "";
    $mdl = new mensajes();
@@ -23,9 +15,7 @@ if(isset($_SESSION['usr']) && isset($_SESSION['cod_usr'])){
             echo $resultado;
         }
    
-}else{
-    header('location: ../../login.php');
-}
+
 ?>
 <!DOCTYPE html>
 <html>

@@ -105,15 +105,22 @@ class mto_alumno extends clDML
         $depa = $conn->get_list($query);
         return $depa;
     }
+    
 
-    public function get_encargado()
+    public function get_tipo_parentesco()
     {
-        $query = "SELECT CODIGO_ENCARGADO, CONCAT(NOMBRES_ENCARGADO, ' ',APELLIDOS_ENCARGADO) AS ENCARGADO FROM ENCARGADO_ALUMNO";
+        $query = "SELECT * FROM PARENTESCO";
         $conn = new clDML();
-        $encargado = $conn->get_list($query);
-        return $encargado;
+        $parentesco = $conn->get_list($query);
+        return $parentesco;
     }
 
-    
+    public function get_profesion()
+    {
+        $query = "SELECT * FROM PROFESION";
+        $conn = new clDML();
+        $parentesco = $conn->get_list($query);
+        return $parentesco;
+    }
 }
 ?>
