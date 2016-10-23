@@ -43,5 +43,21 @@ class LogIn
 		$lista = $conn->get_list($str);		
 		return $lista;
 	}
+
+	public function obtener_datos_by_code($value)
+	{
+		$conn = new clDML();
+		$str = "SELECT CODIGO_USUARIO,NOMBRE_USUARIO,CONTRA FROM USUARIO WHERE CODIGO_USUARIO = '".$value."'";
+		$lista = $conn->get_list($str);		
+		return $lista;	
+	}
+
+	public function modificar_usuario($id, $nombre,$pass)
+	{
+		$conn = new clDML();
+		$str = "UPDATE usuario SET NOMBRE_USUARIO = '".$nombre."',CONTRA='".$pass."'  WHERE CODIGO_USUARIO = '".$id."' ";
+		$re = $conn->guardar($str);		
+		return $re;	
+	}
 }
 ?>

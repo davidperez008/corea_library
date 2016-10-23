@@ -7,7 +7,6 @@ $mdl = new mensajes();
 $codigo = "";
 $titulo = "";
 $ubicacion = "";
-$cantidad = "";
 $autor = "";
 $editorial = "";
 $asignatura = "";
@@ -15,10 +14,9 @@ $tipo_libro = "";
 $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
-	if(isset($_POST['titulo']) && !empty($_POST['titulo']) && isset($_POST['ubicacion']) && !empty($_POST['ubicacion']) && isset($_POST['cantidad']) && !empty($_POST['cantidad']) && isset($_POST['autor']) && !empty($_POST['autor']) && isset($_POST['editorial']) && !empty($_POST['editorial']) && isset($_POST['asignatura']) && !empty($_POST['asignatura']) && isset($_POST['tipo_libro']) && !empty($_POST['tipo_libro'])){
+	if(isset($_POST['titulo']) && !empty($_POST['titulo']) && isset($_POST['ubicacion']) && !empty($_POST['ubicacion']) && isset($_POST['autor']) && !empty($_POST['autor']) && isset($_POST['editorial']) && !empty($_POST['editorial']) && isset($_POST['asignatura']) && !empty($_POST['asignatura']) && isset($_POST['tipo_libro']) && !empty($_POST['tipo_libro'])){
         $titulo = $_POST['titulo'];
         $ubicacion = $_POST['ubicacion'];
-		$cantidad = $_POST['cantidad'];
 		$autor = $_POST['autor'];
 		$editorial = $_POST['editorial'];
 		$asignatura = $_POST['asignatura'];		
@@ -27,49 +25,26 @@ if(isset($_POST['guardar'])){
         if($tipo_movimiento == 2){
             $codigo = $_POST['codigo'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Libro->modificar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro);
-            $mensaje = "Modificado satisfactoriamente";
+            $estado = $clMto_Libro->modificar_libro($codigo,$titulo,$ubicacion,$autor,$editorial,$asignatura,$tipo_libro);
+            if ($estado > 0) {
+                $mensaje = "Modificado satisfactoriamente";
+            }else{
+                $mensaje = "Hubo algun error";
+                    $tipo_movimiento = 3;
+            }
+            
         }else{
             $tipo_movimiento = 1;
-			$estado = $clMto_Libro->guardar_libro($codigo,$titulo,$ubicacion,$cantidad,$autor,$editorial,$asignatura,$tipo_libro);
-			if($estado > 0)			
-				{
+			$estado = $clMto_Libro->guardar_libro($codigo,$titulo,$ubicacion,$autor,$editorial,$asignatura,$tipo_libro);
+			if($estado > 0){
 					$mensaje = "Guardado satisfactoriamente";
-				}else{
+			}else{
 					$mensaje = "Hubo algun error";
 					$tipo_movimiento = 3;
-				}
-			
-            
-            
+			}			                    
         }
         
-        if(!$estado){            
-            $mensaje = "Hubo algun error";
-            $tipo_movimiento = 3;
-        }           
-    }else{
-		 
-		 $titulo = $_POST['titulo'];
-        $ubicacion = $_POST['ubicacion'];
-		$cantidad = $_POST['cantidad'];
-		$autor = $_POST['autor'];
-		$editorial = $_POST['editorial'];
-		$asignatura = $_POST['asignatura'];
-		$ejemplar_libro = $_POST['ejemplar_libro'];
-		$tipo_libro = $_POST['tipo_libro'];		
-        $tipo_movimiento = $_POST['guardar'];
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-        $mensaje = "Datos no son válidos.";
-        $tipo_movimiento = 3;
+             
     }
 }elseif (isset($_GET['codigo'])) {
     $codigo = htmlspecialchars($_GET['codigo']);
@@ -80,11 +55,9 @@ if(isset($_POST['guardar'])){
 		$codigo = $row['CODIGO_LIBRO'];
 		$titulo = $row['TITULO_LIBRO'];
         $ubicacion = $row['UBICACION'];
-		$cantidad = $row['CANTIDAD_EN_EXISTENCIA'];
 		$autor = $row['AUTOR_CODIGO_AUTOR'];
 		$editorial = $row['EDITORIAL_CODIGO_EDITORIAL'];
 		$asignatura = $row['ASIGNATURA_CODIGO_ASIGNATURA'];
-		$ejemplar_libro = $row['EJEMPLAR_LIBRO_ID_EJEMPLAR'];
 		$tipo_libro = $row['TIPO_LIBRO'];	
         endforeach;      
         $tipo_movimiento = 2;
@@ -206,26 +179,27 @@ if(isset($_POST['guardar'])){
                                             }                                          
                                             ?> 
 										</div>											
-																				                                    
+										
                                         <div class="form-group">
                                             <label >CÓDIGO DEL LIBRO</label>
                                             <input name="codigo" class="form-control" value="<?php echo $codigo; ?>" readonly>                                            
                                         </div>
                                         <div class="form-group">
                                             <label>TÍTULO DEL LIBRO</label>
-                                            <input name="titulo" class="form-control" value="<?php echo $titulo; ?>" placeholder="Nombre del libro">
+                                            <input required name="titulo" class="form-control" value="<?php echo $titulo; ?>" placeholder="Nombre del libro">
                                         </div>
-                                        <div class="form-group">
-                                            <label>UBICACIÓN</label>
-                                            <input name="ubicacion" class="form-control" value="<?php echo $ubicacion; ?>" placeholder="Número del módulo de ubicación">
-                                        </div>									
+																																																							
 										<div class="form-group">
-                                            <label>CANTIDAD</label>
-                                            <input name="cantidad" class="form-control" value="<?php echo $cantidad; ?>" placeholder="Cantidad en existencia">
-                                        </div>
+                                            <label>UBICACION DEL LIBRO:</label>									
+                                             <textarea required class="form-control" name="ubicacion"><?php echo $ubicacion;?></textarea> 
+                                        </div>		
+
+                                        <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-primary">Guardar</button>                                                                        
+                                        <button type="reset" class="btn btn-default">Limpiar</button>								
 									</div>	
 										
 									 <div class="col-md-6">	
+									 
 										<div class="form-group">
                                             <label>AUTOR</label>
                                              <select required name="autor" class="form-control">
@@ -236,7 +210,7 @@ if(isset($_POST['guardar'])){
                                                 <?php endforeach ?> 
                                             </select>
                                         </div>
-
+									 
 
 										<div class="form-group">
                                             <label>EDITORIAL</label>
@@ -260,7 +234,7 @@ if(isset($_POST['guardar'])){
                                                 <?php endforeach ?> 
                                             </select>
 										</div>																																																	
-																												
+										
 										<div class="form-group">
                                             <label>TIPO DE LIBRO</label>
                                             <select required name="tipo_libro" class="form-control">
@@ -271,12 +245,7 @@ if(isset($_POST['guardar'])){
                                                 <?php endforeach ?> 
                                             </select>
 										</div>
-										
-										
-									
-									
-                                        <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>                                                                        
-                                        <button type="reset" class="btn btn-default">Limpiar</button>
+							
                                     </form>
                                 </div>
 

@@ -8,21 +8,21 @@ include_once '../../clases/login.php';
 function validarDatos()
 {
     $var_error = "";
-    if (isset($_POST['carnet']) && !empty($_POST['carnet'])) {
+    if (!isset($_POST['carnet']) && empty($_POST['carnet'])) {
         $var_error = "Ingrese un carné";
-    }elseif (isset($_POST['nombres_alumno']) && !empty($_POST['nombres_alumno'])) {
+    }elseif (!isset($_POST['nombres_alumno']) && empty($_POST['nombres_alumno'])) {
         $var_error = "Ingrese los nombres del alumno";
-    }elseif (isset($_POST['apellido1']) && !empty($_POST['apellido1'])) {
+    }elseif (!isset($_POST['apellidos_alumno']) && empty($_POST['apellidos_alumno'])) {
         $var_error = "Ingrese los apellidos del alumno";
-    }elseif (isset($_POST['departamento']) && !empty($_POST['departamento'])) {
+    }elseif (!isset($_POST['departamento']) && empty($_POST['departamento'])) {
         $var_error = "Ingrese un departamento";
-    }elseif (isset($_POST['municipio']) && !empty($_POST['municipio'])) {
+    }elseif (!isset($_POST['municipio']) && empty($_POST['municipio'])) {
         $var_error = "Ingrese un municipio";
-    }elseif (isset($_POST['grado']) && !empty($_POST['grado'])) {
+    }elseif (!isset($_POST['grado']) && empty($_POST['grado'])) {
         $var_error = "Ingrese un grado";    
-    }elseif (isset($_POST['fecha']) && !empty($_POST['fecha'])) {
+    }elseif (!isset($_POST['fecha']) && empty($_POST['fecha'])) {
         # code...
-    }elseif (isset($_POST['genero']) && !empty($_POST['genero'])) {
+    }elseif (!isset($_POST['genero']) && empty($_POST['genero'])) {
         # code...
     }
 
@@ -52,7 +52,7 @@ function validarDatos()
     $tipo_movimiento = 1;
 
 if(isset($_POST['guardar'])){
-    if($empty(validarDatos())){
+    if(empty(validarDatos())){
         $carnet = $_POST['carnet'];
         $nombres_alumno = $_POST['nombres_alumno'];        
         $apellidos_alumno = $_POST['apellidos_alumno'];    
@@ -68,7 +68,7 @@ if(isset($_POST['guardar'])){
         $telefono = $_POST['telefono'];
         $parentesco = $_POST['parentesco'];
         $genero_encargado = $_POST['genero_encargado'];
-        $profesion = $_POST['profresion'];
+        $profesion = $_POST['profesion'];
         $genero_encargado = $_POST['genero_encargado'];
 
 
@@ -76,7 +76,7 @@ if(isset($_POST['guardar'])){
         if($tipo_movimiento == 2){
             $carnet = $_POST['carnet'];
             $tipo_movimiento = 2;
-            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombres_alumno,$apellidos_alumno,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);           
+            $estado = $clMto_Alumno->modificar_alumno($carnet,$nombres_alumno,$apellidos_alumno,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$nombre_encargado,$apellido_encargado,$telefono,$genero_encargado,$parentesco,$profesion);           
             if ($estado > 0) {
                 $mensaje = "Modificado satisfactoriamente";
             }else{
@@ -86,7 +86,7 @@ if(isset($_POST['guardar'])){
         }else{
             $tipo_movimiento = 1;
             if ($clMto_Alumno->validar_carnet($carnet)){
-                    $estado = $clMto_Alumno->guardar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado);
+                    $estado = $clMto_Alumno->guardar_alumno($carnet,$nombres_alumno,$apellidos_alumno,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$nombre_encargado,$apellido_encargado,$telefono,$genero_encargado,$parentesco,$profesion);
                 if ($estado > 0) {                
                     $mensaje = "Guardado satisfactoriamente";                
                 }else{
@@ -101,7 +101,7 @@ if(isset($_POST['guardar'])){
         }
                         
     }else{
-        $mensaje = "Datos no son válidos o incompletos.";
+        $mensaje = "Datos no son válidos o incompletos." . validarDatos();
         $tipo_movimiento = 3;
     }
 }elseif (isset($_GET['codigo'])) {
@@ -154,6 +154,30 @@ if(isset($_POST['guardar'])){
     <!-- SB Admin CSS - Include with every page -->
     <link href="../../css/sb-admin.css" rel="stylesheet">       
 
+<script src="../../js/jquery-1.10.2.js"></script>
+     <script language="javascript">
+    $(document).ready(function(){
+      
+       $("#departamento").change(function() {                             
+               $("#departamento option:selected").each(function () {
+                id_departamento = $(this).val();                
+                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
+                    $("#municipio").html(data);
+                });            
+            });
+       });
+
+       $('#texto').keyup(function() {
+            id_departamento = $(this).val();
+            $.post("../../clases/conexion/encargados.php", { id_departamento: id_departamento }, function(data){            
+            $("#lista").html(data);            
+            });
+        });  
+
+
+    });
+ 
+    </script>
    
 </head>
 
@@ -370,7 +394,7 @@ if(isset($_POST['guardar'])){
                                             <label>PARENTESCO</label>
                                             <select required name="parentesco" class="form-control">
                                                 <?php 
-                                                    $parentesco_list = $clMto_Alumno->get_parentesco();
+                                                    $parentesco_list = $clMto_Alumno->get_tipo_parentesco();
                                                     foreach ($parentesco_list as $row): ?>                                                                                                
                                                     <option <?php if($parentesco == $row['ID_PARENTESCO']){echo "selected";}?> value="<?php echo $row['ID_PARENTESCO']; ?>"><?php echo $row['DESCRIPCION_PARENTESCO']; ?></option>                                                                                            
                                                 <?php endforeach ?> 
@@ -401,47 +425,6 @@ if(isset($_POST['guardar'])){
     </div>
     <!-- /#wrapper -->
 
-    <!-- Core Scripts - Include with every page -->
-     <script src="../../js/jquery-1.10.2.js"></script>
-    <script language="javascript">
-    $(document).ready(function(){
-       $("#departamento").change(function () {               
-               $("#departamento option:selected").each(function () {
-                id_departamento = $(this).val();
-
-                $.post("../../clases/conexion/municipios.php", { id_departamento: id_departamento }, function(data){
-                    $("#municipio").html(data);
-                });            
-            });
-       })
-
-       $('#texto').keyup(function() {
-            id_departamento = $(this).val();
-            $.post("../../clases/conexion/encargados.php", { id_departamento: id_departamento }, function(data){            
-            $("#lista").html(data);            
-            });
-        });  
-
-
-    });
-
-    function validarEncargado(valorId){
-        $("#encargado").val(valorId);
-        $("#myModal .close").click()
-        obtnenerEncargado(valorId);
-    }
-
-
-    function obtnenerEncargado(valorId){
-        $.post("../../clases/conexion/encargados.php", { id: valorId }, function(data){                    
-        $("#nombre_encargado").val(data);            
-        });
-    }   
-
-
-    
-</script>
-    
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
@@ -450,6 +433,8 @@ if(isset($_POST['guardar'])){
     <!-- SB Admin Scripts - Include with every page -->
     <script src="../../js/sb-admin.js"></script>        
     <!-- Page-Level Demo Scripts - Forms - Use for reference -->
+
+
 
 </body>
 

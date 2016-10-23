@@ -10,7 +10,7 @@ class mto_alumno extends clDML
 
     public function get_alumnos()
     {
-        $query = "SELECT a.CARNET,CONCAT(a.PRIMER_NOMBRE,' ',a.SEGUNDO_NOMBRE) As NOMBRES,CONCAT(a.PRIMER_APELLIDO,' ', a.SEGUNDO_APELLIDO) AS APELLIDOS, ";
+        $query = "SELECT a.CARNET,CONCAT(a.NOMBRES_ALUMNO,' ',a.APELLIDOS_ALUMNO) As NOMBRES, ";
         $query .= "a.DIRECCION,a.FECHA,IF(a.SEXO = 1,'FEMENINO','MASCULINO') AS SEXO,g.DESCRIPCION_GRADO As GRADO  FROM ALUMNO a ";
         $query .= "INNER JOIN GRADO g ON g.CODIGO_GRADO = a.GRADO_CODIGO_GRADO; ";
         $conn = new clDML();
@@ -47,11 +47,11 @@ class mto_alumno extends clDML
         return $users;
     }
 
-    public function guardar_alumno($carnet,$nombre1,$nombre2,$apellido1,$apellido2,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$encargado)
+    public function guardar_alumno($carnet,$nombres_alumno,$apellidos_alumno,$fecha,$genero,$direccion,$departamento,$municipio,$grado,$nombres_encargado,$apellidos_encargado,$telefono,$genero_encargado,$id_parentesco,$id_profesion)
     {
         $conn = new clDML();
-        $query = "INSERT INTO ALUMNO (CARNET,PRIMER_NOMBRE,SEGUNDO_NOMBRE,PRIMER_APELLIDO,SEGUNDO_APELLIDO,DIRECCION,FECHA,SEXO,GRADO_CODIGO_GRADO,ENCARGADO_ALUMNOS_CODIGO_ENCARGADO,DEPARTAMENTO_ID_DEPARTAMENTO,MUNICIPIO_ID_MUNICIPIO) ";
-        $query .= "VALUES('".$carnet."','".mb_strtoupper($nombre1)."','".mb_strtoupper($nombre2)."','".strtoupper($apellido1)."','".strtoupper($apellido2)."','".strtoupper($direccion)."','".$fecha."','".$genero."','".$grado."','".$encargado."','".$departamento."','".$municipio."'); ";        
+        $query = "INSERT INTO ALUMNO (CARNET,NOMBRES_ALUMNO,APELLIDOS_ALUMNO,DIRECCION,FECHA,SEXO,GRADO_CODIGO_GRADO,DEPARTAMENTO_ID_DEPARTAMENTO,MUNICIPIO_ID_MUNICIPIO,NOMBRES_ENCARGADO,APELLIDOS_ENCARGADO,TELEFONO,GENERO_ENCARGADO,ID_PARENTESCO,ID_PROFESION) ";
+        $query .= "VALUES('".$carnet."','".mb_strtoupper($nombres_alumno)."','".mb_strtoupper($apellidos_alumno)."','".strtoupper($direccion)."','".$fecha."','".$genero."','".$grado."','".$departamento."','".$municipio."','".$nombres_encargado."','".$apellidos_encargado."','".$telefono."','".$genero_encargado."','".$id_parentesco."','".$id_profesion."'); ";        
 		$result = $conn->guardar($query);
     	return $result;	
 	}

@@ -1,5 +1,26 @@
 <?php 
+include_once 'clases/login.php';
+include_once 'clases/vista/mensajes.php';
+$mdl = new mensajes();
+$id = "";
+$nombre_user = "";
+$pass = "";
+$login =new LogIn();
 
+if (!empty($_POST['nombre']) && !empty($_POST['pass'])) {
+   //Actualizando usuario
+    $id = $_POST['id'];
+    $nombre_user = $_POST['nombre'];
+    $pass = $_POST['pass'];
+    $resultado = $login->modificar_usuario($id,$nombre_user,$pass);
+    if ($resultado > 0) {
+        $mensaje = "Modificado satisfactoriamente.";
+        $tipo_movimiento = 1;
+    }else{
+        $mensaje = "No se pudo modificar.";
+        $tipo_movimiento = 3;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,7 +89,16 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                       <?php include 'menu.php';?>
+                    <?php include 'menu.php';
+                        if (isset($_SESSION['cod_usr'])) {    
+                            $id = $_SESSION['cod_usr'];
+                            $lista = $login->obtener_datos_by_code($id);
+                            foreach ($lista as $row) {
+                               $pass = $row['CONTRA'];
+                               $nombre_user = $row['NOMBRE_USUARIO'];
+                            }    
+                        }
+                    ?>
                     </ul>
                     <!-- /#side-menu -->
                 </div>
@@ -95,7 +125,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" action="roles_usuario.php" method="POST">                                                        
+                                    <form role="form" action="usuario.php" method="POST">                                                        
                                         <div class="form-group" id="estado">
                                             <?php 
                                             if(!empty($mensaje)){
@@ -109,15 +139,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label >ID USUARIO</label>
-                                            <input name="id" class="form-control" value="<?php echo $id; ?>" readonly>                                            
+                                            <input name="id" class="form-control" type="text" value="<?php echo $id; ?>" readonly >                                            
                                         </div>
                                         <div class="form-group">
                                             <label>NOMBRE USUARIO</label>
-                                            <input name="nombre" class="form-control" value="<?php echo $nombre_rol; ?>" placeholder="Nombre de usuario">
+                                            <input name="nombre" autocomplete="off" type="text" class="form-control"  value="<?php echo $nombre_user; ?>" placeholder="Nombre de usuario">
                                         </div>
                                         <div class="form-group">
                                             <label>CONTRASEÑA USUARIO</label>
-                                            <input name="pass" type="password" class="form-control" value="<?php echo $pass; ?>">
+                                            <input name="pass" autocomplete="off" type="password" class="form-control" value="<?php echo $pass; ?>">
                                         </div>
                                         
                                         <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>                                                                                                                

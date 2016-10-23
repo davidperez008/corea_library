@@ -126,8 +126,7 @@ require_once "../../clases/vista/mensajes.php";
                                      <thead>
                                         <tr>
                                             <th>CARNÉ</th>
-                                            <th>Nombres</th>
-                                            <th>Apellidos</th>
+                                            <th>Nombres</th>                                            
                                             <th>Género</th>
                                             <th>Fecha de Nac.</th>
                                             <th>Grado</th>
@@ -140,8 +139,7 @@ require_once "../../clases/vista/mensajes.php";
                                         foreach ($a_alumnos as $row): ?>
                                             <tr>
                                                 <td><?php echo $row['CARNET']; ?></td>
-                                                <td><?php echo $row['NOMBRES']; ?></td>
-                                                <td><?php echo $row['APELLIDOS']; ?></td>
+                                                <td><?php echo $row['NOMBRES']; ?></td>                                                
                                                 <td><?php echo $row['SEXO']; ?></td>
                                                 <td><?php echo $row['FECHA']; ?></td>
                                                 <td><?php echo $row['GRADO']; ?></td>

@@ -6,6 +6,7 @@ class clDML
     {      
         
     }
+    public $estado_conexion;
 
     public function conectar($hostname, $username,$password, $database){        
         $mysqli = new mysqli($hostname, $username,$password, $database);
@@ -42,6 +43,7 @@ class clDML
            
        }
        echo $connection->error;
+       $estado_conexion = $connection->error;
        return $count;
 	}
     

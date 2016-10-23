@@ -130,17 +130,15 @@ $resultado;
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                      <thead>
                                         <tr>
-                                            <th>Código del libro</th>
-                                            <th>Título del libro</th>
-                                            <th>Ubicación</th>
-                                            <th>Cantidad en existencia</th>
-                                            <th>Código de autor</th>
-											<th>Código de editorial</th>
-											<th>Código de asignatura</th>
-											<th>ID Ejemplar</th>
+                                            <th>Código</th>
+                                            <th>Título</th>                                           			
+                                            <th>Autor</th>
+											<th>Editorial</th>
+											<th>Asignatura</th>
 											<th>Tipo de libro</th>
-											<th>Modificar</th>
-											<th>Eliminar</th>
+											<th></th>
+                                            <th></th>
+											<th></th>
                                         </tr>
                                     </thead>
                                      <?php                                      
@@ -148,16 +146,14 @@ $resultado;
                                         foreach ($a_users as $row): ?>
                                             <tr>
                                                 <td><?php echo $row['CODIGO_LIBRO']; ?></td>
-                                                <td><?php echo $row['TITULO_LIBRO']; ?></td>
-                                                <td><?php echo $row['UBICACION']; ?></td>
-												<td><?php echo $row['CANTIDAD_EN_EXISTENCIA']; ?></td>
-												<td><?php echo $row['AUTOR_CODIGO_AUTOR']; ?></td>
-												<td><?php echo $row['EDITORIAL_CODIGO_EDITORIAL']; ?></td>
-												<td><?php echo $row['ASIGNATURA_CODIGO_ASIGNATURA']; ?></td>
-												<td><?php echo $row['EJEMPLAR_LIBRO_ID_EJEMPLAR']; ?></td>
-												<td><?php echo $row['TIPO_LIBRO']; ?></td>
-                                                <td><a href="libros_nuevos.php?codigo=<?php echo $row['CODIGO_LIBRO']; ?>">Modificar</a></td>
-                                                <td><a href="libros.php?codigo=<?php echo $row['CODIGO_LIBRO']; ?>">Eliminar</a></td>
+                                                <td><?php echo $row['TITULO_LIBRO']; ?></td>                                            
+												<td><?php echo $row['NOMBRE_AUTOR']; ?></td>
+												<td><?php echo $row['NOMBRE_EDITORIAL']; ?></td>
+												<td><?php echo $row['NOMBRE_ASIGNATURA']; ?></td>
+												<td><?php echo $row['NOMBRE_TIPO_LIBRO']; ?></td>
+                                                <td><a class="btn-xs btn btn-success " href="libros_ejemplares.php?codigo=<?php echo $row['CODIGO_LIBRO']; ?>">Ejemplares</a></td>
+                                                <td><a class="btn-xs btn btn-warning " href="libros_nuevos.php?codigo=<?php echo $row['CODIGO_LIBRO']; ?>">Modificar</a></td>
+                                                <td><a class="btn-xs btn btn-danger " href="libros.php?codigo=<?php echo $row['CODIGO_LIBRO']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                    
                                     <?php endforeach ?>    
                                 </table>

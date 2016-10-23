@@ -2,6 +2,7 @@
 require_once "../../clases/conexion/mto_empleado.php";
 require_once "../../clases/vista/mensajes.php";
 
+
    $clMto_Empleado = new mto_empleado();
    $mensaje = "";
    $mdl = new mensajes();
@@ -13,7 +14,7 @@ require_once "../../clases/vista/mensajes.php";
             $resultado = $clMto_Empleado->eliminar_empleado($codigo);
             echo $resultado;
         }
-
+   
 ?>
 <!DOCTYPE html>
 <html>
@@ -123,35 +124,37 @@ require_once "../../clases/vista/mensajes.php";
                         ?>
                             <div class="table-responsive">
                                                                
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example"  align="center">
                                      <thead>
                                         <tr>
-                                            <th>Codigo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellidos</th>
-                                            <th>Genero</th>
-                                            <th>Usuario</th>
-                                            <th>Departamento</th>
-                                            <th>Municipio</th>
-                                            <th>Dirección</th>
-                                            <th>Rol</th>
+                                            <th style="text-align:center">Codigo</th>
+                                            <th style="text-align:center">Nombre</th>
+                                            <th style="text-align:center">Apellidos</th>
+                                            <th style="text-align:center">Genero</th>
+                                            <th style="text-align:center">Usuario</th>
+                                            <th style="text-align:center">Departamento</th>
+                                            <th style="text-align:center">Municipio</th>
+                                            <th style="text-align:center">Profesión</th>
+                                            <th style="text-align:center">Modificar</th>
+                                            <th style="text-align:center">Eliminar</th>
+                                           
                                         </tr>
                                     </thead>
                                      <?php                                  
                                         $a_empleado = $clMto_Empleado->get_empleado();
                                         foreach ($a_empleado as $row): ?>
                                             <tr>
-                                                <td><?php echo $row['CODIGO_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['NOMBRE_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['APELLIDO_EMPLEADO']; ?></td>
-                                                <td><?php echo $row['GENERO']; ?></td>
-                                                <td><?php echo $row['USUARIO_CODIGO_USUARIO']; ?></td>
-                                                <td><?php echo $row['DEPARTAMENTO_ID_DEPARTAMENTO']; ?></td>
-                                                <td><?php echo $row['MUNICIPIO_ID_MUNICIPIO']; ?></td>
-                                                <td><?php echo $row['DIRECCION']; ?></td>
-                                                <td><?php echo $row['ROL_ID_ROL']; ?></td>
-                                                <td><a href="empleado_ingresar.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Modificar</a></td>
-                                                <td><a href="empleados.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Eliminar</a></td>
+                                                <td align="center"><?php echo $row['CODIGO_EMPLEADO']; ?></td>
+                                                <td align="center"><?php echo $row['NOMBRE_EMPLEADO']; ?></td>
+                                                <td align="center"><?php echo $row['APELLIDO_EMPLEADO']; ?></td>
+                                                <td align="center"><?php echo $row['GENERO']; ?></td>
+                                                <td align="center"><?php echo $row['NOMBRE_USUARIO']; ?></td>
+                                                <td align="center"><?php echo $row['NOMBRE_DEPARTAMENTO']; ?></td>
+                                                <td align="center"><?php echo $row['NOMBRE_MUNICIPIO']; ?></td>
+                                                <td align="center"><?php echo $row['NOMBRE_PROFESION']; ?></td>
+
+                                                <td align="center"><a href="empleado_ingresar.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Modificar</a></td>
+                                                <td align="center"><a href="empleados.php?codigo=<?php echo $row['CODIGO_EMPLEADO']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                  
                                     <?php endforeach ?>    
                                 </table>

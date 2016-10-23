@@ -204,34 +204,37 @@ if(isset($_POST['guardar'])){
                                         </div>   
 
                                         <div class="col-md-12">
+                                            <p></p>
                                             <label>SUB MENÚS</label>
                                            <table class="table table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>Código</th>
                                                         <th>Nombre</th>                                                                                                                
-                                                        <th></th>
+                                                        <th></th>                                                                                                                
+                                                        <th><input id='nuevoMenuSecundario' type='button' class='btn btn-success btn-xs' value='Nuevo Item'></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                      <?php 
                                                     $lista_nivel = $clMto_Menu->get_menu_secundario($id);
                                                     foreach ($lista_nivel as $row){
-                                                        echo "<tr><td><a href=''>".$row['id_menu']."</a></td>";
-                                                        echo "<td><a id='accion_modificar' data-toggle='modal' data-target='#myModal' href=''>".$row['nombre_item']."</a></td>";                                                                                                                
-                                                        echo "<td><input id='".$row['id_menu']."' type='button' class='ver btn btn-primary btn-xs' value='Modificar'></td></tr>";
+                                                        echo "<tr><td>".$row['id_menu']."</td>";
+                                                        echo "<td>".$row['nombre_item']."</td>";                                                                                                                
+                                                        echo "<td><input id='".$row['id_menu']."' type='button' class='ver btn btn-warning btn-xs' value='Modificar'></td>";
+                                                        echo "<td><input id='".$row['id_menu']."' type='button' class='ver btn btn-danger btn-xs' value='Eliminar'></td></tr>";
                                                     } ?>                                                                                                                                                    
                                                                                                         
                                                 </tbody>
                                            </table>
                                         </div> 
-                                                    
-                                 
+
 
                                         <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>                                                                        
                                         <button type="reset" class="btn btn-default">Limpiar</button>
                                     </form>
                                 </div>
+
 
 
                                 <!-- /.col-lg-6 (nested) -->
@@ -250,13 +253,14 @@ if(isset($_POST['guardar'])){
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">Sub Menu</h4>
-                                        </div>
+                                        </div>                                       
+                                     
                                         <div class="modal-body" id="menus">
 
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="modificar-boton btn btn-primary">Guardar cambios</button>
+                                            <button type="button" id="guardarCambios" class="modificar-boton btn btn-primary">Guardar cambios</button>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -291,14 +295,13 @@ if(isset($_POST['guardar'])){
     <script src="../../js/sb-admin.js"></script>
 
     <script type="text/javascript">
-        $().ready(function(){
+        $(document).ready(function(){
                         
-            $(".ver.btn.btn-primary.btn-xs").click(function(){
+            $(".ver.btn.btn-warning.btn-xs").click(function(){
                 //var id_menu = $(this).attr(id);
-                var id_menu = $(this).attr('id');
-                
+                var id_menu = $(this).attr('id');                
                 $.ajax({
-                    url:"select.php",
+                    url:"../../clases/vista/select_menu_secundario.php",
                     method:"post",
                     data:{codigo:id_menu},
                     success:function(data){
@@ -309,20 +312,84 @@ if(isset($_POST['guardar'])){
             });
 
 
-            $(".ver.btn.btn-primary.btn-xs").click(function(){
-                //var id_menu = $(this).attr(id);
-                var id_menu = $(this).attr('id');
-                
+            $(".ver.btn.btn-danger.btn-xs").click(function(){
+                var id_menu = $(this).attr('id');            
                 $.ajax({
-                    url:"select.php",
+                    url:"../../clases/vista/insert_menu_secundario.php",
                     method:"post",
                     data:{codigo:id_menu},
+                    success:function(data){
+                        $('#menus').html(data);
+                        location.reload();
+                    }
+                });                                                          
+            });
+
+
+
+
+
+             $("#nuevoMenuSecundario").click(function(){
+                //var id_menu = $(this).attr(id);                            
+                $.ajax({
+                    url:"../../clases/vista/select_menu_secundario.php",
+                    method:"post",                    
                     success:function(data){
                         $('#menus').html(data);
                         $('#myModal').modal('show');
                     }
                 });                                                
             });
+
+
+           $("#guardarCambios").click(function(){
+                var id_menu_secundario = $('#id_menu_secundario').val();
+                var nombre_menu_secundario = $('#nombre_menu_secundario').val();
+                var id_parent_item = $('#id_parent_item').val();
+                var url_secundario = $('#url_secundario').val();
+                var nivel_acceso_secundario = $('#nivel_acceso_secundario').val();
+                var icono_secundario = $('#icono_secundario').val();   
+                
+                if (id_menu_secundario == null || !id_menu_secundario) {
+
+                     $.ajax({
+                    url:"../../clases/vista/insert_menu_secundario.php",
+                    method:"post",
+                    data:{nombre_menu_secundario:nombre_menu_secundario, 
+                          id_parent_item:id_parent_item,
+                          url_secundario:url_secundario,
+                          nivel_acceso_secundario:nivel_acceso_secundario,
+                          icono_secundario:icono_secundario },
+                    success:function(data){
+                        $('#estadoSubmenu').html(data);                        
+                        $('#myModal').modal('hide');  
+                        location.reload();                      
+                        }
+                    });
+                     
+                }else{
+                     $.ajax({
+                    url:"../../clases/vista/insert_menu_secundario.php",
+                    method:"post",
+                    data:{ id_menu_secundario:id_menu_secundario,
+                          nombre_menu_secundario:nombre_menu_secundario, 
+                          id_parent_item:id_parent_item,
+                          url_secundario:url_secundario,
+                          nivel_acceso_secundario:nivel_acceso_secundario,
+                          icono_secundario:icono_secundario },
+                    success:function(data){
+                        $('#estadoSubmenu').html(data);                        
+                        $('#myModal').modal('hide');                        
+                        location.reload();
+                        }
+                    });
+                }
+                             
+                //Guardar datos
+               
+                 
+            });
+
 
            
 

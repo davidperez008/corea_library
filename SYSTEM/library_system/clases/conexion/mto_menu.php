@@ -106,18 +106,45 @@ class mto_menu
         echo $result;
     	return $result;
 	}
+
+     public function guardar_menu_secundario($nombre,$id_parent,$url,$nivel_acceso,$icono)
+    {
+        $conn = new clDML();
+        $query = "INSERT INTO menu (id_menu,nombre_item,id_parent_item,url,nivel_acceso,icono) VALUES (null,'".$nombre."',";
+        $query .= " '".$id_parent."', '".$url."','".$nivel_acceso."','".$icono."'); ";                
+        $result = $conn->guardar($query);                
+        return $result;
+    }
+
+
     public function modificar_menu_principal($id,$nombre,$url,$nivel_acceso,$icono)
     {
         $query = "UPDATE menu_principal SET nombre = '".$nombre."', url = '".$url."', nivel_acceso = '".$nivel_acceso."', icono = '".$icono."' WHERE id_menu_principal = '".$id."'";
         $conn = new clDML();
-        $result = $conn->guardar($query);
-        echo $query;
+        $result = $conn->guardar($query);        
+        return $result;
+    }
+
+    public function modificar_menu_secundario($id,$nombre,$id_parent,$url,$nivel_acceso,$icono)
+    {
+        $query = "UPDATE menu SET nombre_item = '".$nombre."', id_parent_item = '".$id_parent."',url = '".$url."', nivel_acceso = '".$nivel_acceso."', icono = '".$icono."'";
+        $query .= " WHERE id_menu = '".$id."'";
+        $conn = new clDML();
+        $result = $conn->guardar($query);        
         return $result;
     }
 
     public function eliminar_menu_principal($codigo)
     {
         $query = "DELETE FROM menu_principal WHERE id_menu_principal = '".$codigo."';";
+        $conn = new clDML();
+        $result = $conn->guardar($query);            
+        return $result;
+    }
+
+    public function eliminar_menu_secundario($codigo)
+    {
+        $query = "DELETE FROM menu WHERE id_menu = '".$codigo."';";
         $conn = new clDML();
         $result = $conn->guardar($query);            
         return $result;

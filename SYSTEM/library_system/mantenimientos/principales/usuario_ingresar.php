@@ -1,9 +1,8 @@
 	<?php
 require_once "../../clases/conexion/mto_usuario.php";
 require_once "../../clases/vista/mensajes.php";
-   //Acá antes variables de sesión...
    
-   $clMto_Usuario = new mto_usuario();
+$clMto_Usuario = new mto_usuario();
 $mensaje = "";
 $mdl = new mensajes();
 $codigo = "";
@@ -14,7 +13,7 @@ $tipo_movimiento = 1;
 
 //Se necesita el método POST en el usuario 
 if(isset($_POST['guardar'])){
-    if(isset($_POST['nombre']) && !empty($_POST['nombre']) && isset($_POST['contra']) && !empty($_POST['contra']) ){
+    if(isset($_POST['nombre']) && !empty($_POST['nombre']) && isset($_POST['contra']) && !empty($_POST['contra']) && isset($_POST['rol']) && !empty($_POST['rol'])){
         $codigo = $_POST['codigo'];
         $nombre = $_POST['nombre'];
         $contra = $_POST['contra'];
@@ -32,7 +31,7 @@ if(isset($_POST['guardar'])){
            if ($estado>0){
 			  $mensaje = "Guardado satisfactoriamente"; 
 		   }
-		   else { $mensaje ="Algo ha tronado"; $tipo_movimiento = 3;
+		   else { $mensaje ="Algo ha fallado"; $tipo_movimiento = 3;
 			   }
 		   
         }
@@ -65,7 +64,9 @@ if(isset($_POST['guardar'])){
 }else{
     $tipo_movimiento = 1;
 }    
-                                                                      
+
+
+                                                                          
 ?>
 <!DOCTYPE html>
 <html>
@@ -85,6 +86,16 @@ if(isset($_POST['guardar'])){
 
     <!-- SB Admin CSS - Include with every page -->
     <link href="../../css/sb-admin.css" rel="stylesheet">
+
+    <script languaje="javascript">
+function limpiarform(){
+document.nombre.reset();
+document."nombre".reset();
+
+}
+</script>
+
+<body onLoad="limpiarform">
 
 </head>
 
@@ -158,7 +169,7 @@ if(isset($_POST['guardar'])){
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" action="usuario_ingresar.php" method="POST">                                                        
+                                    <form name="form1" role="form" action="usuario_ingresar.php" method="POST" document.form1.reset(); >                                                        
                                         <div class="form-group" id="estado">
                                             <?php 
                                             if(!empty($mensaje)){
@@ -180,7 +191,7 @@ if(isset($_POST['guardar'])){
                                         </div>
                                         <div class="form-group">
                                             <label>CONTRASEÑA</label>
-                                            <input name="contra" required class="form-control" value="<?php echo $contra; ?>" placeholder="seis o más caracteres alfanumericos">
+                                            <input type="password" name="contra" required class="form-control" value="<?php echo $contra; ?>" placeholder="seis o más caracteres alfanúmericos">
                                         </div>
                                         
                                         <div class="form-group">
@@ -194,8 +205,7 @@ if(isset($_POST['guardar'])){
                                             </select>
                                     </div>
 
-                                        <button type="submit" name="guardar" value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button>
-
+                                        <button  type="submit" name="guardar" document.getElementById('nombre').value= "";  document."form1".reset();  value="<?php echo $tipo_movimiento;?>" class="btn btn-default">Guardar</button> 
                                         <button type="reset" class="btn btn-default">Limpiar</button>
                                     
                                 </div>

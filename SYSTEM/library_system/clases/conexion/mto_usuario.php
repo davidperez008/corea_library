@@ -10,7 +10,7 @@ class mto_usuario extends clDML
 
     public function get_usuario()
     {
-        $query = "SELECT * FROM USUARIO";
+        $query = "SELECT u.CODIGO_USUARIO,u.NOMBRE_USUARIO,r.NOMBRE_ROL FROM usuario u INNER JOIN rol r ON r.ID_ROL=u.ROL_ID_ROL";
         $conn = new clDML();
         $users = $conn->get_list($query);
         return $users;
@@ -18,14 +18,14 @@ class mto_usuario extends clDML
     public function guardar_usuario($codigo,$nombre,$contra,$rol)
     {
         $conn = new clDML();
-        $query = "INSERT INTO USUARIO (CODIGO_USUARIO,NOMBRE_USUARIO,CONTRA,ROL_ID_ROL) VALUES (null,'".($nombre)."','".($contra)."','".strtoupper($rol)."');";
+        $query = "INSERT INTO USUARIO (CODIGO_USUARIO,NOMBRE_USUARIO,CONTRA,ROL_ID_ROL) VALUES (null,'".($nombre)."',sha('".$contra."'),'".strtoupper($rol)."');";
 		$result = $conn->guardar($query);
     return $result;
 	}
 	
     public function modificar_usuario($codigo,$nombre,$contra,$rol)
     {
-        $query = "UPDATE USUARIO SET CODIGO_USUARIO = '".strtoupper($codigo)."', NOMBRE_USUARIO = '".strtoupper($nombre)."', CONTRA = '".strtoupper($contra)."', ROL_ID_ROL = '".strtoupper($rol)."' WHERE CODIGO_USUARIO = '".$codigo."';";
+        $query = "UPDATE USUARIO SET CODIGO_USUARIO = '".($codigo)."', NOMBRE_USUARIO = '".($nombre)."', CONTRA = '".($contra)."', ROL_ID_ROL = '".strtoupper($rol)."' WHERE CODIGO_USUARIO = '".$codigo."';";
         $conn = new clDML();
         $result = $conn->guardar($query);
         if($result)

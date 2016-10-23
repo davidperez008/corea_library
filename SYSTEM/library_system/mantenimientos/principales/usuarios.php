@@ -2,6 +2,8 @@
 require_once "../../clases/conexion/mto_usuario.php";
 require_once "../../clases/vista/mensajes.php";
 
+
+
    $clMto_Usuario = new mto_usuario();
    $mensaje = "";
    $mdl = new mensajes();
@@ -14,6 +16,7 @@ require_once "../../clases/vista/mensajes.php";
             echo $resultado;
         }
    
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -128,7 +131,6 @@ require_once "../../clases/vista/mensajes.php";
                                         <tr>
                                             <th>Codigo</th>
                                             <th>Nombre</th>
-                                            <th>Contraseña</th>
                                             <th>Rol</th>
                                             <th>Modificar</th>
                                             <th>Eliminar</th>
@@ -140,8 +142,7 @@ require_once "../../clases/vista/mensajes.php";
                                             <tr>
                                                 <td><?php echo $row['CODIGO_USUARIO']; ?></td>
                                                 <td><?php echo $row['NOMBRE_USUARIO']; ?></td>
-                                                <td><?php echo $row['CONTRA']; ?></td>
-                                                <td><?php echo $row['ROL_ID_ROL']; ?></td>
+                                                <td><?php echo $row['NOMBRE_ROL']; ?></td>
                                                 <td><a href="usuario_ingresar.php?codigo=<?php echo $row['CODIGO_USUARIO']; ?>">Modificar</a></td>
                                                 <td><a href="usuarios.php?codigo=<?php echo $row['CODIGO_USUARIO']; ?>">Eliminar</a></td>
                                             </tr><!-- /TROW -->                                  
